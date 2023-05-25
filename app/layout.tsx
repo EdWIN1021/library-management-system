@@ -1,6 +1,9 @@
 import "./globals.scss";
 import { Nunito } from "next/font/google";
-import Navbar from "./components/navbar/Navbar";
+import Navbar from "./components/Navbar/Navbar";
+import Login from "./components/Login/Login";
+
+import StoreProvider from "./providers/StoreProvider";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -16,8 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={nunito.className}>
-        <Navbar />
-        {children}
+        <StoreProvider>
+          <Navbar />
+          <Login />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );

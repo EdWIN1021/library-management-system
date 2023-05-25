@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import { useCallback, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,13 +12,14 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 
+import { useDispatch } from "react-redux";
+import { openLogin } from "../../features/modal/modalSlice";
+
 const Navbar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const dispatch = useDispatch();
+
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -34,6 +35,11 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleOpenLogin = useCallback(() => {
+    dispatch(openLogin());
+    handleCloseUserMenu();
+  }, [openLogin, handleCloseUserMenu]);
 
   return (
     <AppBar position="static">
@@ -145,7 +151,7 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem>
+              <MenuItem onClick={handleOpenLogin}>
                 <Typography textAlign="center">Login</Typography>
               </MenuItem>
 
