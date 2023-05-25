@@ -11,8 +11,9 @@ import Button from "@mui/material/Button";
 import Heading from "../Heading/Heading";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
-import { FcGoogle } from "react-icons/fc";
-import { AiFillGithub } from "react-icons/ai";
+
+import Logo from "../Logo/Logo";
+import OAuth from "../OAuth/OAuth";
 
 const Login = () => {
   const isLoginOpen = useSelector(
@@ -27,7 +28,7 @@ const Login = () => {
       onClose={() => dispatch(closeLogin())}
     >
       <Card className={styles.container}>
-        <Heading title={" Welcome Back!"} subtitle={"Login to your account!"} />
+        <Heading title={" Welcome Back!"} subtitle={"Login to your account"} />
 
         <Input
           lable={"Email"}
@@ -55,27 +56,9 @@ const Login = () => {
 
         <Divider>or</Divider>
 
-        <Button
-          variant="outlined"
-          size="large"
-          startIcon={<FcGoogle size={24} />}
-          style={{ color: "black" }}
-          fullWidth
-        >
-          Continue with Google
-        </Button>
+        <OAuth />
 
-        <Button
-          variant="outlined"
-          size="large"
-          startIcon={<AiFillGithub size={24} />}
-          style={{ color: "black" }}
-          fullWidth
-        >
-          Continue with Github
-        </Button>
-
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <div className={styles.footer}>
           Don't have an account? <Link>Sign Up</Link>
         </div>
       </Card>

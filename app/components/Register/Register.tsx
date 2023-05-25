@@ -10,8 +10,9 @@ import Input from "../Input/Input";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Divider from "@mui/material/Divider";
-import { FcGoogle } from "react-icons/fc";
-import { AiFillGithub } from "react-icons/ai";
+
+import Logo from "../Logo/Logo";
+import OAuth from "../OAuth/OAuth";
 
 const Register = () => {
   const isRegisterOpen = useSelector(
@@ -65,27 +66,9 @@ const Register = () => {
 
         <Divider>or</Divider>
 
-        <Button
-          variant="outlined"
-          size="large"
-          startIcon={<FcGoogle size={24} />}
-          style={{ color: "black" }}
-          fullWidth
-        >
-          Continue with Google
-        </Button>
+        <OAuth />
 
-        <Button
-          variant="outlined"
-          size="large"
-          startIcon={<AiFillGithub size={24} />}
-          style={{ color: "black" }}
-          fullWidth
-        >
-          Continue with Github
-        </Button>
-
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <div className={styles.footer}>
           Already have an account? <Link>Login</Link>
         </div>
       </Card>

@@ -2,6 +2,11 @@
 .container {
   @include flex-column;
   @include center;
-  gap: 15px;
-  padding: 60px;
+  gap: 10px;
+  padding: 40px;
+
+  .footer {
+    text-align: center;
+    margin-top: 8px;
+  }
 }

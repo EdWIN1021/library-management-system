@@ -8,7 +8,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
   onClose,
 }) => {
   return (
-    <Modal open={openModal} onClose={onClose}>
+    <Modal  open={openModal} onClose={onClose}>
       {children}
     </Modal>
   );
