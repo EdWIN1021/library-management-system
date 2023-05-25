@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login/Login";
 
 import StoreProvider from "./providers/StoreProvider";
+import Register from "./components/Register/Register";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <StoreProvider>
           <Navbar />
           <Login />
+          <Register />
           {children}
         </StoreProvider>
       </body>

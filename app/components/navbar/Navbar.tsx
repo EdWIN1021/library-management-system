@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 
 import { useDispatch } from "react-redux";
-import { openLogin } from "../../features/modal/modalSlice";
+import { openLogin, openRegister } from "../../features/modal/modalSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -38,6 +38,11 @@ const Navbar = () => {
 
   const handleOpenLogin = useCallback(() => {
     dispatch(openLogin());
+    handleCloseUserMenu();
+  }, [openLogin, handleCloseUserMenu]);
+
+  const handleOpenRegister = useCallback(() => {
+    dispatch(openRegister());
     handleCloseUserMenu();
   }, [openLogin, handleCloseUserMenu]);
 
@@ -155,7 +160,7 @@ const Navbar = () => {
                 <Typography textAlign="center">Login</Typography>
               </MenuItem>
 
-              <MenuItem>
+              <MenuItem onClick={handleOpenRegister}>
                 <Typography textAlign="center">Signup</Typography>
               </MenuItem>
             </Menu>

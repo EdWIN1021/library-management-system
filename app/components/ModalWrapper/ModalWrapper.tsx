@@ -5,10 +5,10 @@ import { ModalWrapperProps } from "./types";
 const ModalWrapper: React.FC<ModalWrapperProps> = ({
   children,
   openModal,
-  onClick,
+  onClose,
 }) => {
   return (
-    <Modal open={openModal} onClose={onClick}>
+    <Modal open={openModal} onClose={onClose}>
       {children}
     </Modal>
   );
