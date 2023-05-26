@@ -15,7 +15,9 @@ const BookItem = ({ book }: { book: Book }) => {
         height="200"
         priority
       />
-      <Button>info</Button>
+      <div>{book.title}</div>
+      <div>{book.authors}</div>
+      <div>{book.rating}/5</div>
     </div>
   );
 };
