@@ -5,6 +5,7 @@ import Login from "./components/Login/Login";
 
 import StoreProvider from "./providers/StoreProvider";
 import Register from "./components/Register/Register";
+import Footer from "./components/Footer/Footer";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <Login />
           <Register />
           {children}
+          <Footer />
         </StoreProvider>
       </body>
     </html>

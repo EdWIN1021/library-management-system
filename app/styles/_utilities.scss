@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+@mixin flex-row {
+  display: flex;
+}
+
 @mixin center {
   position: absolute;
   left: 50%;

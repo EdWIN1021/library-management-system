@@ -1,0 +1,7 @@
+@import "../../styles/utilities";
+.row {
+  @include flex-row;
+  gap: 25px;
+  padding: 10px;
+  overflow-x: scroll;
+}

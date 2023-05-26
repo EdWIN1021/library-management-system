@@ -1,0 +1,35 @@
+@import "../../styles/utilities";
+.footer {
+  @include flex-column;
+  background-color: #1976d2;
+  padding: 40px;
+  color: #ffffff;
+
+  .info {
+    @include flex-row;
+    justify-content: center;
+    gap: 50px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 30px;
+
+    .title {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 26px;
+      margin-bottom: 40px;
+    }
+  }
+
+  .copyright {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .social {
+    @include flex-row;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+}

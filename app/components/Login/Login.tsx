@@ -11,8 +11,6 @@ import Button from "@mui/material/Button";
 import Heading from "../Heading/Heading";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
-
-import Logo from "../Logo/Logo";
 import OAuth from "../OAuth/OAuth";
 
 const Login = () => {
