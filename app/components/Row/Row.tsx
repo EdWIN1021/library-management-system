@@ -7,14 +7,14 @@ import Button from "@mui/material/Button";
 
 const Row: React.FC<RowProp> = ({ books, type }) => {
   return (
-    <>
-      <h2>{type}</h2>
-      <div className={styles.row}>
+    <div className={styles.row}>
+      <h2 className={styles.type}>{type}</h2>
+      <div className={styles.books}>
         {books?.map((book: Book) => (
           <BookItem key={book.id} book={book} />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

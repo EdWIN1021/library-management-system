@@ -1,16 +1,29 @@
+@import "../../styles/variables";
 .book {
-}
+  font-weight: 400;
+  color: $text-primary;
+  line-height: 25px;
 
-.image {
-  &:hover {
-    scale: 1.1;
-    cursor: pointer;
+  .image {
+    &:hover {
+      scale: 1.1;
+      cursor: pointer;
+    }
   }
-}
 
-.title {
-  overflow: hidden;
-  width: 150px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  .title {
+    overflow: hidden;
+    width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 15px;
+  }
+
+  .author {
+    overflow: hidden;
+    width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 13px;
+  }
 }
