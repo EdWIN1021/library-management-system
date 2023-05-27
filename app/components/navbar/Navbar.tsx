@@ -47,7 +47,7 @@ const Navbar = () => {
   }, [openLogin, handleCloseUserMenu]);
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="sticky" style={{ backgroundColor: "#ff8a00" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

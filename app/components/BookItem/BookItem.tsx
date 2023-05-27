@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 
 const BookItem = ({ book }: { book: Book }) => {
   return (
-    <div>
+    <div className={styles.book}>
       <Image
         className={styles.image}
         src={book?.image_url}
@@ -15,7 +15,7 @@ const BookItem = ({ book }: { book: Book }) => {
         height="200"
         priority
       />
-      <div>{book.title}</div>
+      <div className={styles.title}>{book.title}</div>
       <div>{book.authors}</div>
       <div>{book.rating}/5</div>
     </div>

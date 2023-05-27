@@ -1,6 +1,16 @@
+.book {
+}
+
 .image {
   &:hover {
     scale: 1.1;
     cursor: pointer;
   }
+}
+
+.title {
+  overflow: hidden;
+  width: 150px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

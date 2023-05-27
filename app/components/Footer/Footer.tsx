@@ -12,65 +12,60 @@ import { DiSnapSvg } from "react-icons/di";
 
 const Footer = () => {
   return (
-    <>
-      <Box className={styles.footer}>
-        <div className={styles.info}>
-          <div>
-            <div className={styles.title}>Edwin Inc</div>
-            <div>Pricing</div>
-            <div>Updates</div>
-            <div>Beta</div>
-            <div>Newsletter</div>
-            <div>Collaborations</div>
-          </div>
-          <div>
-            <div className={styles.title}>Product</div>
-            <div>Pricing</div>
-            <div>Updates</div>
-            <div>Beta</div>
-            <div>Newsletter</div>
-            <div>Collaborations</div>
-          </div>
-          <div>
-            <div className={styles.title}>Learning</div>
-            <div>Pricing</div>
-            <div>Updates</div>
-            <div>Beta</div>
-            <div>Newsletter</div>
-            <div>Collaborations</div>
-          </div>
-
-          <div>
-            <div className={styles.title}>Resources</div>
-            <div>Pricing</div>
-            <div>Updates</div>
-            <div>Beta</div>
-            <div>Newsletter</div>
-            <div>Collaborations</div>
-          </div>
-
-          <div>
-            <div className={styles.title}>About</div>
-            <div>Pricing</div>
-            <div>Updates</div>
-            <div>Beta</div>
-            <div>Newsletter</div>
-            <div>Collaborations</div>
-          </div>
+    <section className={styles.footer}>
+      <div className={styles.info}>
+        <div>
+          <div className={styles.title}>Edwin Inc</div>
+          <div>Pricing</div>
+          <div>Updates</div>
+          <div>Beta</div>
+          <div>Newsletter</div>
+          <div>Collaborations</div>
+        </div>
+        <div>
+          <div className={styles.title}>Product</div>
+          <div>Business</div>
+          <div>Designers</div>
+          <div>Classrooms</div>
+          <div>Newscommers</div>
+        </div>
+        <div>
+          <div className={styles.title}>Learning</div>
+          <div>Learn Hub</div>
+          <div>Manulas</div>
+          <div>Beta</div>
+          <div>Tutorials</div>
+          <div>Communities</div>
         </div>
 
-        <Logo />
-        <div className={styles.copyright}>
-          © 2020 Edwin Inc. All rights reserved.
+        <div>
+          <div className={styles.title}>Resources</div>
+          <div>Tutorials</div>
+          <div>Editorials</div>
+          <div>Beta</div>
+          <div>Product</div>
         </div>
-        <div className={styles.social}>
-          <AiFillFacebook size={30} />
-          <AiFillTwitterSquare size={30} />
-          <AiOutlineInstagram size={30} />
-          <DiSnapSvg size={30} />
+
+        <div>
+          <div className={styles.title}>About</div>
+          <div>Company</div>
+          <div>Careers</div>
+          <div>Legal</div>
+          <div>Help</div>
         </div>
-      </Box>
-    </>
+      </div>
+
+      <Logo />
+      <div className={styles.copyright}>
+        © 2023 Edwin Inc. All rights reserved.
+      </div>
+      <div className={styles.social}>
+        <AiFillFacebook size={30} />
+        <AiFillTwitterSquare size={30} />
+        <AiOutlineInstagram size={30} />
+        <DiSnapSvg size={30} />
+      </div>
+    </section>
   );
 };
 

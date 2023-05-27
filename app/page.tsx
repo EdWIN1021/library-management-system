@@ -5,28 +5,29 @@ import {
   getReturned,
   getRomance,
   getFiction,
-  getHorror,
   getChildren,
 } from "./lib/genres";
+
+import { getQuote } from "./lib/quotes";
 
 import Row from "./components/Row/Row";
 import styles from "./page.module.scss";
 
 export default async function Home() {
-  const [trending, classic, returned, romance, fiction, horror, children] =
+  const [trending, classic, returned, romance, fiction, children, quote] =
     await Promise.all([
       await getTrending(),
       await getClassic(),
       await getReturned(),
       await getRomance(),
       await getFiction(),
-      await getHorror(),
       await getChildren(),
+      await getQuote(),
     ]);
 
   return (
     <div className={styles.container}>
-      <Search />
+      <Search book={quote} />
       <Row books={trending} type={"Trending"} />
       <Row books={classic} type={"Classic"} />
       <Row books={returned} type={"Recently Returned"} />

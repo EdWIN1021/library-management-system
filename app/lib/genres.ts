@@ -8,16 +8,8 @@ export const getRomance = async () => {
 };
 
 export const getFiction = async () => {
-  //https://example-data.draftbit.com/books?_limit=10&q=Horror
   const res = await fetch(
     `https://example-data.draftbit.com/books?q=Fiction&_page=${num()}&_limit=10`
-  );
-  return res.json();
-};
-
-export const getHorror = async () => {
-  const res = await fetch(
-    `https://example-data.draftbit.com/books?q=Horror&_page=${num()}&_limit=10`
   );
   return res.json();
 };

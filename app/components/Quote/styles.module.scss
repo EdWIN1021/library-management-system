@@ -1,0 +1,21 @@
+@import "../../styles/variables";
+.quote {
+  position: absolute;
+  margin: 0 auto;
+  z-index: 100;
+  color: $text-white;
+  top: 10%;
+  padding: 50px;
+  line-height: 60px;
+
+  div:first-child {
+    font-weight: 600;
+    font-size: 48px;
+  }
+
+  div:nth-child(2) {
+    font-weight: 300;
+    font-size: 30px;
+    text-align: end;
+  }
+}
