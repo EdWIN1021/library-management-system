@@ -10,14 +10,15 @@
   .info {
     @include flex-row;
     justify-content: center;
-    gap: 50px;
-    font-weight: 400;
-    font-size: 14px;
     line-height: 30px;
+    gap: 100px;
+
+    div:first-child {
+      @include flex-column;
+    }
 
     .title {
-      font-weight: 500;
-      font-size: 18px;
+      font-weight: 600;
       line-height: 26px;
       margin-bottom: 40px;
     }

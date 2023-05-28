@@ -1,4 +1,4 @@
-import Search from "./components/Search/Search";
+"use client";
 import {
   getTrending,
   getClassic,
@@ -7,9 +7,9 @@ import {
   getFiction,
   getChildren,
 } from "./lib/genres";
-
 import { getQuote } from "./lib/quotes";
-
+import Search from "./components/Search/Search";
+import Banner from "./components/Banner/Banner";
 import Row from "./components/Row/Row";
 import styles from "./page.module.scss";
 
@@ -27,7 +27,9 @@ export default async function Home() {
 
   return (
     <div className={styles.container}>
-      <Search book={quote} />
+      <Banner book={quote} />
+      <Search />
+      <Row books={classic} type={"Classic"} />
       <Row books={trending} type={"Trending"} />
       <Row books={classic} type={"Classic"} />
       <Row books={returned} type={"Recently Returned"} />

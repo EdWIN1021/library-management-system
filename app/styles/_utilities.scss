@@ -13,3 +13,9 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+@mixin text-nowrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

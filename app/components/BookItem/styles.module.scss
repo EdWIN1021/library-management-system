@@ -1,8 +1,10 @@
 @import "../../styles/variables";
+@import "../../styles/utilities";
+
 .book {
-  font-weight: 400;
   color: $text-primary;
   line-height: 25px;
+  width: 150px;
 
   .image {
     &:hover {
@@ -12,18 +14,19 @@
   }
 
   .title {
-    overflow: hidden;
-    width: 150px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    @include text-nowrap;
     font-size: 15px;
   }
 
   .author {
-    overflow: hidden;
-    width: 150px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    @include text-nowrap;
     font-size: 13px;
+  }
+
+  .rating {
+    font-size: 13px;
+    span {
+      color: $text-secondary;
+    }
   }
 }

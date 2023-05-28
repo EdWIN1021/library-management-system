@@ -11,11 +11,13 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-
 import { useDispatch } from "react-redux";
 import { openLogin, openRegister } from "../../features/modal/modalSlice";
+import styles from "./styles.module.scss";
+import { signOut } from "next-auth/react";
+import { Session } from "next-auth";
 
-const Navbar = () => {
+const Navbar = ({ currentUser }: { currentUser: Session | null }) => {
   const dispatch = useDispatch();
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -47,7 +49,7 @@ const Navbar = () => {
   }, [openLogin, handleCloseUserMenu]);
 
   return (
-    <AppBar position="sticky" style={{ backgroundColor: "#ff8a00" }}>
+    <AppBar className={styles.appbar}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -156,13 +158,25 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleOpenLogin}>
-                <Typography textAlign="center">Login</Typography>
-              </MenuItem>
-
-              <MenuItem onClick={handleOpenRegister}>
-                <Typography textAlign="center">Signup</Typography>
-              </MenuItem>
+              {currentUser ? (
+                <div>
+                  <MenuItem>
+                    <Typography textAlign="center">My Shelf</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={() => signOut()}>
+                    <Typography textAlign="center">Log out</Typography>
+                  </MenuItem>
+                </div>
+              ) : (
+                <div>
+                  <MenuItem onClick={handleOpenLogin}>
+                    <Typography textAlign="center">Login</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleOpenRegister}>
+                    <Typography textAlign="center">Signup</Typography>
+                  </MenuItem>
+                </div>
+              )}
             </Menu>
           </Box>
         </Toolbar>

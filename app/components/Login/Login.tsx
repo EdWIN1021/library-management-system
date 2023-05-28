@@ -2,7 +2,7 @@
 import ModalWrapper from "../ModalWrapper/ModalWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { closeLogin } from "@/app/features/modal/modalSlice";
+import { closeLogin, openRegister } from "@/app/features/modal/modalSlice";
 
 import Card from "@mui/material/Card";
 import Input from "../Input/Input";
@@ -12,13 +12,24 @@ import Heading from "../Heading/Heading";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import OAuth from "../OAuth/OAuth";
+import PwdInput from "../PwdInput/PwdInput";
+import { useState } from "react";
 
 const Login = () => {
   const isLoginOpen = useSelector(
     (state: RootState) => state.modal.isLoginOpen
   );
 
+  const [inputFields, setInputFields] = useState({
+    email: "",
+    password: "",
+  });
+
   const dispatch = useDispatch();
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputFields({ ...inputFields, [e.target.name]: e.target.value });
+  };
 
   return (
     <ModalWrapper
@@ -30,13 +41,18 @@ const Login = () => {
 
         <Input
           lable={"Email"}
-          type={"text"}
           placeholder={"username@email.com"}
+          name={"email"}
+          value={inputFields.email}
+          onChange={handleOnChange}
         />
-        <Input
+
+        <PwdInput
           lable={"Password"}
-          type={"password"}
           placeholder={"enter your password"}
+          name={"password"}
+          value={inputFields.password}
+          onChange={handleOnChange}
         />
 
         <Button
@@ -57,7 +73,16 @@ const Login = () => {
         <OAuth />
 
         <div className={styles.footer}>
-          Don't have an account? <Link>Sign Up</Link>
+          Don't have an account?{" "}
+          <Link
+            href="#"
+            onClick={() => {
+              dispatch(closeLogin());
+              dispatch(openRegister());
+            }}
+          >
+            Sign Up
+          </Link>
         </div>
       </Card>
     </ModalWrapper>

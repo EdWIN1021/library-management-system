@@ -1,16 +1,17 @@
 @import "../../styles/variables";
+@import "../../styles/utilities";
+
 .quote {
-  position: absolute;
+  @include center;
   margin: 0 auto;
   z-index: 100;
   color: $text-white;
-  top: 10%;
   padding: 50px;
-  line-height: 60px;
+  line-height: 50px;
+  width: 100%;
 
-  div:first-child {
-    font-weight: 600;
-    font-size: 48px;
+  h2 {
+    text-align: end;
   }
 
   div:nth-child(2) {

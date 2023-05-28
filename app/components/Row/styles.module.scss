@@ -1,13 +1,20 @@
 @import "../../styles/utilities";
 @import "../../styles/variables";
 
-.row {
+.category {
   background-color: $bg-white;
-  margin-bottom: 20px;
   padding: 35px;
   color: $text-primary;
+  margin-bottom: 20px;
 
-  .type {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .title {
     font-weight: 400;
     font-size: 25px;
   }
@@ -16,9 +23,5 @@
     @include flex-row;
     gap: 13px;
     overflow-x: scroll;
-  }
-
-  span {
-    color: $text-secondary;
   }
 }

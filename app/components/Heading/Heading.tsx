@@ -1,3 +1,5 @@
+"use client";
+
 import { HeadingProps } from "./type";
 import styles from "./styles.module.scss";
 

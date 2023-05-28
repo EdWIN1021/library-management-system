@@ -1,7 +1,7 @@
 export interface InputProps {
-  lable: string;
+  lable?: string;
   placeholder: string;
-  type: "text" | "password";
+  name?: string;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
-//https://example-data.draftbit.com/books?_limit=700
