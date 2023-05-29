@@ -1,5 +1,5 @@
-export interface ConstrainsProps {
-  showConstrains: boolean;
+export interface PwdConstrainProps {
+  showConstrain: boolean;
   password: string;
   setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
 }

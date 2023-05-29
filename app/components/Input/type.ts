@@ -3,5 +3,11 @@ export interface InputProps {
   placeholder: string;
   name?: string;
   value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
+  ) => void;
+  onBlur?: (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
+  ) => void;
 }

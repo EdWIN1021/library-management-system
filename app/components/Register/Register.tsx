@@ -15,9 +15,11 @@ import OAuth from "../OAuth/OAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
+import EmailConstrain from "../EmailConstrain/EmailConstrain";
+
 import isEmail from "validator/lib/isEmail";
 
-const Constrains = dynamic(() => import("../Constrains/Constrains"), {
+const PwdConstrain = dynamic(() => import("../PwdConstrain/PwdConstrain"), {
   ssr: false,
 });
 
@@ -26,9 +28,13 @@ const Register = () => {
     (state: RootState) => state.modal.isRegisterOpen
   );
 
-  const [showPwdConstrains, setShowPwdConstrains] = useState(false);
-  const [showConfirmPwdConstrains, setShowConfirmPwdConstrains] =
-    useState(false);
+  const [showPwdConstrain, setShowPwdConstrain] = useState(false);
+  const [showConfirmPwdConstrain, setShowConfirmPwdConstrain] = useState(false);
+
+  const [showEmailConstrain, setShowEmailConstrain] = useState(false);
+
+  const [isPwdValid, setIsPwdValid] = useState(false);
+  const [isConfirmPwdValid, setIsConfirmPwdValid] = useState(false);
 
   const [inputFields, setInputFields] = useState({
     email: "",
@@ -36,9 +42,6 @@ const Register = () => {
     password: "",
     confirmPwd: "",
   });
-
-  const [isValidPwd, setIsValidPwd] = useState(false);
-  const [isValidConfirmPwd, setIsValidConfirmPwd] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -71,11 +74,19 @@ const Register = () => {
     }
   };
 
+  const handleOnClose = () => {
+    dispatch(closeRegister());
+    setInputFields({
+      email: "",
+      username: "",
+      password: "",
+      confirmPwd: "",
+    });
+    setShowEmailConstrain(false);
+  };
+
   return (
-    <ModalWrapper
-      openModal={isRegisterOpen}
-      onClose={() => dispatch(closeRegister())}
-    >
+    <ModalWrapper openModal={isRegisterOpen} onClose={handleOnClose}>
       <Card className={styles.container}>
         <Heading
           title={"Create an account"}
@@ -88,7 +99,14 @@ const Register = () => {
             name={"email"}
             value={inputFields.email}
             onChange={handleOnChange}
+            onBlur={() => {
+              !isEmail(inputFields.email)
+                ? setShowEmailConstrain(true)
+                : setShowEmailConstrain(false);
+            }}
           />
+
+          {showEmailConstrain && <EmailConstrain />}
 
           <Input
             lable={"Username"}
@@ -104,13 +122,14 @@ const Register = () => {
             name={"password"}
             value={inputFields.password}
             onChange={handleOnChange}
-            onFocus={() => setShowPwdConstrains(true)}
-            onBlur={() => setShowPwdConstrains(false)}
+            onFocus={() => setShowPwdConstrain(true)}
+            onBlur={() => setShowPwdConstrain(false)}
           />
-          <Constrains
-            showConstrains={showPwdConstrains}
+
+          <PwdConstrain
+            showConstrain={showPwdConstrain}
             password={inputFields.password}
-            setIsValid={setIsValidPwd}
+            setIsValid={setIsPwdValid}
           />
 
           <PwdInput
@@ -119,14 +138,14 @@ const Register = () => {
             name={"confirmPwd"}
             value={inputFields.confirmPwd}
             onChange={handleOnChange}
-            onFocus={() => setShowConfirmPwdConstrains(true)}
-            onBlur={() => setShowConfirmPwdConstrains(false)}
+            onFocus={() => setShowConfirmPwdConstrain(true)}
+            onBlur={() => setShowConfirmPwdConstrain(false)}
           />
 
-          <Constrains
-            showConstrains={showConfirmPwdConstrains}
+          <PwdConstrain
+            showConstrain={showConfirmPwdConstrain}
             password={inputFields.confirmPwd}
-            setIsValid={setIsValidConfirmPwd}
+            setIsValid={setIsConfirmPwdValid}
           />
 
           <Button
@@ -136,8 +155,8 @@ const Register = () => {
             style={{ marginTop: "20px" }}
             disabled={
               !(
-                isValidPwd &&
-                isValidConfirmPwd &&
+                isPwdValid &&
+                isConfirmPwdValid &&
                 isEmail(inputFields.email) &&
                 inputFields.username
               )

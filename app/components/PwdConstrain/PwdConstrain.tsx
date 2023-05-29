@@ -3,51 +3,35 @@ import React, { useEffect, useMemo } from "react";
 import styles from "./styles.module.scss";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
-import { ConstrainsProps } from "./type";
+import { PwdConstrainProps } from "./type";
+import usePwdValidator from "@/app/hooks/usePwdValidator";
 
-const Constrains: React.FC<ConstrainsProps> = ({
-  showConstrains,
+const PwdConstrain: React.FC<PwdConstrainProps> = ({
+  showConstrain,
   password,
   setIsValid,
 }) => {
-  const checkLength = useMemo(
-    () => password?.length >= 8 && password?.length <= 20,
-    [password]
-  );
-
-  const checkUpperCase = useMemo(
-    () => password?.split("").some((c) => c === c.toUpperCase()),
-    [password]
-  );
-
-  const checkLowerCase = useMemo(
-    () => password?.split("").some((c) => c === c.toLowerCase()),
-    [password]
-  );
-
-  const checkNumber = useMemo(
-    () => password?.split("").some((c) => !isNaN(parseInt(c))),
-    [password]
-  );
-
-  const checkSpecicalChar = useMemo(
-    () => /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password),
-    [password]
-  );
+  const {
+    isProperLength,
+    hasUpperCase,
+    hasLowerCase,
+    hasNumericChar,
+    hasSpecicalChar,
+  } = usePwdValidator(password);
 
   const isValidPwd = useMemo(
     () =>
-      checkUpperCase &&
-      checkLowerCase &&
-      checkNumber &&
-      checkSpecicalChar &&
-      checkLength,
+      isProperLength &&
+      hasUpperCase &&
+      hasLowerCase &&
+      hasNumericChar &&
+      hasSpecicalChar,
     [
-      checkUpperCase,
-      checkLowerCase,
-      checkNumber,
-      checkSpecicalChar,
-      checkLength,
+      isProperLength,
+      hasUpperCase,
+      hasLowerCase,
+      hasNumericChar,
+      hasSpecicalChar,
     ]
   );
 
@@ -57,11 +41,11 @@ const Constrains: React.FC<ConstrainsProps> = ({
 
   return (
     <>
-      {showConstrains && (
+      {showConstrain && (
         <div className={styles.constrains}>
           <ul>
             <li>
-              {password?.length >= 8 && password?.length <= 20 ? (
+              {isProperLength ? (
                 <CheckIcon className={styles.check} />
               ) : (
                 <ClearIcon className={styles.error} />
@@ -69,7 +53,7 @@ const Constrains: React.FC<ConstrainsProps> = ({
               Between 8 and 20 characters
             </li>
             <li>
-              {checkUpperCase ? (
+              {hasUpperCase ? (
                 <CheckIcon className={styles.check} />
               ) : (
                 <ClearIcon className={styles.error} />
@@ -77,7 +61,7 @@ const Constrains: React.FC<ConstrainsProps> = ({
               1 upper case letter
             </li>
             <li>
-              {checkLowerCase ? (
+              {hasLowerCase ? (
                 <CheckIcon className={styles.check} />
               ) : (
                 <ClearIcon className={styles.error} />
@@ -86,7 +70,7 @@ const Constrains: React.FC<ConstrainsProps> = ({
             </li>
 
             <li>
-              {checkNumber ? (
+              {hasNumericChar ? (
                 <CheckIcon className={styles.check} />
               ) : (
                 <ClearIcon className={styles.error} />
@@ -94,7 +78,7 @@ const Constrains: React.FC<ConstrainsProps> = ({
               1 numerical number
             </li>
             <li>
-              {checkSpecicalChar ? (
+              {hasSpecicalChar ? (
                 <CheckIcon className={styles.check} />
               ) : (
                 <ClearIcon className={styles.error} />
@@ -108,4 +92,4 @@ const Constrains: React.FC<ConstrainsProps> = ({
   );
 };
 
-export default Constrains;
+export default PwdConstrain;

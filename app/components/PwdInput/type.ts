@@ -10,5 +10,4 @@ export interface PwdInputProps {
   onBlur: (
     e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) => void;
-
 }

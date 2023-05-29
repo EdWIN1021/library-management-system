@@ -1,0 +1,9 @@
+@import "../../styles/variables";
+
+.message {
+  font-size: 14px;
+  margin-top: 10px;
+  margin-left: 5px;
+  line-height: 25px;
+  color: $text-error;
+}
