@@ -11,9 +11,9 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Divider from "@mui/material/Divider";
 import PwdInput from "../PwdInput/PwdInput";
-
 import OAuth from "../OAuth/OAuth";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const isRegisterOpen = useSelector(
@@ -35,6 +35,27 @@ const Register = () => {
 
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    const res = await fetch("api/register", {
+      method: "POST",
+      body: JSON.stringify(inputFields),
+    });
+
+    const data = await res.json();
+
+    if (res.status === 201) {
+      setInputFields({ email: "", username: "", password: "", confirmPwd: "" });
+      toast.success(data.message, {
+        style: {
+          minWidth: "450px",
+        },
+      });
+    } else {
+      toast.error(data.error, {
+        style: {
+          minWidth: "500px",
+        },
+      });
+    }
   };
 
   return (

@@ -12,6 +12,7 @@ const Input: React.FC<InputProps> = (props) => {
       </label>
       <TextField
         {...props}
+        required
         style={{ width: "300px" }}
         size="small"
         id={props.lable}

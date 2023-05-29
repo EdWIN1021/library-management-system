@@ -15,14 +15,12 @@ const BookItem = ({ book }: { book: Book }) => {
         priority
       />
 
-      <ul>
-        <li className={styles.title}>{book?.title}</li>
-        <li className={styles.author}>{book?.authors}</li>
-        <li className={styles.rating}>
-          {book?.rating}
-          <span>/5</span>
-        </li>
-      </ul>
+      <div className={styles.title}>{book?.title}</div>
+      <div className={styles.author}>{book?.authors}</div>
+      <div className={styles.rating}>
+        {book?.rating}
+        <span>/5</span>
+      </div>
     </div>
   );
 };

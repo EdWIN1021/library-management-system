@@ -17,7 +17,9 @@ import styles from "./styles.module.scss";
 import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
 
-const Navbar = ({ currentUser }: { currentUser: Session | null }) => {
+const Navbar = ({ session }: { session: Session | null }) => {
+  const currentUser = session?.user;
+
   const dispatch = useDispatch();
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -140,7 +142,10 @@ const Navbar = ({ currentUser }: { currentUser: Session | null }) => {
 
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="..." src="/images/placeholder.jpg" />
+              <Avatar
+                alt="..."
+                src={currentUser?.image || "/images/placeholder.jpg"}
+              />
             </IconButton>
             <Menu
               sx={{ mt: "45px" }}

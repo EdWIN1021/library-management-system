@@ -12,6 +12,8 @@ import Footer from "./components/Footer/Footer";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 
+import { Toaster } from "react-hot-toast";
+
 const nunito = Nunito({ subsets: ["latin"] });
 
 export const metadata = {
@@ -23,13 +25,15 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const currentUser = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body className={nunito.className}>
+        <Toaster />
         <StoreProvider>
           <StyleProvider>
-            <Navbar currentUser={currentUser} />
+            <Navbar session={session} />
             <Login />
             <Register />
             {children}

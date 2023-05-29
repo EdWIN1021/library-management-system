@@ -1,4 +1,3 @@
-"use client";
 import {
   getTrending,
   getClassic,
@@ -14,28 +13,20 @@ import Row from "./components/Row/Row";
 import styles from "./page.module.scss";
 
 export default async function Home() {
-  const [trending, classic, returned, romance, fiction, children, quote] =
-    await Promise.all([
-      await getTrending(),
-      await getClassic(),
-      await getReturned(),
-      await getRomance(),
-      await getFiction(),
-      await getChildren(),
-      await getQuote(),
-    ]);
+  const [romance, fiction, children, quote] = await Promise.all([
+    await getRomance(),
+    await getFiction(),
+    await getChildren(),
+    await getQuote(),
+  ]);
 
   return (
     <div className={styles.container}>
       <Banner book={quote} />
       <Search />
-      <Row books={classic} type={"Classic"} />
-      <Row books={trending} type={"Trending"} />
-      <Row books={classic} type={"Classic"} />
-      <Row books={returned} type={"Recently Returned"} />
-      <Row books={fiction} type={"Fiction"} />
-      <Row books={romance} type={"Romance"} />
-      <Row books={children} type={"Children"} />
+      <Row books={fiction} categoryId={"Fiction"} />
+      <Row books={romance} categoryId={"Romance"} />
+      <Row books={children} categoryId={"Children"} />
     </div>
   );
 }

@@ -11,12 +11,12 @@ import { Typography } from "@mui/material";
 
 const BookItem = dynamic(() => import("../BookItem/BookItem"));
 
-const Row: React.FC<RowProp> = ({ books, type }) => {
+const Row: React.FC<RowProp> = ({ books, categoryId }) => {
   return (
     <div className={styles.category}>
       <div className={styles.header}>
-        <h2 className={styles.title}>{type}</h2>
-        <Link href={"/"}>More</Link>
+        <h2 className={styles.title}>{categoryId}</h2>
+        <Link href={`category/${categoryId.toLowerCase()}`}>More</Link>
       </div>
 
       <div className={styles.books}>

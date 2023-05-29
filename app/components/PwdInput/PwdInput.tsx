@@ -26,6 +26,7 @@ const PwdInput: React.FC<PwdInputProps> = (props) => {
       </label>
       <OutlinedInput
         {...props}
+        required
         style={{ width: "300px" }}
         size="small"
         type={showPassword ? "text" : "password"}

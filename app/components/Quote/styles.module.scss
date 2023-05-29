@@ -10,12 +10,11 @@
   line-height: 50px;
   width: 100%;
 
-  h2 {
-    text-align: end;
+  div:nth-child(1) {
+    font-size: 45px;
   }
 
   div:nth-child(2) {
-    font-weight: 300;
     font-size: 30px;
     text-align: end;
   }
