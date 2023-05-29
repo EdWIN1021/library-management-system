@@ -1,4 +1,6 @@
 @import "../../styles/utilities";
+@import "../../styles/variables";
+
 .container {
   @include flex-column;
   @include center;

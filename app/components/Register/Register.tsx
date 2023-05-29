@@ -14,11 +14,21 @@ import PwdInput from "../PwdInput/PwdInput";
 import OAuth from "../OAuth/OAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import dynamic from "next/dynamic";
+import isEmail from "validator/lib/isEmail";
+
+const Constrains = dynamic(() => import("../Constrains/Constrains"), {
+  ssr: false,
+});
 
 const Register = () => {
   const isRegisterOpen = useSelector(
     (state: RootState) => state.modal.isRegisterOpen
   );
+
+  const [showPwdConstrains, setShowPwdConstrains] = useState(false);
+  const [showConfirmPwdConstrains, setShowConfirmPwdConstrains] =
+    useState(false);
 
   const [inputFields, setInputFields] = useState({
     email: "",
@@ -26,6 +36,9 @@ const Register = () => {
     password: "",
     confirmPwd: "",
   });
+
+  const [isValidPwd, setIsValidPwd] = useState(false);
+  const [isValidConfirmPwd, setIsValidConfirmPwd] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -91,6 +104,13 @@ const Register = () => {
             name={"password"}
             value={inputFields.password}
             onChange={handleOnChange}
+            onFocus={() => setShowPwdConstrains(true)}
+            onBlur={() => setShowPwdConstrains(false)}
+          />
+          <Constrains
+            showConstrains={showPwdConstrains}
+            password={inputFields.password}
+            setIsValid={setIsValidPwd}
           />
 
           <PwdInput
@@ -99,6 +119,14 @@ const Register = () => {
             name={"confirmPwd"}
             value={inputFields.confirmPwd}
             onChange={handleOnChange}
+            onFocus={() => setShowConfirmPwdConstrains(true)}
+            onBlur={() => setShowConfirmPwdConstrains(false)}
+          />
+
+          <Constrains
+            showConstrains={showConfirmPwdConstrains}
+            password={inputFields.confirmPwd}
+            setIsValid={setIsValidConfirmPwd}
           />
 
           <Button
@@ -106,6 +134,14 @@ const Register = () => {
             variant="contained"
             size="large"
             style={{ marginTop: "20px" }}
+            disabled={
+              !(
+                isValidPwd &&
+                isValidConfirmPwd &&
+                isEmail(inputFields.email) &&
+                inputFields.username
+              )
+            }
             fullWidth
           >
             Sign Up

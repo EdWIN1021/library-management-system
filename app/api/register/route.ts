@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import isEmail from "validator/lib/isEmail";
-import isStrongPassword from "validator/lib/isStrongPassword";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 
@@ -16,16 +15,6 @@ export async function POST(request: Request, res: Response) {
     return NextResponse.json(
       {
         error: "Please enter a valid email address.",
-      },
-      { status: 400 }
-    );
-  }
-
-  if (!isStrongPassword(password)) {
-    return NextResponse.json(
-      {
-        error:
-          "Password must be at least 8 characters long and contain at least 1 lowercase letter, 1 uppercase letter, and 1 symbol.",
       },
       { status: 400 }
     );
