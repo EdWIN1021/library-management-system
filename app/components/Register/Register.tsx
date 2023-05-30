@@ -50,6 +50,17 @@ const Register = () => {
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputFields({ ...inputFields, [e.target.name]: e.target.value });
+    if (e.target.name === "password") {
+      setShowPwdConstrain(!isPwdValid);
+    }
+
+    if (e.target.name === "confirmPwd") {
+      setShowConfirmPwdConstrain(!isConfirmPwdValid);
+    }
+
+    if (e.target.name === "email") {
+      setShowEmailConstrain(!isEmail(inputFields.email));
+    }
   };
 
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
@@ -118,11 +129,6 @@ const Register = () => {
             name={"email"}
             value={inputFields.email}
             onChange={handleOnChange}
-            onBlur={() => {
-              !isEmail(inputFields.email)
-                ? setShowEmailConstrain(true)
-                : setShowEmailConstrain(false);
-            }}
           />
 
           {showEmailConstrain && <EmailConstrain />}
@@ -141,8 +147,6 @@ const Register = () => {
             name={"password"}
             value={inputFields.password}
             onChange={handleOnChange}
-            onFocus={() => setShowPwdConstrain(true)}
-            onBlur={() => setShowPwdConstrain(false)}
           />
 
           <PwdConstrain
@@ -157,8 +161,6 @@ const Register = () => {
             name={"confirmPwd"}
             value={inputFields.confirmPwd}
             onChange={handleOnChange}
-            onFocus={() => setShowConfirmPwdConstrain(true)}
-            onBlur={() => setShowConfirmPwdConstrain(false)}
           />
 
           <PwdConstrain
