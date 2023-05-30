@@ -4,10 +4,10 @@ export interface PwdInputProps {
   name: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onFocus: (
+  onFocus?: (
     e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) => void;
-  onBlur: (
+  onBlur?: (
     e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>
   ) => void;
 }

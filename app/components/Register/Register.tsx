@@ -65,6 +65,8 @@ const Register = () => {
           minWidth: "450px",
         },
       });
+
+      dispatch(closeRegister());
     } else {
       toast.error(data.error, {
         style: {

@@ -1,15 +1,13 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import isEmail from "validator/lib/isEmail";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
+import { prisma } from "@/prisma/db";
 
-const prisma = new PrismaClient();
-
-export async function POST(request: Request, res: Response) {
+export async function POST(request: Request) {
   const { email, password, username, confirmPwd } = await request.json();
 
-  const user = await prisma.user.findFirst({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { email } });
 
   if (!isEmail(email)) {
     return NextResponse.json(
@@ -41,10 +39,10 @@ export async function POST(request: Request, res: Response) {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await prisma.user.create({
+  await prisma.user.create({
     data: {
       id: uuidv4(),
-      username,
+      name: username,
       email,
       hashedPassword,
     },

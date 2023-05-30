@@ -3,12 +3,11 @@ import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "@/prisma/db";
 
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID as string,
@@ -25,12 +24,19 @@ export const authOptions: NextAuthOptions = {
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        // const { email, password } = credentials;
-        // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
-        // console.log(credentials);
-        // return user;
+        const res = await fetch("http://localhost:3000/api/login", {
+          method: "POST",
+          body: JSON.stringify(credentials),
+          headers: { "Content-Type": "application/json" },
+        });
 
-        return null;
+        const data = await res.json();
+
+        if (!res.ok && !data.user) {
+          throw new Error(data.error);
+        }
+
+        return data.user;
       },
     }),
   ],
