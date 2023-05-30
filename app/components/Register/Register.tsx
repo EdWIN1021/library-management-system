@@ -16,6 +16,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 import EmailConstrain from "../EmailConstrain/EmailConstrain";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import isEmail from "validator/lib/isEmail";
 
@@ -27,6 +28,8 @@ const Register = () => {
   const isRegisterOpen = useSelector(
     (state: RootState) => state.modal.isRegisterOpen
   );
+
+  const [isLoding, setIsLoading] = useState(false);
 
   const [showPwdConstrain, setShowPwdConstrain] = useState(false);
   const [showConfirmPwdConstrain, setShowConfirmPwdConstrain] = useState(false);
@@ -51,28 +54,42 @@ const Register = () => {
 
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const res = await fetch("api/register", {
-      method: "POST",
-      body: JSON.stringify(inputFields),
-    });
 
-    const data = await res.json();
+    setIsLoading(true);
 
-    if (res.status === 201) {
-      setInputFields({ email: "", username: "", password: "", confirmPwd: "" });
-      toast.success(data.message, {
-        style: {
-          minWidth: "450px",
-        },
+    try {
+      const res = await fetch("api/register", {
+        method: "POST",
+        body: JSON.stringify(inputFields),
       });
 
-      dispatch(closeRegister());
-    } else {
-      toast.error(data.error, {
-        style: {
-          minWidth: "500px",
-        },
-      });
+      const data = await res.json();
+
+      if (res.status === 201) {
+        setInputFields({
+          email: "",
+          username: "",
+          password: "",
+          confirmPwd: "",
+        });
+        toast.success(data.message, {
+          style: {
+            minWidth: "450px",
+          },
+        });
+
+        dispatch(closeRegister());
+      } else {
+        toast.error(data.error, {
+          style: {
+            minWidth: "500px",
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -150,7 +167,9 @@ const Register = () => {
             setIsValid={setIsConfirmPwdValid}
           />
 
-          <Button
+          <LoadingButton
+            loading={isLoding}
+            loadingPosition="end"
             type="submit"
             variant="contained"
             size="large"
@@ -166,7 +185,7 @@ const Register = () => {
             fullWidth
           >
             Sign Up
-          </Button>
+          </LoadingButton>
         </form>
 
         <Divider>or</Divider>

@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import Card from "@mui/material/Card";
 import Input from "../Input/Input";
 import styles from "./styles.module.scss";
-import Button from "@mui/material/Button";
 import Heading from "../Heading/Heading";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
@@ -17,6 +16,7 @@ import { useState } from "react";
 import isEmpty from "validator/lib/isEmpty";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -30,6 +30,8 @@ const Login = () => {
     password: "",
   });
 
+  const [isLoding, setIsLoading] = useState(false);
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputFields({ ...inputFields, [e.target.name]: e.target.value });
   };
@@ -37,25 +39,30 @@ const Login = () => {
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const cb = await signIn("credentials", { ...inputFields, redirect: false });
+    setIsLoading(true);
 
-    if (cb?.error) {
-      toast.error(cb?.error, {
-        style: {
-          minWidth: "400px",
-        },
+    signIn("credentials", { ...inputFields, redirect: false })
+      .then((cb) => {
+        if (cb?.error) {
+          toast.error(cb?.error, {
+            style: {
+              minWidth: "400px",
+            },
+          });
+        } else {
+          toast.success("Welcome! You have successfully logged in.", {
+            style: {
+              minWidth: "450px",
+            },
+          });
+          dispatch(closeLogin());
+          router.refresh();
+        }
+      })
+      .finally(() => {
+        setInputFields({ email: "", password: "" });
+        setIsLoading(false);
       });
-    } else {
-      toast.success("Welcome! You have successfully logged in.", {
-        style: {
-          minWidth: "450px",
-        },
-      });
-
-      dispatch(closeLogin());
-      router.refresh();
-    }
-    setInputFields({ email: "", password: "" });
   };
 
   return (
@@ -83,7 +90,9 @@ const Login = () => {
             onChange={handleOnChange}
           />
 
-          <Button
+          <LoadingButton
+            loading={isLoding}
+            loadingPosition="end"
             disabled={
               isEmpty(inputFields.email) || isEmpty(inputFields.password)
             }
@@ -94,7 +103,7 @@ const Login = () => {
             fullWidth
           >
             Login
-          </Button>
+          </LoadingButton>
         </form>
 
         <Link href="#" variant="caption" style={{ alignSelf: "end" }}>
