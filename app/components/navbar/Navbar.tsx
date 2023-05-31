@@ -16,6 +16,7 @@ import { openLogin, openRegister } from "../../features/modal/modalSlice";
 import styles from "./styles.module.scss";
 import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
+import Link from "next/link";
 
 const Navbar = ({ session }: { session: Session | null }) => {
   const currentUser = session?.user;
@@ -59,6 +60,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
             noWrap
             component="a"
             href="/"
+            style={{ color: "#fff" }}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -112,6 +114,7 @@ const Navbar = ({ session }: { session: Session | null }) => {
             noWrap
             component="a"
             href=""
+            style={{ color: "#fff" }}
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -166,7 +169,10 @@ const Navbar = ({ session }: { session: Session | null }) => {
               {currentUser ? (
                 <div>
                   <MenuItem>
-                    <Typography textAlign="center">My Shelf</Typography>
+                    <Link href={"/account"}>Account</Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link href={"/shelf"}>My Shelf</Link>
                   </MenuItem>
                   <MenuItem onClick={() => signOut()}>
                     <Typography textAlign="center">Log out</Typography>

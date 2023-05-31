@@ -171,7 +171,6 @@ const Register = () => {
 
           <LoadingButton
             loading={isLoding}
-            loadingPosition="end"
             type="submit"
             variant="contained"
             size="large"

@@ -92,7 +92,6 @@ const Login = () => {
 
           <LoadingButton
             loading={isLoding}
-            loadingPosition="end"
             disabled={
               isEmpty(inputFields.email) || isEmpty(inputFields.password)
             }
