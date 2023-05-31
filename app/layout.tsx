@@ -40,11 +40,19 @@ export default async function RootLayout({
         <Toaster />
         <StoreProvider>
           <StyleProvider>
-            <Navbar session={session} />
-            <Login />
-            <Register />
-            {children}
-            <Footer />
+            <header>
+              <Navbar session={session} />
+            </header>
+
+            <main>
+              <Login />
+              <Register />
+              {children}
+            </main>
+
+            <footer>
+              <Footer />
+            </footer>
           </StyleProvider>
         </StoreProvider>
       </body>

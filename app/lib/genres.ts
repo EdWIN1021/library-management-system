@@ -21,23 +21,31 @@ export const getChildren = async () => {
   return res.json();
 };
 
-export const getClassic = async () => {
+export const getFantasy = async () => {
   const res = await fetch(
-    `https://example-data.draftbit.com/books?_page=5&_limit=10`
+    `https://example-data.draftbit.com/books?q=Fantasy&_page=${num()}&_limit=10`
   );
   return res.json();
 };
 
-export const getReturned = async () => {
+export const getHistorical = async () => {
   const res = await fetch(
-    `https://example-data.draftbit.com/books?_page=20&_limit=10`
+    `https://example-data.draftbit.com/books?q=Historical&_page=${num()}&_limit=10`
   );
   return res.json();
 };
 
-export const getTrending = async () => {
+export const getSchool = async () => {
   const res = await fetch(
-    `https://example-data.draftbit.com/books?_page=1&_limit=10`
+    `https://example-data.draftbit.com/books?q=School&_page=${num()}&_limit=10`
   );
+  return res.json();
+};
+
+export const getCategory = async (categoryId: string) => {
+  const res = await fetch(
+    `https://example-data.draftbit.com/books?q=${categoryId}&_page=1&_limit=10`
+  );
+
   return res.json();
 };

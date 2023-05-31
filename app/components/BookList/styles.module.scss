@@ -1,48 +1,13 @@
 @import "../../styles/variables";
 @import "../../styles/utilities";
 
-.bookList {
-  @include flex-column;
-  align-items: center;
+.edition {
+  font-size: 13px;
+  color: $text-secondary;
+}
 
-  .listItem {
-    @include flex-row;
-    align-items: center;
-    gap: 40px;
-    margin-bottom: 20px;
-    background-color: $bg-white;
-    padding: 15px 40px;
-    color: $text-primary;
-    line-height: 25px;
-
-    .title {
-      width: 250px;
-      .edition {
-        font-size: 14px;
-        color: $text-secondary;
-      }
-    }
-
-    .category {
-      width: 250px;
-    }
-
-    li {
-      @include flex-row;
-      align-items: center;
-      width: 200px;
-
-      .icon {
-        margin-right: 5px;
-      }
-    }
-
-    .favorite {
-      padding: 20px;
-    }
-  }
-
-  .pagination {
-    margin-bottom: 30px;
-  }
+.pagination {
+  @include flex-row;
+  justify-content: center;
+  margin: 20px;
 }

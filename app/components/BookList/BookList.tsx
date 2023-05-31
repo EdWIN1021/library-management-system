@@ -1,94 +1,90 @@
 "use client";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 import Image from "next/image";
 import { Book } from "@/app/types";
-import useFetch from "@/app/hooks/useFetch";
 import styles from "./styles.module.scss";
 import Rating from "@mui/material/Rating";
-
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { Button, Pagination } from "@mui/material";
 
-const BookList = ({ categoryId }: { categoryId: string }) => {
-  const { isLoading, data: books } = useFetch(
-    `https://example-data.draftbit.com/books?q=${categoryId}&_page=1&_limit=20`
-  );
+const BookList = ({ books }: { books: Book[] }) => {
+  const handleChangePage = (event: unknown, newPage: number) => {};
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {};
 
   return (
-    <>
-      {!isLoading && (
-        <div className={styles.bookList}>
-          {books?.map((book: Book) => (
-            <div className={styles.listItem} key={book.id}>
-              <Image
-                src={book?.image_url}
-                alt="..book"
-                width="100"
-                height="150"
-                priority
-              />
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650, maxWidth: 1400 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Title</TableCell>
+            <TableCell></TableCell>
+            <TableCell>Rating</TableCell>
+            <TableCell>Categories</TableCell>
+            <TableCell>Format</TableCell>
+            <TableCell>Favoirte</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        </TableHead>
 
-              <div className={styles.title}>
-                <div>{book?.title}</div>
-                <div>{book?.authors}</div>
-                <div className={styles.edition}>{book?.edition}</div>
-              </div>
+        <TableBody>
+          {books?.map((book) => (
+            <TableRow key={book.id}>
+              <TableCell>
+                <Image
+                  src={book?.image_url}
+                  alt="..book"
+                  width="100"
+                  height="150"
+                  priority
+                />
+              </TableCell>
 
-              <div className={styles.rating}>
-                <Rating value={book?.rating} precision={0.5} readOnly />
-              </div>
+              <TableCell>
+                <div className={styles.title}>
+                  <div>{book?.title}</div>
+                  <div>{book?.authors}</div>
+                  <div className={styles.edition}>{book?.edition}</div>
+                </div>
+              </TableCell>
 
-              <div className={styles.category}>
-                <div>{book?.genres}</div>
-              </div>
+              <TableCell>
+                <div className={styles.rating}>
+                  <Rating value={book?.rating} precision={0.5} readOnly />
+                </div>
+              </TableCell>
+              <TableCell>{book?.genres}</TableCell>
+              <TableCell>{book?.format}</TableCell>
 
-              <ul className={styles.format}>
-                <li>
-                  <CheckCircleIcon
-                    className={styles.icon}
-                    style={{ color: "#42bb4e" }}
-                  />
-                  Paperback
-                </li>
-                <li>
-                  <CancelIcon
-                    className={styles.icon}
-                    style={{ color: "##4d4d4d" }}
-                  />
-                  Hardcover
-                </li>
-                <li>
-                  <CancelIcon
-                    className={styles.icon}
-                    style={{ color: "#4d4d4d" }}
-                  />
-                  Mass Market Paperback
-                </li>
-              </ul>
-
-              <div className={styles.favorite}>
+              <TableCell>
                 {/* <FavoriteIcon style={{ color: "#f34040" }} /> */}
                 <FavoriteBorderIcon style={{ color: "#f34040" }} />
-              </div>
+              </TableCell>
 
-              <Button className={styles.btn} variant="outlined">
-                Detail
-              </Button>
-            </div>
+              <TableCell>
+                <Button className={styles.btn} variant="outlined">
+                  Detail
+                </Button>
+              </TableCell>
+            </TableRow>
           ))}
-          <Pagination
-            className={styles.pagination}
-            count={10}
-            color="primary"
-          />
-        </div>
-      )}
-    </>
+        </TableBody>
+      </Table>
+
+      <Pagination className={styles.pagination} count={10} color="primary" />
+    </TableContainer>
   );
 };
 

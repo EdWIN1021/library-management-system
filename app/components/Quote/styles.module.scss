@@ -3,7 +3,6 @@
 
 .quote {
   @include center;
-  margin: 0 auto;
   z-index: 100;
   color: $text-white;
   padding: 50px;
