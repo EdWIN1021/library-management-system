@@ -11,13 +11,20 @@ import Image from "next/image";
 import { Book } from "@/app/types";
 import styles from "./styles.module.scss";
 import Rating from "@mui/material/Rating";
+import { Session } from "next-auth";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { Button, Pagination } from "@mui/material";
 
-const BookList = ({ books }: { books: Book[] }) => {
+const BookList = ({
+  books,
+  session,
+}: {
+  books: Book[];
+  session: Session | null;
+}) => {
   const handleChangePage = (event: unknown, newPage: number) => {};
 
   const handleChangeRowsPerPage = (
@@ -31,10 +38,11 @@ const BookList = ({ books }: { books: Book[] }) => {
           <TableRow>
             <TableCell>Title</TableCell>
             <TableCell></TableCell>
+
             <TableCell>Rating</TableCell>
             <TableCell>Categories</TableCell>
             <TableCell>Format</TableCell>
-            <TableCell>Favoirte</TableCell>
+            {session && <TableCell>Favoirte</TableCell>}
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -68,10 +76,12 @@ const BookList = ({ books }: { books: Book[] }) => {
               <TableCell>{book?.genres}</TableCell>
               <TableCell>{book?.format}</TableCell>
 
-              <TableCell>
-                {/* <FavoriteIcon style={{ color: "#f34040" }} /> */}
-                <FavoriteBorderIcon style={{ color: "#f34040" }} />
-              </TableCell>
+              {session && (
+                <TableCell>
+                  {/* <FavoriteIcon style={{ color: "#f34040" }} /> */}
+                  <FavoriteBorderIcon style={{ color: "#f34040" }} />
+                </TableCell>
+              )}
 
               <TableCell>
                 <Button className={styles.btn} variant="outlined">

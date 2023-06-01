@@ -21,7 +21,7 @@
 
   .books {
     @include flex-row;
-    gap: 13px;
+    gap: 20px;
     overflow-x: scroll;
   }
 }

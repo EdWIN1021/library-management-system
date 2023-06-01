@@ -1,0 +1,53 @@
+@import "../../styles/variables";
+@import "../../styles/utilities";
+
+.tab {
+  background-color: $bg-white;
+
+  .top {
+    @include flex-row;
+    color: $text-primary;
+    align-items: center;
+    gap: 40px;
+    padding: 40px;
+
+    .profile {
+      @include flex-column;
+      align-items: center;
+      gap: 20px;
+
+      .upload {
+        color: $text-secondary;
+        font-size: $text-1;
+      }
+    }
+
+    .rectangle {
+      position: relative;
+      width: 175px;
+      height: 149px;
+      background: $primary-color;
+      border-radius: 10px;
+      color: $text-white;
+
+      .container {
+        @include center;
+      }
+
+      .content {
+        gap: 20px;
+        @include flex-row;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+    }
+
+    .borrowed {
+      background: #926cff;
+    }
+
+    .expired {
+      background: #f34040;
+    }
+  }
+}

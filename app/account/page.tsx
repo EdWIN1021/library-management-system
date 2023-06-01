@@ -1,7 +1,7 @@
-import React from "react";
+import Settings from "../components/Settings/Settings";
 
 const Account = () => {
-  return <div>Account</div>;
+  return <Settings />;
 };
 
 export default Account;

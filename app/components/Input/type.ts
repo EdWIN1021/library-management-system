@@ -1,7 +1,8 @@
 export interface InputProps {
   lable?: string;
-  placeholder: string;
+  placeholder?: string;
   name?: string;
   value?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
