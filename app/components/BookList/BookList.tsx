@@ -12,11 +12,13 @@ import { Book } from "@/app/types";
 import styles from "./styles.module.scss";
 import Rating from "@mui/material/Rating";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { Button, Pagination } from "@mui/material";
+import Link from "next/link";
 
 const BookList = ({
   books,
@@ -25,6 +27,8 @@ const BookList = ({
   books: Book[];
   session: Session | null;
 }) => {
+  const router = useRouter();
+
   const handleChangePage = (event: unknown, newPage: number) => {};
 
   const handleChangeRowsPerPage = (
@@ -84,7 +88,11 @@ const BookList = ({
               )}
 
               <TableCell>
-                <Button className={styles.btn} variant="outlined">
+                <Button
+                  className={styles.btn}
+                  onClick={() => router.push(`/books/${book.id}`)}
+                  variant="outlined"
+                >
                   Detail
                 </Button>
               </TableCell>

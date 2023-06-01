@@ -6,17 +6,15 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import styles from "./styles.module.scss";
-import { useSession } from "next-auth/react";
 import Grid from "@mui/material/Grid";
 
 import Image from "next/image";
 import Input from "../Input/Input";
 import { Button } from "@mui/material";
+import { Session } from "next-auth";
 
-const Settings = () => {
+const Settings = ({ session }: { session: Session | null }) => {
   const [value, setValue] = useState("1");
-  const { data: session } = useSession();
-  console.log(session);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -31,7 +29,6 @@ const Settings = () => {
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Account" value="1" />
-            <Tab label="Login & Security" value="2" />
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -108,10 +105,10 @@ const Settings = () => {
                   <Input lable="Provider" disabled value={"google"} />
                 </Grid>
                 <Grid item xs={6}>
-                  <Input lable="Username" />
+                  <Input lable="Username" value={session?.user?.name || ""} />
                 </Grid>
                 <Grid item xs={6}>
-                  <Input lable="Email" />
+                  <Input lable="Email" value={session?.user?.email || ""} />
                 </Grid>
 
                 <Grid item xs={6} mt={"40px"}>
@@ -123,7 +120,6 @@ const Settings = () => {
             </form>
           </div>
         </TabPanel>
-        <TabPanel value="2">Item One</TabPanel>
       </TabContext>
     </Box>
   );
