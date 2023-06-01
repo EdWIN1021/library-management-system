@@ -2,10 +2,16 @@
 import { Book } from "@/app/types";
 import Image from "next/image";
 import styles from "./styles.module.scss";
+import { useRouter } from "next/navigation";
 
 const BookItem = ({ book }: { book: Book }) => {
+  const router = useRouter();
+
   return (
-    <div className={styles.book}>
+    <div
+      className={styles.book}
+      onClick={() => router.push(`/books/${book?.id}`)}
+    >
       <Image
         className={styles.image}
         src={book?.image_url}

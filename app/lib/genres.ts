@@ -5,7 +5,6 @@ export const getCategory = async (categoryId: string) => {
       next: { revalidate: 60 },
     }
   );
-
   return res.json();
 };
 

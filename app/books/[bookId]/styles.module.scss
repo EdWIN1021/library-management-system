@@ -1,0 +1,10 @@
+@import "../../styles/variables";
+@import "../../styles/utilities";
+
+.book {
+  @include flex-row;
+  color: $text-primary;
+  padding: 40px;
+
+
+}

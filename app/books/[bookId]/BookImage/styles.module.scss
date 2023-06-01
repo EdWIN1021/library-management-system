@@ -1,0 +1,9 @@
+@import "../../../styles/_variables";
+@import "../../../styles/_utilities";
+
+.contianer {
+  background-color: $bg-white;
+  padding: 40px;
+  height: 400px;
+  border-radius: 10px;
+}
