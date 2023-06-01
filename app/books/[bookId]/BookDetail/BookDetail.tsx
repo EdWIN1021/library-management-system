@@ -59,9 +59,11 @@ const BookDetail = ({ book }: { book: Book }) => {
           </Button>
 
           <div className={styles.quotes}>
-            <div className={styles.quote}>Quote1: {book?.Quote1}</div>
-            <div className={styles.quote}>Quote2: {book?.Quote2}</div>
-            <div className={styles.quote}>Quote3: {book?.Quote3}</div>
+            <div>Quotes: </div>
+
+            <div className={styles.quote}>{book?.Quote1}</div>
+            <div className={styles.quote}>{book?.Quote2}</div>
+            <div className={styles.quote}>{book?.Quote3}</div>
           </div>
         </div>
 
@@ -75,7 +77,7 @@ const BookDetail = ({ book }: { book: Book }) => {
       </div>
 
       <TabContext value={"1"}>
-        <TabList style={{ backgroundColor: "#fff" }}>
+        <TabList style={{ backgroundColor: "#fff", marginTop: "20px" }}>
           <Tab label="Overview" value="1" />
         </TabList>
         <TabPanel value="1" style={{ padding: "0", marginTop: "20px" }}>

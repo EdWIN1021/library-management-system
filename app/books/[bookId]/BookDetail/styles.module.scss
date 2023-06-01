@@ -14,11 +14,14 @@
       flex: 1;
 
       .quotes {
-        line-height: 40px;
         padding: 40px 0;
 
+        div:first-child {
+          font-size: $text-3;
+        }
+
         .quote {
-          color: $primary-color;
+          margin: 10px 0;
         }
       }
 
@@ -67,7 +70,7 @@
       background-color: $bg-white;
       width: 400px;
       padding: 40px;
-      height: 600px;
+      max-height: 600px;
       border-radius: 10px;
       overflow-y: auto;
 
