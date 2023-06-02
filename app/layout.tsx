@@ -8,12 +8,9 @@ import AuthProvider from "./providers/AuthProvider";
 
 import Footer from "./components/Footer/Footer";
 
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-
 import { Toaster } from "react-hot-toast";
 import dynamic from "next/dynamic";
-import { Auth } from "./types";
+import { getUser } from "./lib/getUser";
 
 const Login = dynamic(() => import("./components/Login/Login"), {
   ssr: false,
@@ -34,7 +31,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const auth = (await getServerSession(authOptions)) as Auth;
+  const user = await getUser();
 
   return (
     <html lang="en">
@@ -44,7 +41,7 @@ export default async function RootLayout({
           <StoreProvider>
             <StyleProvider>
               <header>
-                <Navbar auth={auth} />
+                <Navbar user={user} />
               </header>
               <main>
                 <Login />

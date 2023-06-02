@@ -1,13 +1,10 @@
 import Settings from "../components/Settings/Settings";
-
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { Auth } from "../types";
+import { getUser } from "../lib/getUser";
 
 const Account = async () => {
-  const auth = (await getServerSession(authOptions)) as Auth;
+  const user = await getUser();
 
-  return <Settings auth={auth} />;
+  return <Settings user={user} />;
 };
 
 export default Account;

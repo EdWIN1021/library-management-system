@@ -1,14 +1,9 @@
-import { Session } from "next-auth";
 export interface User {
-  id: string;
-  name: string;
-  email: string;
-  image: string;
-  provider: string;
-}
-
-export interface Auth extends Session {
-  user: User;
+  id?: string | null | undefined;
+  name?: string | null | undefined;
+  email?: string | null | undefined;
+  image?: string | null | undefined;
+  provider?: string | null | undefined;
 }
 
 export interface Book {

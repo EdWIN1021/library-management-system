@@ -11,9 +11,9 @@ import Grid from "@mui/material/Grid";
 import Image from "next/image";
 import Input from "../Input/Input";
 import { Button } from "@mui/material";
-import { Auth } from "@/app/types";
+import { User } from "@/app/types";
 
-const Settings = ({ auth }: { auth: Auth | null }) => {
+const Settings = ({ user }: { user: User }) => {
   const [value, setValue] = useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -37,7 +37,7 @@ const Settings = ({ auth }: { auth: Auth | null }) => {
               <div>Your Profile Picture</div>
               <Image
                 className={styles.image}
-                src={auth?.user?.image || "/images/placeholder.jpg"}
+                src={user?.image || "/images/placeholder.jpg"}
                 alt="..avatar"
                 width="150"
                 height="200"
@@ -99,20 +99,20 @@ const Settings = ({ auth }: { auth: Auth | null }) => {
             <form className={styles.uploadForm}>
               <Grid container px={"40px"}>
                 <Grid item xs={6}>
-                  <Input lable="ID" disabled value={auth?.user?.id} />
+                  <Input lable="ID" disabled value={user?.id || ""} />
                 </Grid>
                 <Grid item xs={6}>
                   <Input
                     lable="Provider"
                     disabled
-                    value={auth?.user?.provider}
+                    value={user?.provider || ""}
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <Input lable="Username" value={auth?.user?.name || ""} />
+                  <Input lable="Username" value={user?.name || ""} />
                 </Grid>
                 <Grid item xs={6}>
-                  <Input lable="Email" value={auth?.user?.email || ""} />
+                  <Input lable="Email" value={user?.email || ""} />
                 </Grid>
 
                 <Grid item xs={6} mt={"40px"}>

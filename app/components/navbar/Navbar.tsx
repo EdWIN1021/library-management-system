@@ -17,11 +17,11 @@ import styles from "./styles.module.scss";
 import { signOut } from "next-auth/react";
 import { openRegister, openLogin } from "@/app/features/modal/modalSlice";
 import { useDispatch } from "react-redux";
-import { Auth } from "@/app/types";
+import { User } from "@/app/types";
 
 const pages = ["Products", "Pricing", "Blog"];
 
-function NavBar({ auth }: { auth: Auth | null }) {
+function NavBar({ user }: { user: User }) {
   const dispatch = useDispatch();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -139,7 +139,7 @@ function NavBar({ auth }: { auth: Auth | null }) {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
                   alt="..."
-                  src={auth?.user?.image || "/images/placeholder.jpg"}
+                  src={user?.image || "/images/placeholder.jpg"}
                 />
               </IconButton>
             </Tooltip>
@@ -160,7 +160,7 @@ function NavBar({ auth }: { auth: Auth | null }) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {auth?.user ? (
+              {user ? (
                 <div>
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">
