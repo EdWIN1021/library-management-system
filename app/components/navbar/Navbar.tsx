@@ -14,11 +14,16 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
 import styles from "./styles.module.scss";
-import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
+import { openRegister, openLogin } from "@/app/features/modal/modalSlice";
+import { useDispatch } from "react-redux";
 
 const pages = ["Products", "Pricing", "Blog"];
 
-function NavBar() {
+function NavBar({ session }: { session: Session | null }) {
+  const dispatch = useDispatch();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -132,7 +137,10 @@ function NavBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/images/placeholder.jpg" />
+                <Avatar
+                  alt="..."
+                  src={session?.user?.image || "/images/placeholder.jpg"}
+                />
               </IconButton>
             </Tooltip>
 
@@ -152,19 +160,47 @@ function NavBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">
-                  <Link className={styles.link} href={"/account"}>
-                    Account
-                  </Link>
-                </Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">My shelf</Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">logout</Typography>
-              </MenuItem>
+              {session?.user ? (
+                <div>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">
+                      <Link className={styles.link} href={"/account"}>
+                        Account
+                      </Link>
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">My shelf</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      setAnchorElUser(null);
+                      signOut();
+                    }}
+                  >
+                    <Typography textAlign="center">logout</Typography>
+                  </MenuItem>
+                </div>
+              ) : (
+                <div>
+                  <MenuItem
+                    onClick={() => {
+                      setAnchorElUser(null);
+                      dispatch(openLogin());
+                    }}
+                  >
+                    Login
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      setAnchorElUser(null);
+                      dispatch(openRegister());
+                    }}
+                  >
+                    <Typography textAlign="center">Signup</Typography>
+                  </MenuItem>
+                </div>
+              )}
             </Menu>
           </Box>
         </Toolbar>
