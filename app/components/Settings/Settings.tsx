@@ -11,9 +11,9 @@ import Grid from "@mui/material/Grid";
 import Image from "next/image";
 import Input from "../Input/Input";
 import { Button } from "@mui/material";
-import { Session } from "next-auth";
+import { Auth } from "@/app/types";
 
-const Settings = ({ session }: { session: Session | null }) => {
+const Settings = ({ auth }: { auth: Auth | null }) => {
   const [value, setValue] = useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -37,7 +37,7 @@ const Settings = ({ session }: { session: Session | null }) => {
               <div>Your Profile Picture</div>
               <Image
                 className={styles.image}
-                src={session?.user?.image || "/images/placeholder.jpg"}
+                src={auth?.user?.image || "/images/placeholder.jpg"}
                 alt="..avatar"
                 width="150"
                 height="200"
@@ -99,16 +99,20 @@ const Settings = ({ session }: { session: Session | null }) => {
             <form className={styles.uploadForm}>
               <Grid container px={"40px"}>
                 <Grid item xs={6}>
-                  <Input lable="ID" disabled value={"123"} />
+                  <Input lable="ID" disabled value={auth?.user?.id} />
                 </Grid>
                 <Grid item xs={6}>
-                  <Input lable="Provider" disabled value={"google"} />
+                  <Input
+                    lable="Provider"
+                    disabled
+                    value={auth?.user?.provider}
+                  />
                 </Grid>
                 <Grid item xs={6}>
-                  <Input lable="Username" value={session?.user?.name || ""} />
+                  <Input lable="Username" value={auth?.user?.name || ""} />
                 </Grid>
                 <Grid item xs={6}>
-                  <Input lable="Email" value={session?.user?.email || ""} />
+                  <Input lable="Email" value={auth?.user?.email || ""} />
                 </Grid>
 
                 <Grid item xs={6} mt={"40px"}>

@@ -14,14 +14,14 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
 import styles from "./styles.module.scss";
-import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { openRegister, openLogin } from "@/app/features/modal/modalSlice";
 import { useDispatch } from "react-redux";
+import { Auth } from "@/app/types";
 
 const pages = ["Products", "Pricing", "Blog"];
 
-function NavBar({ session }: { session: Session | null }) {
+function NavBar({ auth }: { auth: Auth | null }) {
   const dispatch = useDispatch();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -139,7 +139,7 @@ function NavBar({ session }: { session: Session | null }) {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
                   alt="..."
-                  src={session?.user?.image || "/images/placeholder.jpg"}
+                  src={auth?.user?.image || "/images/placeholder.jpg"}
                 />
               </IconButton>
             </Tooltip>
@@ -160,7 +160,7 @@ function NavBar({ session }: { session: Session | null }) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {session?.user ? (
+              {auth?.user ? (
                 <div>
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">

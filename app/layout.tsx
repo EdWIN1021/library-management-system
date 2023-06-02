@@ -13,6 +13,7 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 
 import { Toaster } from "react-hot-toast";
 import dynamic from "next/dynamic";
+import { Auth } from "./types";
 
 const Login = dynamic(() => import("./components/Login/Login"), {
   ssr: false,
@@ -33,7 +34,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
+  const auth = (await getServerSession(authOptions)) as Auth;
 
   return (
     <html lang="en">
@@ -43,7 +44,7 @@ export default async function RootLayout({
           <StoreProvider>
             <StyleProvider>
               <header>
-                <Navbar session={session} />
+                <Navbar auth={auth} />
               </header>
               <main>
                 <Login />

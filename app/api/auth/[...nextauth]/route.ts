@@ -40,10 +40,29 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session }) {
+      const user = await prisma.user.findUnique({
+        where: { email: session.user?.email || "" },
+        include: {
+          accounts: true,
+        },
+      });
+
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user?.id,
+          provider: user?.accounts[0].provider,
+        },
+      };
+    },
+  },
   pages: {
     signIn: "/",
   },
-  debug: process.env.NODE_ENV === "development",
+  // debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
   },

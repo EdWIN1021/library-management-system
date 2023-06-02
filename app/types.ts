@@ -1,7 +1,14 @@
+import { Session } from "next-auth";
 export interface User {
+  id: string;
   name: string;
   email: string;
   image: string;
+  provider: string;
+}
+
+export interface Auth extends Session {
+  user: User;
 }
 
 export interface Book {
