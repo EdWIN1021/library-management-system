@@ -13,7 +13,7 @@ import Input from "../Input/Input";
 import { Button } from "@mui/material";
 import { User } from "@/app/types";
 
-const Settings = ({ user }: { user: User }) => {
+const Settings = ({ user }: { user: User | null }) => {
   const [value, setValue] = useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {

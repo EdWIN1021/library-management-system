@@ -1,5 +1,5 @@
 export interface User {
-  id?: string | null | undefined;
+  id?: string;
   name?: string | null | undefined;
   email?: string | null | undefined;
   image?: string | null | undefined;

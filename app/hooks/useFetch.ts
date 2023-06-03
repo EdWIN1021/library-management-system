@@ -4,7 +4,7 @@ import { Book } from "../types";
 const useFetch = (url: string) => {
   const [data, setData] = useState<Book[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     setIsLoading(true);

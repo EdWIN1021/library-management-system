@@ -21,7 +21,7 @@ import { User } from "@/app/types";
 
 const pages = ["Products", "Pricing", "Blog"];
 
-function NavBar({ user }: { user: User }) {
+function NavBar({ user }: { user: User | null }) {
   const dispatch = useDispatch();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(

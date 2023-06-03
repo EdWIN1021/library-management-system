@@ -10,9 +10,11 @@ const Category = async ({ params }: { params: { categoryId: string } }) => {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className={styles.category}>
-      <BookList books={books} session={session} />
-    </div>
+    <>
+      <div className={styles.category}>
+        <BookList books={books} session={session} />
+      </div>
+    </>
   );
 };
 
