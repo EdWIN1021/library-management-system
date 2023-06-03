@@ -1,5 +1,4 @@
 "use client";
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,18 +17,15 @@ import { signOut } from "next-auth/react";
 import { openRegister, openLogin } from "@/app/features/modal/modalSlice";
 import { useDispatch } from "react-redux";
 import { User } from "@/app/types";
+import { useState } from "react";
 
 const pages = ["Products", "Pricing", "Blog"];
 
 function NavBar({ user }: { user: User | null }) {
   const dispatch = useDispatch();
 
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);

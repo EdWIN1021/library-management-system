@@ -8,17 +8,14 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 import Image from "next/image";
-import { Book } from "@/app/types";
+import { Book, User } from "@/app/types";
 import styles from "./styles.module.scss";
 import Rating from "@mui/material/Rating";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
 import { Button, Pagination } from "@mui/material";
-import Link from "next/link";
+import useFetch from "@/app/hooks/useFetch";
 
 const BookList = ({
   books,
@@ -28,6 +25,8 @@ const BookList = ({
   session: Session | null;
 }) => {
   const router = useRouter();
+  const user = session?.user as User;
+
 
   const handleChangePage = (event: unknown, newPage: number) => {};
 
@@ -79,13 +78,6 @@ const BookList = ({
               </TableCell>
               <TableCell>{book?.genres}</TableCell>
               <TableCell>{book?.format}</TableCell>
-
-              {session && (
-                <TableCell>
-                  {/* <FavoriteIcon style={{ color: "#f34040" }} /> */}
-                  <FavoriteBorderIcon style={{ color: "#f34040" }} />
-                </TableCell>
-              )}
 
               <TableCell>
                 <Button

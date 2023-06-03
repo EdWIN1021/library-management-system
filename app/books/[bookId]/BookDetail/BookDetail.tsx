@@ -2,19 +2,19 @@
 import Rating from "@mui/material/Rating";
 import styles from "./styles.module.scss";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-
 import { Button } from "@mui/material";
-
 import { Range } from "react-date-range";
-
+import { useSession } from "next-auth/react";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { Book } from "@/app/types";
+import { Book, User } from "@/app/types";
 
 import DatePicker from "@/app/components/DatePicker/DatePicker";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import useFetch from "@/app/hooks/useFetch";
+import { Borrow } from "@prisma/client";
 
 const BookDetail = ({ book }: { book: Book }) => {
   const initialDateRange = {
@@ -24,6 +24,17 @@ const BookDetail = ({ book }: { book: Book }) => {
   };
 
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
+  const { data: session } = useSession();
+  const user = session?.user as User;
+
+  const { isLoading, data: borrowList } = useFetch(
+    `/api/borrowList?userId=${user?.id}`
+  );
+
+  const exist = useMemo(
+    () => borrowList.find((item: Borrow) => item.bookId === book.id),
+    [borrowList]
+  );
 
   const handleBorrow = async () => {
     const res = await fetch("/api/borrow", {
@@ -31,7 +42,12 @@ const BookDetail = ({ book }: { book: Book }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ test: "s" }),
+      body: JSON.stringify({
+        bookId: book?.id,
+        borrowDate: dateRange.startDate,
+        returnDate: dateRange.endDate,
+        userId: user?.id,
+      }),
     });
 
     console.log(res);
@@ -59,32 +75,30 @@ const BookDetail = ({ book }: { book: Book }) => {
 
                 <div className={styles.format}>
                   <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                  Paperback
-                </div>
-                <div className={styles.format}>
-                  <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                  Hardcover
-                </div>
-
-                <div className={styles.format}>
-                  <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                  Mass Market Paperback
+                  {book?.format}
                 </div>
               </div>
 
               <div>
                 <div className={styles.title}>Status</div>
-                <div className={styles.shelf}>In-Shelf</div>
+                <div className={styles.shelf}>
+                  {exist ? <span>In-Shelf</span> : <span>In-Stock</span>}
+                </div>
               </div>
             </div>
 
             <div style={{ marginBottom: "20px" }}>
               <DatePicker dateRange={dateRange} setDateRange={setDateRange} />
             </div>
-
-            <Button variant="contained" size="large" onClick={handleBorrow}>
-              BORROW
-            </Button>
+            {exist ? (
+              <Button variant="contained" size="large">
+                Return
+              </Button>
+            ) : (
+              <Button variant="contained" size="large" onClick={handleBorrow}>
+                Borrow
+              </Button>
+            )}
 
             <div className={styles.quotes}>
               <div>Quotes: </div>
