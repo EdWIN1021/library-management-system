@@ -10,11 +10,13 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { Book, User } from "@/app/types";
+import { openLogin } from "@/app/features/modal/modalSlice";
 
 import DatePicker from "@/app/components/DatePicker/DatePicker";
 import { useMemo, useState } from "react";
 import useFetch from "@/app/hooks/useFetch";
 import { Borrow } from "@prisma/client";
+import { useDispatch } from "react-redux";
 
 const BookDetail = ({ book }: { book: Book }) => {
   const initialDateRange = {
@@ -25,6 +27,7 @@ const BookDetail = ({ book }: { book: Book }) => {
 
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
   const { data: session } = useSession();
+  const dispatch = useDispatch();
   const user = session?.user as User;
 
   const { isLoading, data: borrowList } = useFetch(
@@ -37,6 +40,10 @@ const BookDetail = ({ book }: { book: Book }) => {
   );
 
   const handleBorrow = async () => {
+    if (!user) {
+      dispatch(openLogin());
+    }
+
     const res = await fetch("/api/borrow", {
       method: "POST",
       headers: {
@@ -87,12 +94,15 @@ const BookDetail = ({ book }: { book: Book }) => {
               </div>
             </div>
 
-            <div style={{ marginBottom: "20px" }}>
-              <DatePicker dateRange={dateRange} setDateRange={setDateRange} />
-            </div>
+            {!exist && (
+              <div style={{ marginBottom: "20px" }}>
+                <DatePicker dateRange={dateRange} setDateRange={setDateRange} />
+              </div>
+            )}
+
             {exist ? (
-              <Button variant="contained" size="large">
-                Return
+              <Button variant="contained" size="large" disabled={true}>
+                Borrowed
               </Button>
             ) : (
               <Button variant="contained" size="large" onClick={handleBorrow}>
