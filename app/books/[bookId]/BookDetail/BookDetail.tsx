@@ -23,6 +23,7 @@ const BookDetail = ({ book }: { book: Book }) => {
     startDate: new Date(),
     endDate: new Date(),
     key: "selection",
+    disabled: true,
   };
 
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
@@ -33,6 +34,8 @@ const BookDetail = ({ book }: { book: Book }) => {
   const { isLoading, data: borrowList } = useFetch(
     `/api/borrowList?userId=${user?.id}`
   );
+
+  console.log(book);
 
   const exist = useMemo(
     () => borrowList.find((item: Borrow) => item.bookId === book.id),
@@ -82,7 +85,42 @@ const BookDetail = ({ book }: { book: Book }) => {
 
                 <div className={styles.format}>
                   <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                  {book?.format}
+                  {"Paperback"}
+                </div>
+                {/* 
+                <div className={styles.format}>
+                  <CheckCircleIcon style={{ color: "#42bb4e" }} />
+                  {"Hardcover"}
+                </div>
+
+                <div className={styles.format}>
+                  <CheckCircleIcon style={{ color: "#42bb4e" }} />
+                  {"Mass Market Paperback"}
+                </div> */}
+
+                {!exist && (
+                  <div style={{ margin: "20px 0" }}>
+                    <DatePicker
+                      dateRange={dateRange}
+                      setDateRange={setDateRange}
+                    />
+                  </div>
+                )}
+
+                <div>
+                  {exist ? (
+                    <Button variant="contained" size="large" disabled={true}>
+                      Borrowed
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      size="large"
+                      onClick={handleBorrow}
+                    >
+                      Borrow
+                    </Button>
+                  )}
                 </div>
               </div>
 
@@ -92,30 +130,6 @@ const BookDetail = ({ book }: { book: Book }) => {
                   {exist ? <span>In-Shelf</span> : <span>In-Stock</span>}
                 </div>
               </div>
-            </div>
-
-            {!exist && (
-              <div style={{ marginBottom: "20px" }}>
-                <DatePicker dateRange={dateRange} setDateRange={setDateRange} />
-              </div>
-            )}
-
-            {exist ? (
-              <Button variant="contained" size="large" disabled={true}>
-                Borrowed
-              </Button>
-            ) : (
-              <Button variant="contained" size="large" onClick={handleBorrow}>
-                Borrow
-              </Button>
-            )}
-
-            <div className={styles.quotes}>
-              <div>Quotes: </div>
-
-              <div className={styles.quote}>{book?.Quote1}</div>
-              <div className={styles.quote}>{book?.Quote2}</div>
-              <div className={styles.quote}>{book?.Quote3}</div>
             </div>
           </div>
 
@@ -129,10 +143,18 @@ const BookDetail = ({ book }: { book: Book }) => {
         </div>
 
         <TabContext value={"1"}>
-          <TabList style={{ backgroundColor: "#fff", marginTop: "20px" }}>
+          <TabList
+            style={{
+              backgroundColor: "#fff",
+              marginLeft: "40px",
+            }}
+          >
             <Tab label="Overview" value="1" />
           </TabList>
-          <TabPanel value="1" style={{ padding: "0", marginTop: "20px" }}>
+          <TabPanel
+            value="1"
+            style={{ padding: "0", marginTop: "20px", marginLeft: "40px" }}
+          >
             <div className={styles.data_container}>
               <div className={styles.data}>
                 <p>Review Count</p>
