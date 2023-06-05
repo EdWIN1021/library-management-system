@@ -1,4 +1,6 @@
 import "./globals.scss";
+import styles from "./page.module.scss";
+
 import { Nunito } from "next/font/google";
 import Navbar from "./components/Navbar/Navbar";
 
@@ -43,15 +45,13 @@ export default async function RootLayout({
             <StoreProvider>
               <StyleProvider>
                 <header>
-                  header
-                  {/* <Navbar user={user} /> */}
+                  <Navbar user={user} />
                 </header>
 
                 <main>
-                  main
-                  {/* <Login />
+                  <Login />
                   <Register />
-                  {children} */}
+                  <div className={styles.container}>{children}</div>
                 </main>
 
                 <footer>

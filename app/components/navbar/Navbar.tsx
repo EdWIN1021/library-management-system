@@ -19,8 +19,6 @@ import { useDispatch } from "react-redux";
 import { User } from "@/app/types";
 import { useState } from "react";
 
-const pages = ["Products", "Pricing", "Blog"];
-
 function NavBar({ user }: { user: User | null }) {
   const dispatch = useDispatch();
 
@@ -43,7 +41,7 @@ function NavBar({ user }: { user: User | null }) {
   };
 
   return (
-    <AppBar className={styles.appbar}>
+    <AppBar className={styles.appbar} position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -75,30 +73,6 @@ function NavBar({ user }: { user: User | null }) {
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
           <Typography
             variant="h5"
@@ -118,17 +92,7 @@ function NavBar({ user }: { user: User | null }) {
           >
             Library
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
