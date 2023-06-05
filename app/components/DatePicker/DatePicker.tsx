@@ -1,24 +1,23 @@
-"use client";
+import * as React from "react";
+import dayjs, { Dayjs } from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-import "react-date-range/dist/styles.css"; // main style file
-import "react-date-range/dist/theme/default.css"; // theme css file
-import { DateRange } from "react-date-range";
-import { useState } from "react";
+export default function DatePickerValue() {
+  const [value, setValue] = React.useState<Dayjs | null>(dayjs());
 
-import { DatePickerProps } from "./type";
-
-const DatePicker: React.FC<DatePickerProps> = ({ dateRange, setDateRange }) => {
   return (
-    <DateRange
-      rangeColors={["#ff8a00"]}
-      ranges={[dateRange]}
-      date={new Date()}
-      onChange={(value) => setDateRange(value.selection)}
-      direction="vertical"
-      showDateDisplay={false}
-      minDate={new Date()}
-    />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer components={["DatePicker", "DatePicker"]}>
+        <DatePicker label="borrow date" defaultValue={dayjs()} />
+        <DatePicker
+          label="return date"
+          value={value}
+          onChange={(newValue) => setValue(newValue)}
+        />
+      </DemoContainer>
+    </LocalizationProvider>
   );
-};
-
-export default DatePicker;
+}

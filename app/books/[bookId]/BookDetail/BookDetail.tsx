@@ -87,7 +87,7 @@ const BookDetail = ({ book }: { book: Book }) => {
                   <CheckCircleIcon style={{ color: "#42bb4e" }} />
                   {"Paperback"}
                 </div>
-                {/* 
+
                 <div className={styles.format}>
                   <CheckCircleIcon style={{ color: "#42bb4e" }} />
                   {"Hardcover"}
@@ -96,31 +96,6 @@ const BookDetail = ({ book }: { book: Book }) => {
                 <div className={styles.format}>
                   <CheckCircleIcon style={{ color: "#42bb4e" }} />
                   {"Mass Market Paperback"}
-                </div> */}
-
-                {!exist && (
-                  <div style={{ margin: "20px 0" }}>
-                    <DatePicker
-                      dateRange={dateRange}
-                      setDateRange={setDateRange}
-                    />
-                  </div>
-                )}
-
-                <div>
-                  {exist ? (
-                    <Button variant="contained" size="large" disabled={true}>
-                      Borrowed
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      size="large"
-                      onClick={handleBorrow}
-                    >
-                      Borrow
-                    </Button>
-                  )}
                 </div>
               </div>
 
@@ -130,6 +105,22 @@ const BookDetail = ({ book }: { book: Book }) => {
                   {exist ? <span>In-Shelf</span> : <span>In-Stock</span>}
                 </div>
               </div>
+            </div>
+
+            <div style={{ margin: "20px 0" }}>
+              <DatePicker dateRange={dateRange} setDateRange={setDateRange} />
+            </div>
+
+            <div style={{ marginTop: "30px" }}>
+              {exist ? (
+                <Button variant="contained" size="large" disabled={true}>
+                  Borrowed
+                </Button>
+              ) : (
+                <Button variant="contained" size="large" onClick={handleBorrow}>
+                  Borrow
+                </Button>
+              )}
             </div>
           </div>
 
@@ -145,7 +136,6 @@ const BookDetail = ({ book }: { book: Book }) => {
         <TabContext value={"1"}>
           <TabList
             style={{
-              backgroundColor: "#fff",
               marginLeft: "40px",
             }}
           >

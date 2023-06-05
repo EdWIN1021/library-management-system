@@ -9,20 +9,16 @@ import {
 } from "react-icons/ai";
 
 import { DiSnapSvg } from "react-icons/di";
-import { Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 
 const footerData = [
   {
     title: "Edwin Inc",
-    subtitles: ["Pricing", "Updates", "Beta", "Newsletter", "Collaborations"],
+    subtitles: ["Pricing", "Updates", "Beta", "Newsletter"],
   },
   {
     title: "Product",
     subtitles: ["Business", "Designers", "Classrooms", "Newscommers"],
-  },
-  {
-    title: "Learning",
-    subtitles: ["Learn Hub", "Manulas", "Beta", "Tutorials", "Communities"],
   },
   {
     title: "Resources",
@@ -37,27 +33,33 @@ const footerData = [
 const Footer = () => {
   return (
     <section className={styles.footer}>
-      <div className={styles.info}>
+      <Grid container alignItems="flex-start" justifyContent={"center"} gap={5}>
         {footerData.map((data) => (
-          <div key={data.title}>
-            <Typography className={styles.title} variant="body1">
-              {data?.title}
-            </Typography>
+          <Grid
+            className={styles.grid}
+            item
+            key={data.title}
+            xs={12}
+            sm={4}
+            lg={2}
+          >
+            <div className={styles.wrapper}>
+              <div className={styles.title}>{data?.title}</div>
 
-            {data?.subtitles?.map((subtitle, index) => (
-              <Typography key={`${subtitle}${index}`} variant="body2">
-                {subtitle}
-              </Typography>
-            ))}
-          </div>
+              {data?.subtitles?.map((subtitle, index) => (
+                <div className={styles.subtitle}>{subtitle}</div>
+              ))}
+            </div>
+          </Grid>
         ))}
-      </div>
+      </Grid>
 
       <Logo />
 
       <div className={styles.copyright}>
         © 2023 Edwin Inc. All rights reserved.
       </div>
+
       <div className={styles.social}>
         <AiFillFacebook size={30} />
         <AiFillTwitterSquare size={30} />

@@ -27,7 +27,6 @@ const BookList = ({
   const router = useRouter();
   const user = session?.user as User;
 
-
   const handleChangePage = (event: unknown, newPage: number) => {};
 
   const handleChangeRowsPerPage = (
@@ -36,7 +35,7 @@ const BookList = ({
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650, maxWidth: 1400 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Title</TableCell>

@@ -57,7 +57,6 @@
     }
 
     .description {
-      background-color: $bg-white;
       width: 400px;
       padding: 40px;
       max-height: 500px;
@@ -81,8 +80,7 @@
 
   .data_container {
     @include flex-row;
-    justify-content: space-between;
-    gap: 20px;
+    gap: 40px;
 
     .data {
       width: 240px;
@@ -90,7 +88,6 @@
       text-align: center;
       line-height: 25px;
 
-      background: #ffffff;
       border: 1px solid #dddddd;
       border-radius: 5px;
 

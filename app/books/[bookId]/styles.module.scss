@@ -3,6 +3,8 @@
 
 .book {
   @include flex-row;
+  background-color: $bg-white;
   color: $text-primary;
   padding: 20px;
+  height: 100%;
 }

@@ -2,37 +2,40 @@
 @import "../../styles/variables";
 
 .footer {
-  @include flex-column;
   background-color: $primary-color;
-  padding: 40px;
   color: $text-white;
+  padding: $p-1;
+  @include flex-column;
 
-  .info {
+  .grid {
     @include flex-row;
     justify-content: center;
-    line-height: 30px;
-    gap: 100px;
 
-    div:first-child {
+    .wrapper {
       @include flex-column;
-    }
+      width: 120px;
 
-    .title {
-      font-weight: 600;
-      line-height: 26px;
-      margin-bottom: 40px;
+      .title {
+        margin-bottom: $mb-1;
+        font-weight: $weight-1;
+        font-size: $text-3;
+      }
+
+      .subtitle {
+        line-height: $lh-1;
+      }
     }
   }
 
   .copyright {
-    margin-top: 20px;
+    margin-top: $mt-1;
     text-align: center;
   }
 
   .social {
     @include flex-row;
     justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
+    gap: $gap-1;
+    margin-top: $mt-1;
   }
 }

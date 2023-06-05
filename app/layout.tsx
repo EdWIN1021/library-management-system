@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import StoreProvider from "./providers/StoreProvider";
 import StyleProvider from "./providers/StyleProvider";
 import AuthProvider from "./providers/AuthProvider";
+import DateProvider from "./providers/DateProvider";
 
 import Footer from "./components/Footer/Footer";
 
@@ -38,21 +39,27 @@ export default async function RootLayout({
       <body className={nunito.className}>
         <Toaster />
         <AuthProvider>
-          <StoreProvider>
-            <StyleProvider>
-              <header>
-                <Navbar user={user} />
-              </header>
-              <main>
-                <Login />
-                <Register />
-                {children}
-              </main>
-              <footer>
-                <Footer />
-              </footer>
-            </StyleProvider>
-          </StoreProvider>
+          <DateProvider>
+            <StoreProvider>
+              <StyleProvider>
+                <header>
+                  header
+                  {/* <Navbar user={user} /> */}
+                </header>
+
+                <main>
+                  main
+                  {/* <Login />
+                  <Register />
+                  {children} */}
+                </main>
+
+                <footer>
+                  <Footer />
+                </footer>
+              </StyleProvider>
+            </StoreProvider>
+          </DateProvider>
         </AuthProvider>
       </body>
     </html>
