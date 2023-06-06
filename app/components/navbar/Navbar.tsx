@@ -41,7 +41,7 @@ function NavBar({ user }: { user: User | null }) {
   };
 
   return (
-    <AppBar className={styles.appbar} position="static">
+    <AppBar className={styles.appbar}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -130,7 +130,9 @@ function NavBar({ user }: { user: User | null }) {
                     </Typography>
                   </MenuItem>
                   <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">My shelf</Typography>
+                    <Link className={styles.link} href={"/borrow"}>
+                      My shelf
+                    </Link>
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -138,7 +140,7 @@ function NavBar({ user }: { user: User | null }) {
                       signOut();
                     }}
                   >
-                    <Typography textAlign="center">logout</Typography>
+                    <Typography>logout</Typography>
                   </MenuItem>
                 </div>
               ) : (

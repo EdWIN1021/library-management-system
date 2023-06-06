@@ -1,4 +1,4 @@
-import BorrowList from "./BorrowList/page";
+import BorrowList from "./BorrowList/BorrowList";
 
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]/route";
