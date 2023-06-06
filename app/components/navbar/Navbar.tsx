@@ -41,7 +41,7 @@ function NavBar({ user }: { user: User | null }) {
   };
 
   return (
-    <AppBar className={styles.appbar} position="fixed">
+    <AppBar className={styles.appbar} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

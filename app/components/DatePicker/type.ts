@@ -1,6 +1,12 @@
-import { Range } from "react-date-range";
+import { Dayjs } from "dayjs";
 
-export interface DatePickerProps {
+interface Range {
+  borrowDate: Dayjs;
+  returnDate: Dayjs;
+}
+
+export interface DateRangePickerProps {
   dateRange: Range;
+  disabled: boolean;
   setDateRange: React.Dispatch<React.SetStateAction<Range>>;
 }

@@ -54,7 +54,7 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           id: user?.id,
-          provider: user?.accounts[0].provider,
+          provider: user?.accounts[0]?.provider || "library",
         },
       };
     },

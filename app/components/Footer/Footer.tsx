@@ -46,8 +46,10 @@ const Footer = () => {
             <div className={styles.wrapper}>
               <div className={styles.title}>{data?.title}</div>
 
-              {data?.subtitles?.map((subtitle, index) => (
-                <div className={styles.subtitle}>{subtitle}</div>
+              {data?.subtitles?.map((subtitle) => (
+                <div className={styles.subtitle} key={subtitle}>
+                  {subtitle}
+                </div>
               ))}
             </div>
           </Grid>

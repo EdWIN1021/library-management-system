@@ -15,7 +15,6 @@ import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
 import { Button, Pagination } from "@mui/material";
-import useFetch from "@/app/hooks/useFetch";
 
 const BookList = ({
   books,
@@ -39,13 +38,9 @@ const BookList = ({
         <TableHead>
           <TableRow>
             <TableCell>Title</TableCell>
-            <TableCell></TableCell>
-
             <TableCell>Rating</TableCell>
             <TableCell>Categories</TableCell>
             <TableCell>Format</TableCell>
-            {session && <TableCell>Favoirte</TableCell>}
-            <TableCell></TableCell>
           </TableRow>
         </TableHead>
 

@@ -30,7 +30,7 @@ const Login = () => {
     password: "",
   });
 
-  const [isLoding, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputFields({ ...inputFields, [e.target.name]: e.target.value });
@@ -91,7 +91,7 @@ const Login = () => {
           />
 
           <LoadingButton
-            loading={isLoding}
+            loading={isLoading}
             disabled={
               isEmpty(inputFields.email) || isEmpty(inputFields.password)
             }

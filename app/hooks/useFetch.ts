@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { Book } from "../types";
-import { Borrow } from "@prisma/client";
 
 const useFetch = (url: string) => {
   const [data, setData] = useState([]);
