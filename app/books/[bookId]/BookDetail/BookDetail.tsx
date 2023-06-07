@@ -61,7 +61,7 @@ const BookDetail = ({ book }: { book: Book }) => {
 
   const handleBorrow = async () => {
     if (!user) {
-      dispatch(openLogin());
+      return dispatch(openLogin());
     }
 
     try {
