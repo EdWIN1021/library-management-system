@@ -1,5 +1,5 @@
 "use client";
-import ModalWrapper from "../ModalWrapper/ModalWrapper";
+import ModalWrapper from "../../ModalWrapper/ModalWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import {
@@ -8,14 +8,13 @@ import {
   openOTP,
 } from "@/app/features/modal/modalSlice";
 import { useRouter } from "next/navigation";
-import Card from "@mui/material/Card";
-import Input from "../Input/Input";
+import Input from "../../Input/Input";
 import styles from "./styles.module.scss";
-import Heading from "../Heading/Heading";
+import Heading from "../../Heading/Heading";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
-import OAuth from "../OAuth/OAuth";
-import PwdInput from "../PwdInput/PwdInput";
+import OAuth from "../../OAuth/OAuth";
+import PwdInput from "../../PwdInput/PwdInput";
 import { useState } from "react";
 import isEmpty from "validator/lib/isEmpty";
 import toast from "react-hot-toast";
@@ -74,7 +73,7 @@ const Login = () => {
       openModal={isLoginOpen}
       onClose={() => dispatch(closeLogin())}
     >
-      <Card className={styles.container}>
+      <>
         <Heading title={" Welcome Back!"} subtitle={"Login to your account"} />
 
         <form className={styles.form} onSubmit={handleOnSubmit}>
@@ -136,7 +135,7 @@ const Login = () => {
             Sign Up
           </Link>
         </div>
-      </Card>
+      </>
     </ModalWrapper>
   );
 };

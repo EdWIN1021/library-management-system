@@ -31,50 +31,50 @@ export async function POST(request: Request) {
     },
   });
 
-  if (updateOtp) {
-    let transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_ADDRESS,
-        pass: process.env.PASSWORD,
-      },
-    });
+  // if (updateOtp) {
+  //   let transporter = nodemailer.createTransport({
+  //     service: "gmail",
+  //     auth: {
+  //       user: process.env.EMAIL_ADDRESS,
+  //       pass: process.env.PASSWORD,
+  //     },
+  //   });
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_ADDRESS,
-      to: email,
-      subject: "Please verify your device",
-      html: `
-            <div>Hey ${updateOtp.name}</div>
-            <br/>
-            <div>Verification code: ${updateOtp.otp}</div>
-            <br/>
-            <div>Thanks,</idv>
-            <div>The Edwin Team</idv>
+  //   await transporter.sendMail({
+  //     from: process.env.EMAIL_ADDRESS,
+  //     to: email,
+  //     subject: "Please verify your device",
+  //     html: `
+  //           <div>Hey ${updateOtp.name}</div>
+  //           <br/>
+  //           <div>Verification code: ${updateOtp.otp}</div>
+  //           <br/>
+  //           <div>Thanks,</idv>
+  //           <div>The Edwin Team</idv>
 
-          `,
-    });
+  //         `,
+  //   });
 
-    setTimeout(async () => {
-      await prisma.user.update({
-        where: {
-          email,
-        },
-        data: {
-          otp: null,
-        },
-      });
-    }, 60 * 1000);
+  //   setTimeout(async () => {
+  //     await prisma.user.update({
+  //       where: {
+  //         email,
+  //       },
+  //       data: {
+  //         otp: null,
+  //       },
+  //     });
+  //   }, 60 * 1000);
 
-    return NextResponse.json(
-      {
-        message: "otp send",
-      },
-      {
-        status: 200,
-      }
-    );
-  }
+  //   return NextResponse.json(
+  //     {
+  //       message: "otp send",
+  //     },
+  //     {
+  //       status: 200,
+  //     }
+  //   );
+  // }
 
   return NextResponse.json(
     {

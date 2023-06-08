@@ -6,12 +6,7 @@
   gap: 10px;
   padding: 40px;
 
-  .form {
-    @include flex-column;
-  }
-
-  .footer {
-    text-align: center;
-    margin-top: 8px;
+  .close {
+    cursor: pointer;
   }
 }

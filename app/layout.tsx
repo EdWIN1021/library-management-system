@@ -15,13 +15,16 @@ import { Toaster } from "react-hot-toast";
 import dynamic from "next/dynamic";
 import { getUser } from "./lib/getUser";
 
-const Login = dynamic(() => import("./components/Login/Login"), {
+const Login = dynamic(() => import("./components/Modals/Login/Login"), {
   ssr: false,
 });
 
-const Register = dynamic(() => import("./components/Register/Register"), {
-  ssr: false,
-});
+const Register = dynamic(
+  () => import("./components/Modals/Register/Register"),
+  {
+    ssr: false,
+  }
+);
 
 const OTP = dynamic(() => import("./components/Modals/OTP/OTP"), {
   ssr: false,

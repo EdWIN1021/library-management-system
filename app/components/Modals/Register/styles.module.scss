@@ -1,8 +1,11 @@
 @import "../../../styles/utilities";
 @import "../../../styles/variables";
 
-.container {
+.form {
   @include flex-column;
-  align-items: center;
-  gap: $g-1;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 8px;
 }

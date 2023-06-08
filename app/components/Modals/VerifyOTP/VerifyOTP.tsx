@@ -1,7 +1,6 @@
 "use client";
 import styles from "./styles.module.scss";
 import ModalWrapper from "../../ModalWrapper/ModalWrapper";
-import Card from "@mui/material/Card";
 import { closeVerifyOTP } from "@/app/features/modal/modalSlice";
 import { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +9,7 @@ import Heading from "../../Heading/Heading";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import { Link } from "@mui/material";
+import Image from "next/image";
 
 const VerifyOTP = () => {
   const isVerifyOTPOpen = useSelector(
@@ -18,14 +18,30 @@ const VerifyOTP = () => {
   const dispatch = useDispatch();
   const [otp, setOtp] = useState("");
 
+  const onVerify = async () => {
+    const res = await fetch("/api/verify_otp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ otp }),
+    });
+  };
+
   return (
     <ModalWrapper
       openModal={isVerifyOTPOpen}
       onClose={() => dispatch(closeVerifyOTP())}
     >
-      <Card className={styles.container}>
+      <div className={styles.container}>
+        <Image
+          src="/images/otp.svg"
+          alt="..."
+          width={150}
+          height={200}
+          priority
+        />
         <Heading title={"OTP Verification"} subtitle={"Enter the OTP"} />
-
         <MuiOtpInput
           className={styles.otp}
           length={6}
@@ -34,26 +50,28 @@ const VerifyOTP = () => {
           style={{ maxWidth: "350px" }}
         />
 
-        <div></div>
-
         <div
           style={{
-            marginTop: "30px",
-            marginBottom: "50px",
             alignSelf: "start",
             color: "#a7a7a7",
           }}
         >
-          Didn’t you receive the OTP?{"  "}
+          Didn’t you receive the OTP?
           <Link variant="caption" style={{ alignSelf: "end" }}>
+            {" "}
             Resend OTP
           </Link>
         </div>
-
-        <Button variant="contained" size="large" fullWidth>
+        <Button
+          onClick={onVerify}
+          style={{ marginTop: "4rem" }}
+          variant="contained"
+          size="large"
+          fullWidth
+        >
           verify
         </Button>
-      </Card>
+      </div>
     </ModalWrapper>
   );
 };

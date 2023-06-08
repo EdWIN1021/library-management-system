@@ -3,7 +3,7 @@
 
 .footer {
   min-width: 1400px;
-  
+
   background-color: $primary-color;
   color: $text-white;
   padding: $p-1;
@@ -37,7 +37,7 @@
   .social {
     @include flex-row;
     justify-content: center;
-    gap: $gap-1;
+    gap: $g-1;
     margin-top: $mt-1;
   }
 }

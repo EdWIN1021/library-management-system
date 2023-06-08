@@ -1,26 +1,25 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import ModalWrapper from "../ModalWrapper/ModalWrapper";
+import ModalWrapper from "../../ModalWrapper/ModalWrapper";
 import { RootState } from "@/app/store";
 import { closeRegister, openLogin } from "@/app/features/modal/modalSlice";
 import styles from "./styles.module.scss";
-import Card from "@mui/material/Card";
-import Heading from "../Heading/Heading";
-import Input from "../Input/Input";
+import Heading from "../../Heading/Heading";
+import Input from "../../Input/Input";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Divider from "@mui/material/Divider";
-import PwdInput from "../PwdInput/PwdInput";
-import OAuth from "../OAuth/OAuth";
+import PwdInput from "../../PwdInput/PwdInput";
+import OAuth from "../../OAuth/OAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
-import EmailConstrain from "../EmailConstrain/EmailConstrain";
+import EmailConstrain from "../../EmailConstrain/EmailConstrain";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import isEmail from "validator/lib/isEmail";
 
-const PwdConstrain = dynamic(() => import("../PwdConstrain/PwdConstrain"), {
+const PwdConstrain = dynamic(() => import("../../PwdConstrain/PwdConstrain"), {
   ssr: false,
 });
 
@@ -117,7 +116,7 @@ const Register = () => {
 
   return (
     <ModalWrapper openModal={isRegisterOpen} onClose={handleOnClose}>
-      <Card className={styles.container}>
+      <>
         <Heading
           title={"Create an account"}
           subtitle={"Welcome to our library"}
@@ -206,7 +205,7 @@ const Register = () => {
             Login
           </Link>
         </div>
-      </Card>
+      </>
     </ModalWrapper>
   );
 };
