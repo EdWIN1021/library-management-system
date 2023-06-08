@@ -2,7 +2,11 @@
 import ModalWrapper from "../ModalWrapper/ModalWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { closeLogin, openRegister } from "@/app/features/modal/modalSlice";
+import {
+  closeLogin,
+  openRegister,
+  openOTP,
+} from "@/app/features/modal/modalSlice";
 import { useRouter } from "next/navigation";
 import Card from "@mui/material/Card";
 import Input from "../Input/Input";
@@ -105,7 +109,14 @@ const Login = () => {
           </LoadingButton>
         </form>
 
-        <Link href="#" variant="caption" style={{ alignSelf: "end" }}>
+        <Link
+          variant="caption"
+          style={{ alignSelf: "end" }}
+          onClick={() => {
+            dispatch(closeLogin());
+            dispatch(openOTP());
+          }}
+        >
           forgot password
         </Link>
 

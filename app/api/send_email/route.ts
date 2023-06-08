@@ -1,39 +1,87 @@
-import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { NextResponse } from "next/server";
+import { prisma } from "@/prisma/db";
 
 export async function POST(request: Request) {
   const { email } = await request.json();
 
-  if (email) {
+  const otp = Math.round(Math.random() * (999999 - 100000) + 100000);
+
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (!user) {
+    return NextResponse.json(
+      {
+        message: "unauthorized",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const updateOtp = await prisma.user.update({
+    where: {
+      email,
+    },
+    data: {
+      otp: otp.toString(),
+    },
+  });
+
+  if (updateOtp) {
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "edwinshi.develop@gmail.com",
-        pass: "dnauujvpwudiqlhx",
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.PASSWORD,
       },
     });
 
-    let info = await transporter.sendMail({
-      from: "edwinshi.develop@gmail.com",
-      to: "edwinshi1021@gmail.com",
-      subject: "Hello ✔",
-      text: "Hello world?",
-      html: "<b>Hello Edwin</b>",
+    await transporter.sendMail({
+      from: process.env.EMAIL_ADDRESS,
+      to: email,
+      subject: "Please verify your device",
+      html: `
+            <div>Hey ${updateOtp.name}</div>
+            <br/>
+            <div>Verification code: ${updateOtp.otp}</div>
+            <br/>
+            <div>Thanks,</idv>
+            <div>The Edwin Team</idv>
+
+          `,
     });
 
-    //create code and save into the database
+    setTimeout(async () => {
+      await prisma.user.update({
+        where: {
+          email,
+        },
+        data: {
+          otp: null,
+        },
+      });
+    }, 60 * 1000);
 
-    console.log("Message sent: %s", info.messageId);
-
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    return NextResponse.json(
+      {
+        message: "otp send",
+      },
+      {
+        status: 200,
+      }
+    );
   }
 
   return NextResponse.json(
     {
-      message: "hi",
+      message: "unauthorized",
     },
     {
-      status: 200,
+      status: 400,
     }
   );
 }

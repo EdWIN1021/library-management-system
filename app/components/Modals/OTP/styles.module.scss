@@ -1,0 +1,10 @@
+@import "../../../styles/utilities";
+@import "../../../styles/variables";
+
+.container {
+  @include flex-column;
+  @include center;
+  align-items: center;
+  gap: $gap-1;
+  padding: $p-1;
+}

@@ -23,6 +23,17 @@ const Register = dynamic(() => import("./components/Register/Register"), {
   ssr: false,
 });
 
+const OTP = dynamic(() => import("./components/Modals/OTP/OTP"), {
+  ssr: false,
+});
+
+const VerifyOTP = dynamic(
+  () => import("./components/Modals/VerifyOTP/VerifyOTP"),
+  {
+    ssr: false,
+  }
+);
+
 const nunito = Nunito({ subsets: ["latin"] });
 
 export const metadata = {
@@ -51,6 +62,8 @@ export default async function RootLayout({
                 <main>
                   <Login />
                   <Register />
+                  <OTP />
+                  <VerifyOTP />
                   <div className={styles.container}>{children}</div>
                 </main>
 
