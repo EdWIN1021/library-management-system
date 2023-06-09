@@ -10,23 +10,39 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import { Link } from "@mui/material";
 import Image from "next/image";
+import toast from "react-hot-toast";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const VerifyOTP = () => {
   const { isVerifyOTPOpen } = useSelector((state: RootState) => state.modal);
   const { email } = useSelector((state: RootState) => state.auth);
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   const onVerify = async () => {
-    const res = await fetch("/api/verify_otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ otp, email }),
-    });
-    if (res.ok) {
-      console.log("here");
+    setLoading(true);
+    try {
+      const res = await fetch("/api/verify_otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ otp, email }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        toast.success(data?.message);
+      } else {
+        toast.error(data?.error);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setOtp("");
+      setLoading(false);
     }
   };
 
@@ -67,7 +83,8 @@ const VerifyOTP = () => {
             Resend OTP
           </Link>
         </div>
-        <Button
+        <LoadingButton
+          loading={loading}
           onClick={onVerify}
           style={{ marginTop: "4rem" }}
           variant="contained"
@@ -75,7 +92,7 @@ const VerifyOTP = () => {
           fullWidth
         >
           verify
-        </Button>
+        </LoadingButton>
       </div>
     </ModalWrapper>
   );

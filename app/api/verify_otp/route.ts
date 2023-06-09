@@ -4,10 +4,6 @@ import { prisma } from "@/prisma/db";
 export async function POST(request: Request) {
   const { otp, email } = await request.json();
 
-  console.log("asdadsadsadsad");
-  console.log(otp);
-  console.log(email);
-
   const user = await prisma.user.findUnique({
     where: {
       email,
@@ -30,7 +26,8 @@ export async function POST(request: Request) {
 
   return NextResponse.json(
     {
-      message: "unauthorized",
+      error:
+        "Oops! It seems like the verification code you entered is incorrect",
     },
     {
       status: 400,
