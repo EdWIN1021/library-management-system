@@ -1,26 +1,31 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
+
 import ModalWrapper from "../../ModalWrapper/ModalWrapper";
-import { RootState } from "@/app/store";
-import { useDispatch, useSelector } from "react-redux";
-import styles from "./styles.module.scss";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Heading from "../../Heading/Heading";
 import Input from "../../Input/Input";
-import { closeOTP, openVerifyOTP } from "@/app/features/modal/modalSlice";
-import { useState } from "react";
+
+import styles from "./styles.module.scss";
+
 import isEmail from "validator/lib/isEmail";
 import toast from "react-hot-toast";
-import Image from "next/image";
-import LoadingButton from "@mui/lab/LoadingButton";
+import { RootState } from "@/app/store";
+import { useDispatch, useSelector } from "react-redux";
+import { closeOTP, openVerifyOTP } from "@/app/features/modal/modalSlice";
+import { setAuthEmail } from "@/app/features/auth/authSlice";
 
 const OTP = () => {
-  const isOTPOpen = useSelector((state: RootState) => state.modal.isOTPOpen);
-  const dispatch = useDispatch();
+  const { isOTPOpen } = useSelector((state: RootState) => state.modal);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const sendEmail = async () => {
     setLoading(true);
+    dispatch(setAuthEmail(email));
 
     try {
       if (isEmail(email)) {
@@ -31,7 +36,6 @@ const OTP = () => {
           },
           body: JSON.stringify({ email }),
         });
-
         if (res.status === 200) {
           dispatch(closeOTP());
           dispatch(openVerifyOTP());
@@ -40,14 +44,21 @@ const OTP = () => {
         toast.error("Please enter a vaild email address");
       }
     } catch (error) {
-      console.log(error);
+      throw new Error("somthing wrong");
     } finally {
       setLoading(false);
+      setEmail("");
     }
   };
 
   return (
-    <ModalWrapper openModal={isOTPOpen} onClose={() => dispatch(closeOTP())}>
+    <ModalWrapper
+      openModal={isOTPOpen}
+      onClose={() => {
+        dispatch(closeOTP());
+        setEmail("");
+      }}
+    >
       <div className={styles.container}>
         <Image
           src="/images/otp.svg"

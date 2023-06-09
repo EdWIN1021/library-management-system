@@ -12,11 +12,10 @@ import { Link } from "@mui/material";
 import Image from "next/image";
 
 const VerifyOTP = () => {
-  const isVerifyOTPOpen = useSelector(
-    (state: RootState) => state.modal.isVerifyOTPOpen
-  );
-  const dispatch = useDispatch();
+  const { isVerifyOTPOpen } = useSelector((state: RootState) => state.modal);
+  const { email } = useSelector((state: RootState) => state.auth);
   const [otp, setOtp] = useState("");
+  const dispatch = useDispatch();
 
   const onVerify = async () => {
     const res = await fetch("/api/verify_otp", {
@@ -24,14 +23,20 @@ const VerifyOTP = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ otp }),
+      body: JSON.stringify({ otp, email }),
     });
+    if (res.ok) {
+      console.log("here");
+    }
   };
 
   return (
     <ModalWrapper
       openModal={isVerifyOTPOpen}
-      onClose={() => dispatch(closeVerifyOTP())}
+      onClose={() => {
+        dispatch(closeVerifyOTP());
+        setOtp("");
+      }}
     >
       <div className={styles.container}>
         <Image

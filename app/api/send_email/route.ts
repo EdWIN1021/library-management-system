@@ -31,50 +31,61 @@ export async function POST(request: Request) {
     },
   });
 
-  // if (updateOtp) {
-  //   let transporter = nodemailer.createTransport({
-  //     service: "gmail",
-  //     auth: {
-  //       user: process.env.EMAIL_ADDRESS,
-  //       pass: process.env.PASSWORD,
-  //     },
-  //   });
+  if (!updateOtp) {
+    return NextResponse.json(
+      {
+        message: "unauthorized",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
 
-  //   await transporter.sendMail({
-  //     from: process.env.EMAIL_ADDRESS,
-  //     to: email,
-  //     subject: "Please verify your device",
-  //     html: `
-  //           <div>Hey ${updateOtp.name}</div>
-  //           <br/>
-  //           <div>Verification code: ${updateOtp.otp}</div>
-  //           <br/>
-  //           <div>Thanks,</idv>
-  //           <div>The Edwin Team</idv>
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_ADDRESS,
+      pass: process.env.PASSWORD,
+    },
+  });
 
-  //         `,
-  //   });
+  const res = await transporter.sendMail({
+    from: process.env.EMAIL_ADDRESS,
+    to: email,
+    subject: "Please verify your device",
+    html: `
+            <div>Hey ${updateOtp.name}</div>
+            <br/>
+            <div>Verification code: ${updateOtp.otp}</div>
+            <br/>
+            <div>Thanks,</idv>
+            <div>The Edwin Team</idv>
 
-  //   setTimeout(async () => {
-  //     await prisma.user.update({
-  //       where: {
-  //         email,
-  //       },
-  //       data: {
-  //         otp: null,
-  //       },
-  //     });
-  //   }, 60 * 1000);
+          `,
+  });
 
-  //   return NextResponse.json(
-  //     {
-  //       message: "otp send",
-  //     },
-  //     {
-  //       status: 200,
-  //     }
-  //   );
-  // }
+  if (res) {
+    setTimeout(async () => {
+      await prisma.user.update({
+        where: {
+          email,
+        },
+        data: {
+          otp: null,
+        },
+      });
+    }, 60 * 1000);
+
+    return NextResponse.json(
+      {
+        message: "otp send",
+      },
+      {
+        status: 200,
+      }
+    );
+  }
 
   return NextResponse.json(
     {
