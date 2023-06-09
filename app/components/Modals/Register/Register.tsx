@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 import EmailConstrain from "../../EmailConstrain/EmailConstrain";
 import LoadingButton from "@mui/lab/LoadingButton";
-
+import { signIn } from "next-auth/react";
 import isEmail from "validator/lib/isEmail";
 
 const PwdConstrain = dynamic(() => import("../../PwdConstrain/PwdConstrain"), {
@@ -76,19 +76,20 @@ const Register = () => {
       const data = await res.json();
 
       if (res.status === 201) {
-        setInputFields({
-          email: "",
-          username: "",
-          password: "",
-          confirmPwd: "",
+        signIn("credentials", { ...inputFields, redirect: false }).then(() => {
+          setInputFields({
+            email: "",
+            username: "",
+            password: "",
+            confirmPwd: "",
+          });
+          toast.success(data.message, {
+            style: {
+              minWidth: "450px",
+            },
+          });
+          dispatch(closeRegister());
         });
-        toast.success(data.message, {
-          style: {
-            minWidth: "450px",
-          },
-        });
-
-        dispatch(closeRegister());
       } else {
         toast.error(data.error, {
           style: {

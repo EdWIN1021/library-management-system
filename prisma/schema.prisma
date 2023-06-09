@@ -42,7 +42,8 @@ model User {
 }
 
 model Borrow {
-  bookId         String       @id
+  borrowId       String      @id @default(cuid())
+  bookId         String       
   title          String
   imageUrl       String
   returnDate     DateTime          
