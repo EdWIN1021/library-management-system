@@ -20,6 +20,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 const BookDetail = ({ book }: { book: Book }) => {
   const { data: session } = useSession();
   const user = session?.user as User;
+  
   const [borrowedBook, setBorrowedBook] = useState();
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
@@ -33,16 +34,10 @@ const BookDetail = ({ book }: { book: Book }) => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const res = await fetch(`/api/borrow/${book?.id}?userId=${user?.id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
+        const res = await fetch(`/api/borrow/${book?.id}?userId=${user?.id}`);
         const data = await res.json();
 
-        if (res.status === 200 && data) {
+        if (res.ok && data) {
           setBorrowedBook(data);
           setDateRange({
             ...dateRange,
@@ -94,120 +89,112 @@ const BookDetail = ({ book }: { book: Book }) => {
   };
 
   return (
-    <>
-      {!isLoading && (
-        <div className={styles.container}>
-          <div className={styles.info}>
-            <div className={styles.detail}>
-              <div className={styles.title}>{book?.title}</div>
-              <div className={styles.author}>By {book?.authors}</div>
-              <div className={styles.edition}>{book?.edition}</div>
+    <div className={styles.container}>
+      <div className={styles.info}>
+        <div className={styles.detail}>
+          <div className={styles.title}>{book?.title}</div>
+          <div className={styles.author}>By {book?.authors}</div>
+          <div className={styles.edition}>{book?.edition}</div>
 
-              <div className={styles.rating}>
-                <Rating value={book?.rating} precision={0.5} readOnly />
-                {book?.rating} ratings
+          <div className={styles.rating}>
+            <Rating value={book?.rating} precision={0.5} readOnly />
+            {book?.rating} ratings
+          </div>
+
+          <div>{book?.genres}</div>
+
+          <div className={styles.status}>
+            <div>
+              <div className={styles.title}>Availability</div>
+
+              <div className={styles.format}>
+                <CheckCircleIcon style={{ color: "#42bb4e" }} />
+                {"Paperback"}
               </div>
 
-              <div>{book?.genres}</div>
-
-              <div className={styles.status}>
-                <div>
-                  <div className={styles.title}>Availability</div>
-
-                  <div className={styles.format}>
-                    <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                    {"Paperback"}
-                  </div>
-
-                  <div className={styles.format}>
-                    <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                    {"Hardcover"}
-                  </div>
-
-                  <div className={styles.format}>
-                    <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                    {"Mass Market Paperback"}
-                  </div>
-                </div>
-
-                <div>
-                  <div className={styles.title}>Status</div>
-                  <div className={styles.shelf}>
-                    {borrowedBook ? (
-                      <span>In-Shelf</span>
-                    ) : (
-                      <span>In-Stock</span>
-                    )}
-                  </div>
-                </div>
+              <div className={styles.format}>
+                <CheckCircleIcon style={{ color: "#42bb4e" }} />
+                {"Hardcover"}
               </div>
 
-              <div style={{ margin: "20px 0" }}>
-                <DatePicker
-                  dateRange={dateRange}
-                  setDateRange={setDateRange}
-                  disabled={borrowedBook ? true : false}
-                />
-              </div>
-
-              <div style={{ marginTop: "30px" }}>
-                {borrowedBook ? (
-                  <Button variant="contained" size="large" disabled>
-                    Borrowed
-                  </Button>
-                ) : (
-                  <LoadingButton
-                    loading={isButtonLoading}
-                    variant="contained"
-                    size="large"
-                    onClick={handleBorrow}
-                  >
-                    Borrow
-                  </LoadingButton>
-                )}
+              <div className={styles.format}>
+                <CheckCircleIcon style={{ color: "#42bb4e" }} />
+                {"Mass Market Paperback"}
               </div>
             </div>
 
-            <div className={styles.description}>
-              <div>
-                <span>About</span> Book
+            <div>
+              <div className={styles.title}>Status</div>
+              <div className={styles.shelf}>
+                {borrowedBook ? <span>In-Shelf</span> : <span>In-Stock</span>}
               </div>
-
-              <div>{book?.description}</div>
             </div>
           </div>
 
-          <TabContext value={"1"}>
-            <TabList
-              style={{
-                marginLeft: "40px",
-              }}
-            >
-              <Tab label="Overview" value="1" />
-            </TabList>
-            <TabPanel
-              value="1"
-              style={{ padding: "0", marginTop: "20px", marginLeft: "40px" }}
-            >
-              <div className={styles.data_container}>
-                <div className={styles.data}>
-                  <p>Review Count</p>
-                  <p>{book?.review_count}</p>
-                </div>
-                <div className={styles.data}>
-                  <p>Page Number</p>
-                  <p>{book?.num_pages}</p>
-                </div>
-                <div className={styles.data}>
-                  <p>Language</p>
-                  <p>English</p>
-                </div>
-              </div>
-            </TabPanel>
-          </TabContext>
+          <div style={{ margin: "20px 0" }}>
+            <DatePicker
+              dateRange={dateRange}
+              setDateRange={setDateRange}
+              disabled={borrowedBook ? true : false}
+            />
+          </div>
+
+          <div style={{ marginTop: "30px" }}>
+            {borrowedBook ? (
+              <Button variant="contained" size="large" disabled>
+                Borrowed
+              </Button>
+            ) : (
+              <LoadingButton
+                loading={isButtonLoading}
+                variant="contained"
+                size="large"
+                onClick={handleBorrow}
+              >
+                Borrow
+              </LoadingButton>
+            )}
+          </div>
         </div>
-      )}
-    </>
+
+        <div className={styles.description}>
+          <div>
+            <span>About</span> Book
+          </div>
+
+          <div>{book?.description}</div>
+        </div>
+      </div>
+
+      <TabContext value={"1"}>
+        <TabList
+          style={{
+            marginLeft: "40px",
+          }}
+        >
+          <Tab label="Overview" value="1" />
+        </TabList>
+        <TabPanel
+          value="1"
+          style={{ padding: "0", marginTop: "20px", marginLeft: "40px" }}
+        >
+          <div className={styles.data_container}>
+            <div className={styles.data}>
+              <p>Review Count</p>
+              <p>{book?.review_count}</p>
+            </div>
+            <div className={styles.data}>
+              <p>Page Number</p>
+              <p>{book?.num_pages}</p>
+            </div>
+            <div className={styles.data}>
+              <p>Language</p>
+              <p>English</p>
+            </div>
+          </div>
+        </TabPanel>
+      </TabContext>
+    </div>
   );
 };
 

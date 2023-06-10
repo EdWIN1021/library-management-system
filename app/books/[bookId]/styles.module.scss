@@ -4,7 +4,6 @@
 .book {
   @include flex-row;
   background-color: $bg-white;
-  color: $text-primary;
-  padding: 65px 40px;
+  padding: 2rem;
   height: 100%;
 }

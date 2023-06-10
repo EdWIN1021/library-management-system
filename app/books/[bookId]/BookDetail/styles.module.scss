@@ -9,8 +9,8 @@
     width: 100%;
 
     .detail {
-      padding: 0 40px;
-      line-height: 30px;
+      padding: 0 $p-1;
+      line-height: $lh-1;
       flex: 1;
 
       .title {
@@ -25,45 +25,45 @@
       .rating {
         @include flex-row;
         align-items: center;
-        gap: 5px;
-        margin: 10px 0;
+        gap: $g-1;
+        margin: $m-1 0;
       }
 
       .status {
         @include flex-row;
-        margin: 20px 0;
-        gap: 30px;
+        margin: $m-1 0;
+        gap: $g-2;
 
         .title {
-          font-size: 20px;
-          margin-bottom: 10px;
+          font-size: $text-3;
+          margin-bottom: $mb-1;
         }
 
         .format {
           @include flex-row;
           align-items: center;
-          gap: 5px;
-          width: 200px;
+          gap: $g-1;
+          width: 18.75rem;
         }
 
         .shelf {
-          border-radius: 5px;
-          padding: 0 5px;
+          border-radius: $br-1;
+          text-align: center;
           background-color: $bg-green;
           color: $text-white;
-          width: 70px;
+          width: 4.38rem;
         }
       }
     }
 
     .description {
-      width: 400px;
-      max-height: 500px;
+      width: 21.88rem;
+      max-height: 31.25rem;
       overflow-y: auto;
 
       div:nth-child(1) {
         font-size: $text-3;
-        margin-bottom: 40px;
+        margin-bottom: $mt-2;
         span {
           font-size: $text-3;
           color: $primary-color;
@@ -71,23 +71,23 @@
       }
 
       div:nth-child(2) {
-        line-height: 25px;
+        line-height: $lh-1;
       }
     }
   }
 
   .data_container {
     @include flex-row;
-    gap: 40px;
+    gap: $g-2;
 
     .data {
-      width: 240px;
-      height: 50px;
+      width: 15.63rem;
+      height: 3.13rem;
       text-align: center;
-      line-height: 25px;
+      line-height: calc(3.13rem / 2);
 
       border: 1px solid #dddddd;
-      border-radius: 5px;
+      border-radius: $br-1;
 
       p:first-child {
         font-size: $text-1;

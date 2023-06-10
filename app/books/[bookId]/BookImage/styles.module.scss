@@ -3,18 +3,20 @@
 
 .contianer {
   @include flex-column;
-  width: 300px;
-  gap: 20px;
+  max-width: 15.63rem;
+  gap: $g-1;
+  align-items: center;
 
   .quotes {
-    margin-top: 20px;
+    margin-top: $mt-1;
+
     div:first-child {
       font-size: $text-3;
-      margin-bottom: 20px;
+      margin-bottom: $mt-1;
     }
 
     li {
-      margin-bottom: 20px;
+      margin-bottom: $mt-1;
     }
   }
 }
