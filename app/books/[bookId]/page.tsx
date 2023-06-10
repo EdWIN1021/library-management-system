@@ -1,4 +1,4 @@
-import { getBook } from "@/app/lib/genres";
+import { getBook } from "@/app/lib/books";
 import styles from "./styles.module.scss";
 
 import BookImage from "./BookImage/BookImage";

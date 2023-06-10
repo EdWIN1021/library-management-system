@@ -1,4 +1,4 @@
-import { getCategory } from "./lib/genres";
+import { getCategory } from "./lib/books";
 import { getQuote } from "./lib/quotes";
 import Search from "./components/Search/Search";
 import Banner from "./components/Banner/Banner";

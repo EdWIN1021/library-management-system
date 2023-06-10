@@ -1,12 +1,12 @@
 import BorrowList from "./BorrowList/BorrowList";
-
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { getBorrowList } from "../lib/books";
+import { getCurrentUser } from "../lib/auth";
 
 const BorrowPage = async () => {
-  const session = await getServerSession(authOptions);
+  const user = await getCurrentUser();
+  const borrowList = (await getBorrowList(user?.id)) || [];
 
-  return <BorrowList session={session} />;
+  return <BorrowList borrowList={borrowList} />;
 };
 
 export default BorrowPage;

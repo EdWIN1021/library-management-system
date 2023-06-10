@@ -9,7 +9,6 @@ import AuthProvider from "./providers/AuthProvider";
 import DateProvider from "./providers/DateProvider";
 import { Toaster } from "react-hot-toast";
 import { Nunito } from "next/font/google";
-// import { getUser } from "./lib/getUser";
 const nunito = Nunito({ subsets: ["latin"] });
 
 const Login = dynamic(() => import("./components/Modals/Login/Login"), {

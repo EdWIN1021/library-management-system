@@ -1,4 +1,5 @@
 "use client";
+
 import styles from "./styles.module.scss";
 import { Button, Rating, TableRow, TableCell } from "@mui/material";
 import Image from "next/image";
