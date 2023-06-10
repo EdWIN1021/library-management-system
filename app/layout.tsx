@@ -9,7 +9,7 @@ import AuthProvider from "./providers/AuthProvider";
 import DateProvider from "./providers/DateProvider";
 import { Toaster } from "react-hot-toast";
 import { Nunito } from "next/font/google";
-import { getUser } from "./lib/getUser";
+// import { getUser } from "./lib/getUser";
 const nunito = Nunito({ subsets: ["latin"] });
 
 const Login = dynamic(() => import("./components/Modals/Login/Login"), {
@@ -34,7 +34,6 @@ const VerifyOTP = dynamic(
   }
 );
 
-
 export const metadata = {
   title: "library management system",
 };
@@ -44,8 +43,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = (await getUser()) || null;
-
   return (
     <html lang="en">
       <body className={nunito.className}>
@@ -55,7 +52,7 @@ export default async function RootLayout({
             <StoreProvider>
               <StyleProvider>
                 <header>
-                  <Navbar user={user} />
+                  <Navbar />
                 </header>
 
                 <main>

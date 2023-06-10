@@ -11,7 +11,7 @@ const Category = async ({ params }: { params: { categoryId: string } }) => {
 
   return (
     <>
-      <div className={styles.category}>
+      <div>
         <BookList books={books} session={session} />
       </div>
     </>
