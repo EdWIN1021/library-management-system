@@ -1,19 +1,16 @@
 import "./globals.scss";
 import styles from "./page.module.scss";
-
-import { Nunito } from "next/font/google";
+import dynamic from "next/dynamic";
 import Navbar from "./components/Navbar/Navbar";
-
+import Footer from "./components/Footer/Footer";
 import StoreProvider from "./providers/StoreProvider";
 import StyleProvider from "./providers/StyleProvider";
 import AuthProvider from "./providers/AuthProvider";
 import DateProvider from "./providers/DateProvider";
-
-import Footer from "./components/Footer/Footer";
-
 import { Toaster } from "react-hot-toast";
-import dynamic from "next/dynamic";
+import { Nunito } from "next/font/google";
 import { getUser } from "./lib/getUser";
+const nunito = Nunito({ subsets: ["latin"] });
 
 const Login = dynamic(() => import("./components/Modals/Login/Login"), {
   ssr: false,
@@ -37,7 +34,6 @@ const VerifyOTP = dynamic(
   }
 );
 
-const nunito = Nunito({ subsets: ["latin"] });
 
 export const metadata = {
   title: "library management system",

@@ -8,14 +8,6 @@ export interface User {
   provider?: string | null | undefined;
 }
 
-export interface Auth extends Session {
-  id?: string | null | undefined;
-  name?: string | null | undefined;
-  email?: string | null | undefined;
-  image?: string | null | undefined;
-  provider?: string | null | undefined;
-}
-
 export interface Book {
   id: number;
   title: string;
