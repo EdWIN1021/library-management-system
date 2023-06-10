@@ -30,7 +30,7 @@
   }
 
   .copyright {
-    margin-top: $mt-1;
+    margin-top: $mt-2;
     text-align: center;
   }
 
@@ -38,6 +38,6 @@
     @include flex-row;
     justify-content: center;
     gap: $g-1;
-    margin-top: $mt-1;
+    margin-top: $mt-2;
   }
 }

@@ -1,21 +1,10 @@
-import BookList from "@/app/components/BookList/BookList";
-import styles from "./styles.module.scss";
+import CategoryList from "@/app/category/[categoryId]/CategoryList/CategoryList";
 import { getCategory } from "@/app/lib/genres";
-
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
 
 const Category = async ({ params }: { params: { categoryId: string } }) => {
   const books = await getCategory(params?.categoryId);
-  const session = await getServerSession(authOptions);
 
-  return (
-    <>
-      <div>
-        <BookList books={books} session={session} />
-      </div>
-    </>
-  );
+  return <CategoryList books={books} />;
 };
 
 export default Category;
