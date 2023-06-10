@@ -16,11 +16,14 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import LoadingButton from "@mui/lab/LoadingButton";
+import CancelIcon from "@mui/icons-material/Cancel";
+
+const formats = ["Paperback", "Hardcover", "Mass Market Paperback"];
 
 const BookDetail = ({ book }: { book: Book }) => {
   const { data: session } = useSession();
   const user = session?.user as User;
-  
+
   const [borrowedBook, setBorrowedBook] = useState();
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
@@ -93,7 +96,7 @@ const BookDetail = ({ book }: { book: Book }) => {
       <div className={styles.info}>
         <div className={styles.detail}>
           <div className={styles.title}>{book?.title}</div>
-          <div className={styles.author}>By {book?.authors}</div>
+          <div>By {book?.authors}</div>
           <div className={styles.edition}>{book?.edition}</div>
 
           <div className={styles.rating}>
@@ -107,20 +110,17 @@ const BookDetail = ({ book }: { book: Book }) => {
             <div>
               <div className={styles.title}>Availability</div>
 
-              <div className={styles.format}>
-                <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                {"Paperback"}
-              </div>
+              {formats.map((format) => (
+                <div className={styles.format}>
+                  {format === book?.format ? (
+                    <CheckCircleIcon style={{ color: "#42bb4e" }} />
+                  ) : (
+                    <CancelIcon style={{ color: "#f34040" }} />
+                  )}
 
-              <div className={styles.format}>
-                <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                {"Hardcover"}
-              </div>
-
-              <div className={styles.format}>
-                <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                {"Mass Market Paperback"}
-              </div>
+                  {book?.format}
+                </div>
+              ))}
             </div>
 
             <div>
@@ -131,7 +131,7 @@ const BookDetail = ({ book }: { book: Book }) => {
             </div>
           </div>
 
-          <div style={{ margin: "20px 0" }}>
+          <div>
             <DatePicker
               dateRange={dateRange}
               setDateRange={setDateRange}
@@ -139,7 +139,7 @@ const BookDetail = ({ book }: { book: Book }) => {
             />
           </div>
 
-          <div style={{ marginTop: "30px" }}>
+          <div className={styles.btn}>
             {borrowedBook ? (
               <Button variant="contained" size="large" disabled>
                 Borrowed
@@ -167,17 +167,10 @@ const BookDetail = ({ book }: { book: Book }) => {
       </div>
 
       <TabContext value={"1"}>
-        <TabList
-          style={{
-            marginLeft: "40px",
-          }}
-        >
+        <TabList>
           <Tab label="Overview" value="1" />
         </TabList>
-        <TabPanel
-          value="1"
-          style={{ padding: "0", marginTop: "20px", marginLeft: "40px" }}
-        >
+        <TabPanel value="1">
           <div className={styles.data_container}>
             <div className={styles.data}>
               <p>Review Count</p>
