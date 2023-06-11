@@ -16,41 +16,38 @@ import { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
 import { closeOTP, openVerifyOTP } from "@/app/features/modal/modalSlice";
 import { setAuthEmail } from "@/app/features/auth/authSlice";
+import { useMutation } from "react-query";
+import { sendEmail } from "@/app/lib/request";
 
 const OTP = () => {
   const { isOTPOpen } = useSelector((state: RootState) => state.modal);
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  // const { mutate, isLoading } = useMutation({
-  //   mutationFn: createBorrow,
-  // });
+  const { mutate, isLoading } = useMutation({
+    mutationFn: sendEmail,
+  });
 
   const dispatch = useDispatch();
 
-  const onClick = async () => {
-    setLoading(true);
+  const handleClick = async () => {
     dispatch(setAuthEmail(email));
 
     try {
       if (isEmail(email)) {
-        const res = await fetch("/api/send_email", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        await mutate(email, {
+          onSuccess: () => {
+            dispatch(closeOTP());
+            dispatch(openVerifyOTP());
           },
-          body: JSON.stringify({ email }),
+          onError: (error) => {
+            console.log(error);
+          },
         });
-        if (res.status === 200) {
-          dispatch(closeOTP());
-          dispatch(openVerifyOTP());
-        }
       } else {
         toast.error("Please enter a vaild email address");
       }
     } catch (error) {
       throw new Error("somthing wrong");
     } finally {
-      setLoading(false);
       setEmail("");
     }
   };
@@ -85,8 +82,8 @@ const OTP = () => {
         />
 
         <LoadingButton
-          loading={loading}
-          onClick={onClick}
+          loading={isLoading}
+          onClick={handleClick}
           variant="contained"
           size="large"
           style={{ marginTop: "4rem" }}
