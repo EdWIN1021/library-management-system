@@ -1,61 +1,35 @@
 "use client";
-import Rating from "@mui/material/Rating";
+
 import styles from "./styles.module.scss";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { Button } from "@mui/material";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-import { Book, User } from "@/app/types";
-import { openLogin } from "@/app/features/modal/modalSlice";
-import DatePicker from "@/app/components/DatePicker/DatePicker";
-import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
-import LoadingButton from "@mui/lab/LoadingButton";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { Button, Tab, Rating } from "@mui/material";
+import { TabContext, TabList, TabPanel, LoadingButton } from "@mui/lab";
+import { Book, User } from "@/app/types";
+import { openLogin } from "@/app/features/modal/modalSlice";
+import DatePicker from "@/app/components/DatePicker/DatePicker";
+import useBorrow from "@/app/hooks/useBorrow";
+import { useMutation } from "react-query";
 
 const formats = ["Paperback", "Hardcover", "Mass Market Paperback"];
 
 const BookDetail = ({ book }: { book: Book }) => {
   const { data: session } = useSession();
-  const user = session?.user as User;
+  const dispatch = useDispatch();
 
-  const [borrowedBook, setBorrowedBook] = useState();
+  const user = session?.user as User;
+  const { data: borrow, refetch } = useBorrow("borrow", book?.id, user?.id);
+
   const [isButtonLoading, setIsButtonLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState<boolean | null>(null);
   const [dateRange, setDateRange] = useState({
     borrowDate: dayjs(),
     returnDate: dayjs(),
   });
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const res = await fetch(`/api/borrow/${book?.id}?userId=${user?.id}`);
-        const data = await res.json();
-
-        if (res.ok && data) {
-          setBorrowedBook(data);
-          setDateRange({
-            ...dateRange,
-            borrowDate: dayjs(data?.borrowDate),
-            returnDate: dayjs(data?.returnDate),
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, [user]);
 
   const handleBorrow = async () => {
     if (!user) {
@@ -84,7 +58,7 @@ const BookDetail = ({ book }: { book: Book }) => {
       if (res.ok && data) {
         setIsButtonLoading(false);
         toast.success(`You have borrowed the book: ${book?.title} `);
-        setBorrowedBook(data);
+        refetch();
       }
     } catch (error) {
       console.log(error);
@@ -111,7 +85,7 @@ const BookDetail = ({ book }: { book: Book }) => {
               <div className={styles.title}>Availability</div>
 
               {formats.map((format) => (
-                <div className={styles.format}>
+                <div className={styles.format} key={format}>
                   {format === book?.format ? (
                     <CheckCircleIcon style={{ color: "#42bb4e" }} />
                   ) : (
@@ -126,7 +100,7 @@ const BookDetail = ({ book }: { book: Book }) => {
             <div>
               <div className={styles.title}>Status</div>
               <div className={styles.shelf}>
-                {borrowedBook ? <span>In-Shelf</span> : <span>In-Stock</span>}
+                {borrow ? <span>In-Shelf</span> : <span>In-Stock</span>}
               </div>
             </div>
           </div>
@@ -135,12 +109,12 @@ const BookDetail = ({ book }: { book: Book }) => {
             <DatePicker
               dateRange={dateRange}
               setDateRange={setDateRange}
-              disabled={borrowedBook ? true : false}
+              disabled={borrow ? true : false}
             />
           </div>
 
           <div className={styles.btn}>
-            {borrowedBook ? (
+            {borrow ? (
               <Button variant="contained" size="large" disabled>
                 Borrowed
               </Button>

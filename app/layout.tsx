@@ -9,6 +9,8 @@ import AuthProvider from "./providers/AuthProvider";
 import DateProvider from "./providers/DateProvider";
 import { Toaster } from "react-hot-toast";
 import { Nunito } from "next/font/google";
+import QueryProvider from "./providers/QueryProvider";
+
 const nunito = Nunito({ subsets: ["latin"] });
 
 const Login = dynamic(() => import("./components/Modals/Login/Login"), {
@@ -47,27 +49,27 @@ export default async function RootLayout({
       <body className={nunito.className}>
         <Toaster />
         <AuthProvider>
-          <DateProvider>
-            <StoreProvider>
-              <StyleProvider>
-                <header>
-                  <Navbar />
-                </header>
-
-                <main>
-                  <Login />
-                  <Register />
-                  <OTP />
-                  <VerifyOTP />
-                  <div className={styles.container}>{children}</div>
-                </main>
-
-                <footer>
-                  <Footer />
-                </footer>
-              </StyleProvider>
-            </StoreProvider>
-          </DateProvider>
+          <QueryProvider>
+            <DateProvider>
+              <StoreProvider>
+                <StyleProvider>
+                  <header>
+                    <Navbar />
+                  </header>
+                  <main>
+                    <Login />
+                    <Register />
+                    <OTP />
+                    <VerifyOTP />
+                    <div className={styles.container}>{children}</div>
+                  </main>
+                  <footer>
+                    <Footer />
+                  </footer>
+                </StyleProvider>
+              </StoreProvider>
+            </DateProvider>
+          </QueryProvider>
         </AuthProvider>
       </body>
     </html>
