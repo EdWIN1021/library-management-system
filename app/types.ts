@@ -1,4 +1,4 @@
-import { Session } from "next-auth";
+import { Dayjs } from "dayjs";
 
 export interface User {
   id?: string | null | undefined;
@@ -25,4 +25,13 @@ export interface Book {
   Quote1: string;
   Quote2: string;
   Quote3: string;
+}
+
+export interface Borrow {
+  bookId: string;
+  title: string;
+  imageUrl: string;
+  borrowDate: Dayjs;
+  returnDate: Dayjs;
+  userId: string | null | undefined;
 }

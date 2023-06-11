@@ -15,20 +15,23 @@ import { openLogin } from "@/app/features/modal/modalSlice";
 import DatePicker from "@/app/components/DatePicker/DatePicker";
 import useBorrow from "@/app/hooks/useBorrow";
 import { useMutation } from "react-query";
+import { createBorrow } from "@/app/lib/request";
 
 const formats = ["Paperback", "Hardcover", "Mass Market Paperback"];
 
 const BookDetail = ({ book }: { book: Book }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
-
   const user = session?.user as User;
-  const { data: borrow, refetch } = useBorrow("borrow", book?.id, user?.id);
-
-  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [dateRange, setDateRange] = useState({
     borrowDate: dayjs(),
     returnDate: dayjs(),
+  });
+
+  const { data: borrow, refetch } = useBorrow("borrow", book?.id, user?.id);
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: createBorrow,
   });
 
   const handleBorrow = async () => {
@@ -36,33 +39,21 @@ const BookDetail = ({ book }: { book: Book }) => {
       return dispatch(openLogin());
     }
 
-    try {
-      setIsButtonLoading(true);
-      const res = await fetch("/api/borrow", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    await mutate(
+      {
+        bookId: book?.id.toString(),
+        title: book?.title,
+        imageUrl: book?.image_url,
+        borrowDate: dateRange.borrowDate,
+        returnDate: dateRange.returnDate,
+        userId: user?.id,
+      },
+      {
+        onSuccess: () => {
+          refetch();
         },
-        body: JSON.stringify({
-          bookId: book?.id.toString(),
-          title: book?.title,
-          imageUrl: book?.image_url,
-          borrowDate: dateRange.borrowDate,
-          returnDate: dateRange.returnDate,
-          userId: user?.id,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data) {
-        setIsButtonLoading(false);
-        toast.success(`You have borrowed the book: ${book?.title} `);
-        refetch();
       }
-    } catch (error) {
-      console.log(error);
-    }
+    );
   };
 
   return (
@@ -120,7 +111,7 @@ const BookDetail = ({ book }: { book: Book }) => {
               </Button>
             ) : (
               <LoadingButton
-                loading={isButtonLoading}
+                loading={isLoading}
                 variant="contained"
                 size="large"
                 onClick={handleBorrow}
