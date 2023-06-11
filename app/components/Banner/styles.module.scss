@@ -1,8 +1,8 @@
 @import "../../styles/variables";
 .bg {
   opacity: 0.9;
-  height: 500px;
+  min-height: 32.25rem;
   position: relative;
   object-fit: contain;
-  margin-bottom: 30px;
+  margin-bottom: $mb-2;
 }

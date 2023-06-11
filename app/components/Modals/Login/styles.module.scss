@@ -3,9 +3,12 @@
 
 .form {
   @include flex-column;
+  .btn {
+    margin-top: $mt-1;
+  }
 }
 
 .footer {
   text-align: center;
-  margin-top: 8px;
+  margin-top: $mt-1;
 }

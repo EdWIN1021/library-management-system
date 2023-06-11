@@ -13,7 +13,6 @@ const Input: React.FC<InputProps> = (props) => {
       <TextField
         {...props}
         required
-        style={{ width: "300px" }}
         size="small"
         id={props.lable}
         variant="outlined"
@@ -23,6 +22,3 @@ const Input: React.FC<InputProps> = (props) => {
 };
 
 export default Input;
-
-{
-}

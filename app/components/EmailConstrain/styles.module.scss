@@ -1,9 +1,7 @@
 @import "../../styles/variables";
 
 .message {
-  font-size: 13px;
-  margin-top: 10px;
-  margin-left: 5px;
-  line-height: 25px;
+  font-size: $text-1;
+  line-height: $lh-1;
   color: $text-error;
 }

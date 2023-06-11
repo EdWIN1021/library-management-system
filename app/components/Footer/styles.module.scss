@@ -2,7 +2,7 @@
 @import "../../styles/variables";
 
 .footer {
-  min-width: 1400px;
+  min-width: $width;
 
   background-color: $primary-color;
   color: $text-white;
@@ -15,7 +15,7 @@
 
     .wrapper {
       @include flex-column;
-      width: 120px;
+      width: 7.5rem;
 
       .title {
         margin-bottom: $mb-2;

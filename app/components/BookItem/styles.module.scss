@@ -3,8 +3,8 @@
 
 .book {
   color: $text-primary;
-  line-height: 25px;
-  width: 150px;
+  line-height: $lh-1;
+  width: 9.38rem;
 
   .image {
     &:hover {
@@ -19,11 +19,11 @@
 
   .author {
     @include text-nowrap;
-    font-size: 13px;
+    font-size: $text-1;
   }
 
   .rating {
-    font-size: 13px;
+    font-size: $text-1;
     span {
       color: $text-secondary;
     }

@@ -1,32 +1,30 @@
 "use client";
-import ModalWrapper from "../../ModalWrapper/ModalWrapper";
+
+import styles from "./styles.module.scss";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { RootState } from "@/app/store";
 import {
   closeLogin,
   openRegister,
   openOTP,
 } from "@/app/features/modal/modalSlice";
-import { useRouter } from "next/navigation";
 import Input from "../../Input/Input";
-import styles from "./styles.module.scss";
-import Heading from "../../Heading/Heading";
-import Divider from "@mui/material/Divider";
-import Link from "@mui/material/Link";
-import OAuth from "../../OAuth/OAuth";
 import PwdInput from "../../PwdInput/PwdInput";
-import { useState } from "react";
+import Heading from "../../Heading/Heading";
+import ModalWrapper from "../../ModalWrapper/ModalWrapper";
+import OAuth from "../../OAuth/OAuth";
+import { Divider, Link } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import isEmpty from "validator/lib/isEmpty";
 import toast from "react-hot-toast";
-import { signIn } from "next-auth/react";
-import LoadingButton from "@mui/lab/LoadingButton";
 
 const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const isLoginOpen = useSelector(
-    (state: RootState) => state.modal.isLoginOpen
-  );
+  const { isLoginOpen } = useSelector((state: RootState) => state.modal);
 
   const [inputFields, setInputFields] = useState({
     email: "",
@@ -41,9 +39,7 @@ const Login = () => {
 
   const handleOnSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-
     setIsLoading(true);
-
     signIn("credentials", { ...inputFields, redirect: false })
       .then((cb) => {
         if (cb?.error) {
@@ -101,7 +97,7 @@ const Login = () => {
             type="submit"
             variant="contained"
             size="large"
-            style={{ marginTop: "20px" }}
+            className={styles.btn}
             fullWidth
           >
             Login

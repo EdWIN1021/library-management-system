@@ -21,9 +21,13 @@ const OTP = () => {
   const { isOTPOpen } = useSelector((state: RootState) => state.modal);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  // const { mutate, isLoading } = useMutation({
+  //   mutationFn: createBorrow,
+  // });
+
   const dispatch = useDispatch();
 
-  const sendEmail = async () => {
+  const onClick = async () => {
     setLoading(true);
     dispatch(setAuthEmail(email));
 
@@ -82,7 +86,7 @@ const OTP = () => {
 
         <LoadingButton
           loading={loading}
-          onClick={sendEmail}
+          onClick={onClick}
           variant="contained"
           size="large"
           style={{ marginTop: "4rem" }}

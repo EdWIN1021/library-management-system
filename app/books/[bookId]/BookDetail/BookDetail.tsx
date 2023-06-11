@@ -39,6 +39,10 @@ const BookDetail = ({ book }: { book: Book }) => {
       return dispatch(openLogin());
     }
 
+    if (dateRange.borrowDate.isSame(dateRange.returnDate)) {
+      return toast.error("Borrow date and Reutrn date cannot be same");
+    }
+
     await mutate(
       {
         bookId: book?.id.toString(),
@@ -51,6 +55,7 @@ const BookDetail = ({ book }: { book: Book }) => {
       {
         onSuccess: () => {
           refetch();
+          toast.success(`You have borrowed the book: ${book?.title}`);
         },
       }
     );
