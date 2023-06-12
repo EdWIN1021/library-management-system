@@ -21,7 +21,6 @@ export const createBorrow = async (borrowData: Borrow) => {
     headers,
     body: JSON.stringify(borrowData),
   });
-
   return res.json();
 };
 
@@ -31,6 +30,29 @@ export const sendEmail = async (email: string) => {
     headers,
     body: JSON.stringify({ email }),
   });
-
   return res.json();
+};
+
+export const verifyOtp = async ({
+  email,
+  otp,
+}: {
+  email: string;
+  otp: string;
+}) => {
+  const res = await fetch("/api/verify_otp", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      email,
+      otp,
+    }),
+  });
+  const data = await res.json();
+
+  if (!res?.ok) {
+    throw new Error(data?.error);
+  }
+
+  return data;
 };

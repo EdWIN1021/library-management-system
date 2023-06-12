@@ -1,49 +1,46 @@
 "use client";
 import styles from "./styles.module.scss";
 import ModalWrapper from "../../ModalWrapper/ModalWrapper";
-import { closeVerifyOTP } from "@/app/features/modal/modalSlice";
+import {
+  closeVerifyOTP,
+  openResetPassword,
+} from "@/app/features/modal/modalSlice";
 import { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import Heading from "../../Heading/Heading";
 import { useState } from "react";
-import Button from "@mui/material/Button";
 import { Link } from "@mui/material";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { verifyOtp } from "@/app/lib/request";
+import { useMutation } from "react-query";
 
 const VerifyOTP = () => {
   const { isVerifyOTPOpen } = useSelector((state: RootState) => state.modal);
   const { email } = useSelector((state: RootState) => state.auth);
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState<string>("");
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const { mutate, isLoading } = useMutation({ mutationFn: verifyOtp });
 
   const onVerify = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/verify_otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    await mutate(
+      { email, otp },
+      {
+        onSuccess: (data) => {
+          toast.success(data?.message);
+          dispatch(closeVerifyOTP());
+          dispatch(openResetPassword());
         },
-        body: JSON.stringify({ otp, email }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        toast.success(data?.message);
-      } else {
-        toast.error(data?.error);
+        onError: (error: any) => {
+          toast.error(error?.message);
+        },
+        onSettled: () => {
+          setOtp("");
+        },
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setOtp("");
-      setLoading(false);
-    }
+    );
   };
 
   return (
@@ -84,7 +81,7 @@ const VerifyOTP = () => {
           </Link>
         </div>
         <LoadingButton
-          loading={loading}
+          loading={isLoading}
           onClick={onVerify}
           style={{ marginTop: "4rem" }}
           variant="contained"

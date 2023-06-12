@@ -30,26 +30,20 @@ const OTP = () => {
 
   const handleClick = async () => {
     dispatch(setAuthEmail(email));
-
-    try {
-      if (isEmail(email)) {
-        await mutate(email, {
-          onSuccess: () => {
-            dispatch(closeOTP());
-            dispatch(openVerifyOTP());
-          },
-          onError: (error) => {
-            console.log(error);
-          },
-        });
-      } else {
-        toast.error("Please enter a vaild email address");
-      }
-    } catch (error) {
-      throw new Error("somthing wrong");
-    } finally {
-      setEmail("");
+    if (isEmail(email)) {
+      await mutate(email, {
+        onSuccess: () => {
+          dispatch(closeOTP());
+          dispatch(openVerifyOTP());
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    } else {
+      toast.error("Please enter a vaild email address");
     }
+    setEmail("");
   };
 
   return (

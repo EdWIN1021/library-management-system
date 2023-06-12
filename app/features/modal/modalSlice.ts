@@ -5,6 +5,7 @@ export interface ModalState {
   isRegisterOpen: boolean;
   isOTPOpen: boolean;
   isVerifyOTPOpen: boolean;
+  isResetPasswordOpen: boolean;
 }
 
 const initialState: ModalState = {
@@ -12,6 +13,7 @@ const initialState: ModalState = {
   isRegisterOpen: false,
   isOTPOpen: false,
   isVerifyOTPOpen: false,
+  isResetPasswordOpen: false,
 };
 
 export const modalSlice = createSlice({
@@ -44,6 +46,12 @@ export const modalSlice = createSlice({
     closeVerifyOTP: (state) => {
       state.isVerifyOTPOpen = false;
     },
+    openResetPassword: (state) => {
+      state.isResetPasswordOpen = true;
+    },
+    closeResetPassword: (state) => {
+      state.isResetPasswordOpen = false;
+    },
   },
 });
 
@@ -56,6 +64,8 @@ export const {
   closeOTP,
   openVerifyOTP,
   closeVerifyOTP,
+  openResetPassword,
+  closeResetPassword,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

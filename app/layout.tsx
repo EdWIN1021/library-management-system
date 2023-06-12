@@ -35,6 +35,13 @@ const VerifyOTP = dynamic(
   }
 );
 
+const RestPassword = dynamic(
+  () => import("./components/Modals/RestPassword/RestPassword"),
+  {
+    ssr: false,
+  }
+);
+
 export const metadata = {
   title: "library management system",
 };
@@ -61,6 +68,7 @@ export default async function RootLayout({
                     <Register />
                     <OTP />
                     <VerifyOTP />
+                    <RestPassword />
                     <div className={styles.container}>{children}</div>
                   </main>
                   <footer>

@@ -11,6 +11,7 @@ const Input: React.FC<InputProps> = (props) => {
         {props.lable}
       </label>
       <TextField
+        className={styles.input}
         {...props}
         required
         size="small"
