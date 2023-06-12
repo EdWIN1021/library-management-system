@@ -10,6 +10,10 @@ import PwdInput from "../../PwdInput/PwdInput";
 import { useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Heading from "../../Heading/Heading";
+import PwdConstrain from "../../PwdConstrain/PwdConstrain";
+import { toast } from "react-hot-toast";
+import { useMutation } from "react-query";
+import { resetPassword } from "@/app/lib/request";
 
 const RestPassword = () => {
   const { isResetPasswordOpen } = useSelector(
@@ -17,14 +21,45 @@ const RestPassword = () => {
   );
 
   const [inputFields, setInputFields] = useState({
-    oldPwd: "",
-    newPwd: "",
-    newConfirmPwd: "",
+    pwd: "",
+    confirmPwd: "",
   });
+
+  const [showPwdConstrain, setShowPwdConstrain] = useState(false);
+  const [showConfirmPwdConstrain, setShowConfirmPwdConstrain] = useState(false);
+  const [isPwdValid, setIsPwdValid] = useState(false);
+  const [isConfirmPwdValid, setIsConfirmPwdValid] = useState(false);
 
   const dispatch = useDispatch();
 
-  const handleOnChange = () => {};
+  const { mutate, isLoading } = useMutation({ mutationFn: resetPassword });
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputFields({ ...inputFields, [e.target.name]: e.target.value });
+    switch (e.target.name) {
+      case "pwd":
+        setShowPwdConstrain(!isPwdValid);
+        break;
+      case "confirmPwd":
+        setShowConfirmPwdConstrain(!isConfirmPwdValid);
+        break;
+    }
+  };
+
+  const onReset = async (e: React.SyntheticEvent) => {
+    const { pwd, confirmPwd } = inputFields;
+    if (pwd !== confirmPwd) {
+      toast.error("The password and confirm password do not match.", {
+        style: { minWidth: "450px" },
+      });
+    } else {
+      await mutate({ pwd, confirmPwd });
+
+      //send request reset_password
+      //userId, pwd, confirmPwd
+      //login
+    }
+  };
 
   return (
     <ModalWrapper
@@ -38,36 +73,42 @@ const RestPassword = () => {
         <Heading title={"Reset your password"} />
 
         <PwdInput
-          lable={"Old Password"}
-          placeholder={"enter your old password"}
-          name={"oldPwd"}
-          value={inputFields.oldPwd}
+          lable={"Password"}
+          placeholder={"enter your password"}
+          name={"pwd"}
+          value={inputFields.pwd}
           onChange={handleOnChange}
+          onBlur={() => setShowPwdConstrain(false)}
+        />
+
+        <PwdConstrain
+          showConstrain={showPwdConstrain}
+          password={inputFields.pwd}
+          setIsValid={setIsPwdValid}
         />
 
         <PwdInput
-          lable={"New Password"}
-          placeholder={"enter your new password"}
-          name={"newPwd"}
-          value={inputFields.newPwd}
+          lable={"Confirm Password"}
+          placeholder={"enter your confirm password"}
+          name={"confirmPwd"}
+          value={inputFields.confirmPwd}
           onChange={handleOnChange}
+          onBlur={() => setShowConfirmPwdConstrain(false)}
         />
 
-        <PwdInput
-          lable={"New Confirm Password"}
-          placeholder={"enter your new confirm password"}
-          name={"newConfirmPwd"}
-          value={inputFields.newConfirmPwd}
-          onChange={handleOnChange}
+        <PwdConstrain
+          showConstrain={showConfirmPwdConstrain}
+          password={inputFields.confirmPwd}
+          setIsValid={setIsConfirmPwdValid}
         />
 
         <LoadingButton
+          disabled={!(isPwdValid && isConfirmPwdValid)}
+          onClick={onReset}
           className={styles.btn}
           loading={false}
-          type="submit"
           variant="contained"
           size="large"
-          style={{ marginTop: "20px" }}
           fullWidth
         >
           Reset

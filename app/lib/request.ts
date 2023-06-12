@@ -56,3 +56,20 @@ export const verifyOtp = async ({
 
   return data;
 };
+
+export const resetPassword = async ({
+  pwd,
+  confirmPwd,
+}: {
+  pwd: string;
+  confirmPwd: string;
+}) => {
+  const res = await fetch("/api/reset_password", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      pwd,
+      confirmPwd,
+    }),
+  });
+};

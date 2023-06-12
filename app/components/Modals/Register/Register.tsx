@@ -6,7 +6,6 @@ import { closeRegister, openLogin } from "@/app/features/modal/modalSlice";
 import styles from "./styles.module.scss";
 import Heading from "../../Heading/Heading";
 import Input from "../../Input/Input";
-import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Divider from "@mui/material/Divider";
 import PwdInput from "../../PwdInput/PwdInput";
