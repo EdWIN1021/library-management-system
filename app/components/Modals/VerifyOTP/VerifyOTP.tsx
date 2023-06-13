@@ -14,7 +14,7 @@ import { Link } from "@mui/material";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { verifyOtp } from "@/app/lib/request";
+import { sendEmail, verifyOtp } from "@/app/lib/request";
 import { useMutation } from "react-query";
 
 const VerifyOTP = () => {
@@ -23,6 +23,11 @@ const VerifyOTP = () => {
   const [otp, setOtp] = useState<string>("");
   const dispatch = useDispatch();
   const { mutate, isLoading } = useMutation({ mutationFn: verifyOtp });
+  const mutation = useMutation({ mutationFn: sendEmail });
+
+  const onResend = async () => {
+    await mutation.mutate(email);
+  };
 
   const onVerify = async () => {
     await mutate(
@@ -75,7 +80,11 @@ const VerifyOTP = () => {
           }}
         >
           Didn’t you receive the OTP?
-          <Link variant="caption" style={{ alignSelf: "end" }}>
+          <Link
+            variant="caption"
+            style={{ alignSelf: "end", cursor: "pointer" }}
+            onClick={onResend}
+          >
             {" "}
             Resend OTP
           </Link>

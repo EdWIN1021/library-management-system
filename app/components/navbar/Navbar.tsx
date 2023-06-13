@@ -15,11 +15,12 @@ import styles from "./styles.module.scss";
 import { signOut, useSession } from "next-auth/react";
 import { openRegister, openLogin } from "@/app/features/modal/modalSlice";
 import { useDispatch } from "react-redux";
-import { User } from "@/app/types";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function NavBar() {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { data: session } = useSession();
 
@@ -95,7 +96,7 @@ function NavBar() {
                   <MenuItem
                     onClick={() => {
                       setAnchorElUser(null);
-                      signOut();
+                      signOut().then(() => router.push("/"));
                     }}
                   >
                     <Typography>logout</Typography>
