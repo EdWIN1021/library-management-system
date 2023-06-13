@@ -2,7 +2,7 @@
 
 import styles from "./styles.module.scss";
 import ModalWrapper from "../../ModalWrapper/ModalWrapper";
-import { closeResetPassword } from "@/app/features/modal/modalSlice";
+import { closeResetPassword, openLogin } from "@/app/features/modal/modalSlice";
 
 import { RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,11 +14,13 @@ import PwdConstrain from "../../PwdConstrain/PwdConstrain";
 import { toast } from "react-hot-toast";
 import { useMutation } from "react-query";
 import { resetPassword } from "@/app/lib/request";
+import { setAuthEmail } from "@/app/features/auth/authSlice";
 
 const RestPassword = () => {
   const { isResetPasswordOpen } = useSelector(
     (state: RootState) => state.modal
   );
+  const { email } = useSelector((state: RootState) => state.auth);
 
   const [inputFields, setInputFields] = useState({
     pwd: "",
@@ -48,23 +50,27 @@ const RestPassword = () => {
 
   const onReset = async (e: React.SyntheticEvent) => {
     const { pwd, confirmPwd } = inputFields;
-    if (pwd !== confirmPwd) {
-      toast.error("The password and confirm password do not match.", {
-        style: { minWidth: "450px" },
-      });
-    } else {
-      await mutate({ pwd, confirmPwd });
-
-      //send request reset_password
-      //userId, pwd, confirmPwd
-      //login
-    }
+    await mutate(
+      { pwd, confirmPwd, email },
+      {
+        onSuccess: (data) => {
+          toast.success(data?.message, { style: { minWidth: "450px" } });
+          dispatch(closeResetPassword());
+          dispatch(openLogin());
+        },
+        onError: (error: any) => {
+          toast.error(error?.message), { style: { minWidth: "450px" } };
+        },
+        onSettled: () => {
+          dispatch(setAuthEmail(""));
+        },
+      }
+    );
   };
 
   return (
     <ModalWrapper
-      // openModal={isResetPasswordOpen}
-      openModal={true}
+      openModal={isResetPasswordOpen}
       onClose={() => {
         dispatch(closeResetPassword());
       }}
