@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   if (updatedPwd) {
     return NextResponse.json(
       {
-        error: "Your password has been successfully reset.",
+        message: "Your password has been successfully reset.",
       },
       { status: 200 }
     );

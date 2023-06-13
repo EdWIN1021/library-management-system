@@ -112,7 +112,7 @@ const RestPassword = () => {
           disabled={!(isPwdValid && isConfirmPwdValid)}
           onClick={onReset}
           className={styles.btn}
-          loading={false}
+          loading={isLoading}
           variant="contained"
           size="large"
           fullWidth
