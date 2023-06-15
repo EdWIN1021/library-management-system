@@ -2,130 +2,84 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
 import styles from "./styles.module.scss";
 import Grid from "@mui/material/Grid";
-
 import Image from "next/image";
 import Input from "../Input/Input";
-import { Button } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import { User } from "@/app/types";
+import ImageUploader from "../ImageUploader/ImageUploader";
+import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
+import BackHandIcon from "@mui/icons-material/BackHand";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
 const Settings = ({ user }: { user: User | null }) => {
-  const [value, setValue] = useState("1");
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
   return (
-    <Box
-      sx={{ width: "100%", typography: "body1" }}
-      className={styles.tab}
-      p={"40px"}
-    >
-      <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Account" value="1" />
-          </TabList>
-        </Box>
-        <TabPanel value="1">
-          <div className={styles.top}>
-            <div className={styles.profile}>
-              <div>Your Profile Picture</div>
-              <Image
-                className={styles.image}
-                src={user?.image || "/images/placeholder.jpg"}
-                alt="..avatar"
-                width="150"
-                height="200"
-                priority
-              />
-              <div className={styles.upload}>Upload New photo</div>
-            </div>
+    <Container className={styles.container}>
+      <div className={styles.top}>
+        <div className={styles.profile}>
+          <div>Your Profile Picture</div>
+          <Image
+            className={styles.image}
+            src={user?.image || "/images/placeholder.jpg"}
+            alt="..avatar"
+            width="200"
+            height="250"
+            priority
+          />
+        </div>
 
-            <div className={styles.rectangle}>
-              <div className={styles.container}>
-                <div className={styles.content}>
-                  <Image
-                    src={"/images/book.png"}
-                    alt="book..."
-                    width="40"
-                    height="40"
-                    priority
-                  />
-                  <div style={{ fontSize: "25px" }}>120</div>
-                </div>
-                <div style={{ fontSize: "25px" }}>Readings</div>
-              </div>
+        <div className={styles.rectangle}>
+          <div className={styles.wrapper}>
+            <div className={styles.content}>
+              <AutoStoriesIcon />
+              <div>120</div>
             </div>
-
-            <div className={`${styles.rectangle} ${styles.borrowed}`}>
-              <div className={styles.container}>
-                <div className={styles.content}>
-                  <Image
-                    src={"/images/book.png"}
-                    alt="book..."
-                    width="40"
-                    height="40"
-                    priority
-                  />
-                  <div style={{ fontSize: "25px" }}>10</div>
-                </div>
-                <div style={{ fontSize: "25px" }}>Borrowed</div>
-              </div>
-            </div>
-
-            <div className={`${styles.rectangle} ${styles.expired}`}>
-              <div className={styles.container}>
-                <div className={styles.content}>
-                  <Image
-                    src={"/images/book.png"}
-                    alt="book..."
-                    width="40"
-                    height="40"
-                    priority
-                  />
-                  <div style={{ fontSize: "25px" }}>1</div>
-                </div>
-                <div style={{ fontSize: "25px" }}>Expired</div>
-              </div>
-            </div>
+            <div>Readings</div>
           </div>
+        </div>
 
-          <div>
-            <form className={styles.uploadForm}>
-              <Grid container px={"40px"}>
-                <Grid item xs={6}>
-                  <Input lable="ID" disabled value={user?.id || ""} />
-                </Grid>
-                <Grid item xs={6}>
-                  <Input
-                    lable="Provider"
-                    disabled
-                    value={user?.provider || ""}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <Input lable="Username" value={user?.name || ""} />
-                </Grid>
-                <Grid item xs={6}>
-                  <Input lable="Email" value={user?.email || ""} />
-                </Grid>
-
-                <Grid item xs={6} mt={"40px"}>
-                  <Button variant="contained" size="large">
-                    Update Profile
-                  </Button>
-                </Grid>
-              </Grid>
-            </form>
+        <div className={`${styles.rectangle} ${styles.borrowed}`}>
+          <div className={styles.wrapper}>
+            <div className={styles.content}>
+              <BackHandIcon />
+              <div>10</div>
+            </div>
+            <div>Borrowed</div>
           </div>
-        </TabPanel>
-      </TabContext>
-    </Box>
+        </div>
+
+        <div className={`${styles.rectangle} ${styles.expired}`}>
+          <div className={styles.wrapper}>
+            <div className={styles.content}>
+              <AssignmentLateIcon />
+              <div>1</div>
+            </div>
+            <div>Expired</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <form>
+          {user?.provider === "library" && <ImageUploader user={user} />}
+          <Grid container>
+            <Grid item xs={6}>
+              <Input lable="ID" disabled value={user?.id || ""} />
+            </Grid>
+            <Grid item xs={6}>
+              <Input lable="Provider" disabled value={user?.provider || ""} />
+            </Grid>
+            <Grid item xs={6}>
+              <Input lable="Username" disabled value={user?.name || ""} />
+            </Grid>
+            <Grid item xs={6}>
+              <Input lable="Email" disabled value={user?.email || ""} />
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
   );
 };
 

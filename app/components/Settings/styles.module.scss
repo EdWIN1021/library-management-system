@@ -1,44 +1,40 @@
 @import "../../styles/variables";
 @import "../../styles/utilities";
 
-.tab {
+.container {
   background-color: $bg-white;
+  padding: $p-1;
+  height: 100%;
 
   .top {
     @include flex-row;
     color: $text-primary;
     align-items: center;
-    gap: 40px;
-    padding: 40px;
-
+    gap: $g-2;
     .profile {
       @include flex-column;
       align-items: center;
-      gap: 20px;
-
-      .upload {
-        color: $text-secondary;
-        font-size: $text-1;
-      }
+      gap: $g-1;
     }
 
     .rectangle {
       position: relative;
-      width: 175px;
-      height: 149px;
+      width: 10.94rem;
+      height: 9.31rem;
       background: $primary-color;
-      border-radius: 10px;
+      border-radius: $br-2;
       color: $text-white;
+      font-size: $text-4;
 
-      .container {
+      .wrapper {
         @include center;
       }
 
       .content {
-        gap: 20px;
+        gap: $g-1;
         @include flex-row;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 1.25rem;
       }
     }
 
@@ -49,5 +45,9 @@
     .expired {
       background: #f34040;
     }
+  }
+
+  .btn {
+    margin-top: $mt-1;
   }
 }
