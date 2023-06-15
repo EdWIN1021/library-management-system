@@ -1,32 +1,34 @@
 "use client";
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import TabList from "@mui/lab/TabList";
 import styles from "./styles.module.scss";
 import Grid from "@mui/material/Grid";
-import Image from "next/image";
 import Input from "../Input/Input";
-import { Button, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import { User } from "@/app/types";
 import ImageUploader from "../ImageUploader/ImageUploader";
 import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
 import BackHandIcon from "@mui/icons-material/BackHand";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import { useMemo } from "react";
 
 const Settings = ({ user }: { user: User | null }) => {
+  const imageUrl = useMemo(
+    () =>
+      user?.provider === "library"
+        ? `https://firebasestorage.googleapis.com/v0/b/images-39219.appspot.com/o/images%2F${user?.image}?alt=media&token=12c1b750-d60c-4123-82ce-c4f76baf5764`
+        : user?.image || "/images/placeholder.jpg",
+    [user]
+  );
+
   return (
     <Container className={styles.container}>
       <div className={styles.top}>
         <div className={styles.profile}>
           <div>Your Profile Picture</div>
-          <Image
+
+          <img
             className={styles.image}
-            src={user?.image || "/images/placeholder.jpg"}
-            alt="..avatar"
-            width="200"
-            height="250"
-            priority
+            src={imageUrl}
+            style={{ width: "250px", height: "300px" }}
           />
         </div>
 

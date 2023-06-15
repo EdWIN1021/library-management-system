@@ -1,5 +1,4 @@
 import { Borrow } from "../types";
-import crypto from "crypto";
 
 const headers = {
   "Content-Type": "application/json",
@@ -86,16 +85,16 @@ export const resetPassword = async ({
 };
 
 export const uploadImage = async ({
-  imagefile,
+  imageId,
   email,
 }: {
-  imagefile: string;
+  imageId: string;
   email: string | null | undefined;
 }) => {
   const res = await fetch("api/upload_image", {
     method: "POST",
     headers,
-    body: JSON.stringify({ imagefile, email }),
+    body: JSON.stringify({ imageId, email }),
   });
 
   const data = await res.json();

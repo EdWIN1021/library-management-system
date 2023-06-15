@@ -6,39 +6,44 @@ import { useMutation } from "react-query";
 import { uploadImage } from "@/app/lib/request";
 import { User } from "@/app/types";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { useRouter } from "next/navigation";
+import { storage } from "../../../firebase/firebase";
+import { deleteObject, ref, uploadBytes } from "firebase/storage";
 
 const ImageUploader = ({ user }: { user: User | null }) => {
   const [file, setFile] = useState<File | null>(null);
   const { email } = user as User;
   const inputRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: uploadImage,
   });
 
-  const router = useRouter();
-
   const onUpload = async () => {
-    if (file && email) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = async () => {
-        const imagefile = reader.result as string;
-        await mutate(
-          { imagefile, email },
-          {
-            onSuccess: (data) => {
-              router.refresh();
-            },
-            onSettled: () => {
-              console.log(inputRef.current);
-              setFile(null);
-            },
-          }
-        );
-      };
+    if (!file) {
+      return;
     }
+
+    setIsLoading(true);
+    const imageRef = ref(storage, `images/${user?.id}`);
+
+    if (user?.image) {
+      await deleteObject(imageRef);
+    }
+
+    const res = await uploadBytes(imageRef, file);
+    const imageId = res.metadata.name;
+
+    await mutate(
+      { imageId, email },
+      {
+        onSuccess: () => {},
+        onSettled: () => {
+          setIsLoading(false);
+          setFile(null);
+        },
+      }
+    );
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

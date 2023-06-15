@@ -17,12 +17,14 @@ import { openRegister, openLogin } from "@/app/features/modal/modalSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { User } from "@/app/types";
 
 function NavBar() {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { data: session } = useSession();
+  const user = session?.user as User;
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -60,7 +62,11 @@ function NavBar() {
               <IconButton onClick={handleOpenUserMenu}>
                 <Avatar
                   alt="..."
-                  src={session?.user?.image || "/images/placeholder.jpg"}
+                  src={
+                    user?.provider === "library"
+                      ? `https://firebasestorage.googleapis.com/v0/b/images-39219.appspot.com/o/images%2F${user?.image}?alt=media&token=12c1b750-d60c-4123-82ce-c4f76baf5764`
+                      : user?.image || ""
+                  }
                 />
               </IconButton>
             </Tooltip>
