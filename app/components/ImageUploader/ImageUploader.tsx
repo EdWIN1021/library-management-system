@@ -8,12 +8,15 @@ import { User } from "@/app/types";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { storage } from "../../../firebase/firebase";
 import { deleteObject, ref, uploadBytes } from "firebase/storage";
+import { useRouter } from "next/navigation";
 
 const ImageUploader = ({ user }: { user: User | null }) => {
   const [file, setFile] = useState<File | null>(null);
   const { email } = user as User;
   const inputRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
 
   const { mutate } = useMutation({
     mutationFn: uploadImage,
@@ -41,6 +44,7 @@ const ImageUploader = ({ user }: { user: User | null }) => {
         onSettled: () => {
           setIsLoading(false);
           setFile(null);
+          router.push("/");
         },
       }
     );

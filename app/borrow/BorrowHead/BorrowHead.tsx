@@ -10,7 +10,8 @@ const BorrowHead = () => {
         <TableCell>Title</TableCell>
         <TableCell>Borrow Date</TableCell>
         <TableCell>Return Date</TableCell>
-        <TableCell></TableCell>
+        <TableCell>Status</TableCell>
+        <TableCell>Late fee</TableCell>
       </TableRow>
     </TableHead>
   );

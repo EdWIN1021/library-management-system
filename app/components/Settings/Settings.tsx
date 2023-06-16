@@ -4,13 +4,24 @@ import Grid from "@mui/material/Grid";
 import Input from "../Input/Input";
 import { Container } from "@mui/material";
 import { User } from "@/app/types";
+import { useSession } from "next-auth/react";
 import ImageUploader from "../ImageUploader/ImageUploader";
 import AssignmentLateIcon from "@mui/icons-material/AssignmentLate";
 import BackHandIcon from "@mui/icons-material/BackHand";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import { useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { Borrow } from "@prisma/client";
 
-const Settings = ({ user }: { user: User | null }) => {
+const Settings = ({ borrowList }: { borrowList: Borrow[] }) => {
+  const { data: session, status } = useSession();
+  const user = session?.user as User;
+  const router = useRouter();
+
+  if (status === "unauthenticated") {
+    router.push("/");
+  }
+
   const imageUrl = useMemo(
     () =>
       user?.provider === "library"

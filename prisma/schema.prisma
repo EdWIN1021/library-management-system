@@ -48,6 +48,7 @@ model Borrow {
   imageUrl       String
   returnDate     DateTime          
   borrowDate     DateTime
+  return         Boolean?    @default(false)
 
   userId       String
   user    User    @relation(fields: [userId], references: [id],onDelete: Cascade)

@@ -4,6 +4,7 @@ import { Table, TableBody, TableContainer, Paper } from "@mui/material";
 import { Borrow } from "@prisma/client";
 import BorrowHead from "../BorrowHead/BorrowHead";
 import BorrowItem from "../BorrowItem/BorrowItem";
+import { useMemo } from "react";
 
 const BorrowList = ({ borrowList }: { borrowList: Borrow[] }) => {
   return (

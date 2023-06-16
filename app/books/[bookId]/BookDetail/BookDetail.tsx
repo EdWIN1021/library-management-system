@@ -83,12 +83,16 @@ const BookDetail = ({ book }: { book: Book }) => {
               {formats.map((format) => (
                 <div className={styles.format} key={format}>
                   {format === book?.format ? (
-                    <CheckCircleIcon style={{ color: "#42bb4e" }} />
+                    <>
+                      <CheckCircleIcon style={{ color: "#42bb4e" }} />
+                      {book?.format}
+                    </>
                   ) : (
-                    <CancelIcon style={{ color: "#f34040" }} />
+                    <>
+                      <CancelIcon style={{ color: "#f34040" }} />
+                      {format}
+                    </>
                   )}
-
-                  {book?.format}
                 </div>
               ))}
             </div>

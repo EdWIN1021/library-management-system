@@ -1,4 +1,12 @@
 import { Borrow } from "../types";
+import Stripe from "stripe";
+
+const stripe = new Stripe(
+  "sk_test_51NJQbTHZ9nNGFgKe56Esg9uRgj5vXjmKYdnYywj0EpQkAw1psSWmlQsXUSiJ77t4O47cvvMjHoTabqX6ktMEkPTP00CbEGx9SP",
+  {
+    apiVersion: "2022-11-15",
+  }
+);
 
 const headers = {
   "Content-Type": "application/json",
@@ -103,4 +111,22 @@ export const uploadImage = async ({
   }
 
   return data;
+};
+
+export const makePayment = async (quantity: number) => {
+  console.log(quantity);
+
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price: "price_1NJR2jHZ9nNGFgKeyTVmj9fA",
+        quantity,
+      },
+    ],
+    mode: "payment",
+    success_url: "http://localhost:3000/success",
+    cancel_url: "http://localhost:3000/cancel",
+  });
+
+  return { url: session.url };
 };
