@@ -19,14 +19,17 @@ const CategoryList = ({ books }: { books: Book[] }) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {};
 
+  console.log(books);
+
   return (
     <TableContainer component={Paper}>
       <Table>
         <CategoryHead />
         <TableBody>
-          {books?.map((book) => (
-            <CategoryItem key={book.id} book={book} />
-          ))}
+          {books?.map(
+            (book: Book) =>
+              book.id && <CategoryItem key={book.id} book={book} />
+          )}
         </TableBody>
       </Table>
 
