@@ -100,7 +100,11 @@ const BookDetail = ({ book }: { book: Book }) => {
             <div>
               <div className={styles.title}>Status</div>
               <div className={styles.shelf}>
-                {borrow ? <span>In-Shelf</span> : <span>In-Stock</span>}
+                {!borrow?.return ? (
+                  <span>In-Shelf</span>
+                ) : (
+                  <span>In-Stock</span>
+                )}
               </div>
             </div>
           </div>
@@ -109,12 +113,12 @@ const BookDetail = ({ book }: { book: Book }) => {
             <DatePicker
               dateRange={dateRange}
               setDateRange={setDateRange}
-              disabled={borrow ? true : false}
+              disabled={!borrow?.return}
             />
           </div>
 
           <div className={styles.btn}>
-            {borrow ? (
+            {!borrow?.return ? (
               <Button variant="contained" size="large" disabled>
                 Borrowed
               </Button>

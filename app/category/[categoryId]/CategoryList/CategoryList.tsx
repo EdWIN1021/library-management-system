@@ -11,29 +11,36 @@ import {
 import CategoryHead from "../CategoryHead/CategoryHead";
 import CategoryItem from "../CategoryItem/CategoryItem";
 import { Book } from "@/app/types";
+import { useEffect, useState } from "react";
 
 const CategoryList = ({ books }: { books: Book[] }) => {
-  const handleChangePage = (event: unknown, newPage: number) => {};
+  const [page, setPage] = useState(1);
+  const [volumes, setVolumes] = useState<Book[]>(books);
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {};
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
 
-  console.log(books);
+  useEffect(() => {}, [page]);
 
   return (
     <TableContainer component={Paper}>
       <Table>
         <CategoryHead />
         <TableBody>
-          {books?.map(
-            (book: Book) =>
-              book.id && <CategoryItem key={book.id} book={book} />
+          {volumes?.map(
+            (volume: Book) =>
+              volume.id && <CategoryItem key={volume.id} book={volume} />
           )}
         </TableBody>
       </Table>
 
-      <Pagination className={styles.pagination} count={10} color="primary" />
+      <Pagination
+        className={styles.pagination}
+        count={10}
+        color="primary"
+        onChange={handleChangePage}
+      />
     </TableContainer>
   );
 };

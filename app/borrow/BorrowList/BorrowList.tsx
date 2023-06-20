@@ -33,7 +33,7 @@ const BorrowList = ({ borrowList }: { borrowList: Borrow[] }) => {
 
   const total = useMemo(() => (quantity * 0.99).toFixed(2), [quantity]);
 
-  const onCheckOut = async () => {
+  const onPay = async () => {
     await mutate(quantity, {
       onSuccess: (data: any) => {
         window.location.assign(data?.url);
@@ -64,7 +64,7 @@ const BorrowList = ({ borrowList }: { borrowList: Borrow[] }) => {
             <span className={styles.price}>Total: ${total}</span>
           </Grid>
           <Grid item>
-            <Link onClick={onCheckOut}>checkout</Link>
+            <Link onClick={onPay}>checkout</Link>
           </Grid>
         </Grid>
       </TableContainer>

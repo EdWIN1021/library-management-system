@@ -34,4 +34,5 @@ export interface Borrow {
   borrowDate: Dayjs;
   returnDate: Dayjs;
   userId: string | null | undefined;
+  return?: boolean;
 }
