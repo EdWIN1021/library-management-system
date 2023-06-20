@@ -1,0 +1,11 @@
+@import "../../styles/utilities";
+@import "../../styles/variables";
+
+.checkout {
+  padding: $p-1;
+  font-size: $text-3;
+
+  .price {
+    color: $text-error;
+  }
+}
