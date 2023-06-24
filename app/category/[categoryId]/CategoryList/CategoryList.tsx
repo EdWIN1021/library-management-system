@@ -12,36 +12,52 @@ import CategoryHead from "../CategoryHead/CategoryHead";
 import CategoryItem from "../CategoryItem/CategoryItem";
 import { Book } from "@/app/types";
 import { useEffect, useState } from "react";
+import { getBooks } from "@/app/lib/request";
+import { useQuery } from "react-query";
 
-const CategoryList = ({ books }: { books: Book[] }) => {
+const CategoryList = ({ categoryId }: { categoryId: string }) => {
   const [page, setPage] = useState(1);
-  const [volumes, setVolumes] = useState<Book[]>(books);
+
+  const {
+    data: books,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryFn: () => getBooks(page, categoryId),
+    enabled: false,
+  });
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  useEffect(() => {}, [page]);
+  useEffect(() => {
+    refetch();
+  }, [page]);
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <CategoryHead />
-        <TableBody>
-          {volumes?.map(
-            (volume: Book) =>
-              volume.id && <CategoryItem key={volume.id} book={volume} />
-          )}
-        </TableBody>
-      </Table>
+    <>
+      {!isLoading && (
+        <TableContainer component={Paper}>
+          <Table>
+            <CategoryHead />
+            <TableBody>
+              {books?.map(
+                (book: Book) =>
+                  book.id && <CategoryItem key={book.id} book={book} />
+              )}
+            </TableBody>
+          </Table>
 
-      <Pagination
-        className={styles.pagination}
-        count={10}
-        color="primary"
-        onChange={handleChangePage}
-      />
-    </TableContainer>
+          <Pagination
+            className={styles.pagination}
+            count={10}
+            color="primary"
+            onChange={handleChangePage}
+          />
+        </TableContainer>
+      )}
+    </>
   );
 };
 

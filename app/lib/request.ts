@@ -130,3 +130,21 @@ export const makePayment = async (quantity: number) => {
 
   return { url: session.url };
 };
+
+export const getBooks = async (page: number, categoryId: string) => {
+  const res = await fetch(
+    `${
+      process.env.NEXT_PUBLIC_API_URL
+    }/books?q=${categoryId}&_page=${page.toString()}&_limit=20`,
+    {
+      headers,
+    }
+  );
+
+  const data = await res.json();
+  if (!res?.ok) {
+    throw new Error(data?.error);
+  }
+
+  return data;
+};
