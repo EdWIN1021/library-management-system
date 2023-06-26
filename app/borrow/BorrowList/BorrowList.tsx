@@ -24,11 +24,16 @@ const BorrowList = ({ borrowList }: { borrowList: Borrow[] }) => {
   });
 
   const quantity = useMemo(() => {
-    return borrowList?.reduce(
-      (accumulator, currentValue) =>
-        accumulator + dayjs().diff(dayjs(currentValue.returnDate), "day"),
-      0
-    );
+    return borrowList
+      ?.filter(
+        (borrow) =>
+          dayjs().diff(dayjs(borrow.returnDate), "day") > 0 && !borrow.return
+      )
+      .reduce(
+        (accumulator, currentValue) =>
+          accumulator + dayjs().diff(dayjs(currentValue.returnDate), "day"),
+        0
+      );
   }, [borrowList]);
 
   const total = useMemo(() => (quantity * 0.99).toFixed(2), [quantity]);
