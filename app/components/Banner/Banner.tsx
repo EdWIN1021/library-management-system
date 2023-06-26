@@ -7,7 +7,7 @@ const Banner = ({ book }: { book: Book }) => {
   return (
     <div className={styles.bg}>
       <Quote book={book} />
-      <Image src="/images/abc.jpg" alt="..." fill priority />
+      <Image src="/images/search.jpg" alt="..." fill priority />
     </div>
   );
 };

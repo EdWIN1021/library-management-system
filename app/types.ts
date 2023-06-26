@@ -36,3 +36,13 @@ export interface Borrow {
   userId: string | null | undefined;
   return?: boolean;
 }
+
+export enum Category {
+  Fiction = "Fiction",
+  Mystery = "Mystery",
+  Romance = "Romance",
+  Science = "Science",
+  Travel = "Travel",
+  Children = "Children",
+  Historical = "Historical",
+}

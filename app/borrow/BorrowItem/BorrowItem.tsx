@@ -37,16 +37,28 @@ const BorrowItem = ({ book }: { book: Borrow }) => {
       <TableCell>{book?.borrowDate.toString().split("T")[0]}</TableCell>
       <TableCell>{book?.returnDate.toString().split("T")[0]}</TableCell>
 
-      {book?.return ? (
-        <TableCell>{"Returned"}</TableCell>
+      {Number(lateFee) < 0 ? (
+        <TableCell>{"Reading"}</TableCell>
       ) : (
-        <TableCell>{"Expired"}</TableCell>
+        <>
+          {book?.return ? (
+            <TableCell>{"Returned"}</TableCell>
+          ) : (
+            <TableCell>{"Expired"}</TableCell>
+          )}
+        </>
       )}
 
-      {book?.return ? (
+      {Number(lateFee) < 0 ? (
         <TableCell>{"$0"}</TableCell>
       ) : (
-        <TableCell>${lateFee}</TableCell>
+        <>
+          {book?.return ? (
+            <TableCell>{"$0"}</TableCell>
+          ) : (
+            <TableCell>${lateFee}</TableCell>
+          )}
+        </>
       )}
 
       <TableCell>

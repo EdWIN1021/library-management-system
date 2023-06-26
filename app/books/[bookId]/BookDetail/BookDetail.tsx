@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./styles.module.scss";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
@@ -28,11 +28,20 @@ const BookDetail = ({ book }: { book: Book }) => {
     returnDate: dayjs(),
   });
 
-  const { data: borrow, refetch } = useBorrow("borrow", book?.id, user?.id);
+  const {
+    data: borrow,
+    isLoading,
+    refetch,
+  } = useBorrow("borrow", book?.id, user?.id);
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isLoading: isButtonLoading } = useMutation({
     mutationFn: createBorrow,
   });
+
+  const isExpired = useMemo(
+    () => dayjs().diff(dayjs(borrow?.returnDate), "day") > 0,
+    [borrow]
+  );
 
   const handleBorrow = async () => {
     if (!user) {
@@ -62,110 +71,123 @@ const BookDetail = ({ book }: { book: Book }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.info}>
-        <div className={styles.detail}>
-          <div className={styles.title}>{book?.title}</div>
-          <div>By {book?.authors}</div>
-          <div className={styles.edition}>{book?.edition}</div>
+    <>
+      {!isLoading && (
+        <div className={styles.container}>
+          <div className={styles.info}>
+            <div className={styles.detail}>
+              <div className={styles.title}>{book?.title}</div>
+              <div>By {book?.authors}</div>
+              <div className={styles.edition}>{book?.edition}</div>
 
-          <div className={styles.rating}>
-            <Rating value={book?.rating} precision={0.5} readOnly />
-            {book?.rating} ratings
-          </div>
+              <div className={styles.rating}>
+                <Rating value={book?.rating} precision={0.5} readOnly />
+                {book?.rating} ratings
+              </div>
 
-          <div>{book?.genres}</div>
+              <div>{book?.genres}</div>
 
-          <div className={styles.status}>
-            <div>
-              <div className={styles.title}>Availability</div>
+              <div className={styles.status}>
+                <div>
+                  <div className={styles.title}>Availability</div>
 
-              {formats.map((format) => (
-                <div className={styles.format} key={format}>
-                  {format === book?.format ? (
+                  {formats.map((format) => (
+                    <div className={styles.format} key={format}>
+                      {format === book?.format ? (
+                        <>
+                          <CheckCircleIcon style={{ color: "#42bb4e" }} />
+                          {book?.format}
+                        </>
+                      ) : (
+                        <>
+                          <CancelIcon style={{ color: "#f34040" }} />
+                          {format}
+                        </>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div>
+                  <div className={styles.title}>Status</div>
+                  {isExpired ? (
                     <>
-                      <CheckCircleIcon style={{ color: "#42bb4e" }} />
-                      {book?.format}
+                      {borrow?.return ? (
+                        <span className={styles.shelf}>In-Stock</span>
+                      ) : (
+                        <span
+                          className={styles.shelf}
+                          style={{ backgroundColor: "#f34040" }}
+                        >
+                          Expired
+                        </span>
+                      )}
                     </>
                   ) : (
-                    <>
-                      <CancelIcon style={{ color: "#f34040" }} />
-                      {format}
-                    </>
+                    <span className={styles.shelf}>In-Shelf</span>
                   )}
                 </div>
-              ))}
-            </div>
+              </div>
 
-            <div>
-              <div className={styles.title}>Status</div>
-              <div className={styles.shelf}>
+              <div>
+                <DatePicker
+                  dateRange={dateRange}
+                  setDateRange={setDateRange}
+                  disabled={!borrow?.return}
+                />
+              </div>
+
+              <div className={styles.btn}>
                 {!borrow?.return ? (
-                  <span>In-Shelf</span>
+                  <Button variant="contained" size="large" disabled>
+                    Borrowed
+                  </Button>
                 ) : (
-                  <span>In-Stock</span>
+                  <LoadingButton
+                    loading={isButtonLoading}
+                    variant="contained"
+                    size="large"
+                    onClick={handleBorrow}
+                  >
+                    Borrow
+                  </LoadingButton>
                 )}
               </div>
             </div>
+
+            <div className={styles.description}>
+              <div>
+                <span>About</span> Book
+              </div>
+
+              <div>{book?.description}</div>
+            </div>
           </div>
 
-          <div>
-            <DatePicker
-              dateRange={dateRange}
-              setDateRange={setDateRange}
-              disabled={!borrow?.return}
-            />
-          </div>
-
-          <div className={styles.btn}>
-            {!borrow?.return ? (
-              <Button variant="contained" size="large" disabled>
-                Borrowed
-              </Button>
-            ) : (
-              <LoadingButton
-                loading={isLoading}
-                variant="contained"
-                size="large"
-                onClick={handleBorrow}
-              >
-                Borrow
-              </LoadingButton>
-            )}
-          </div>
+          <TabContext value={"1"}>
+            <TabList>
+              <Tab label="Overview" value="1" />
+            </TabList>
+            <TabPanel value="1">
+              <div className={styles.data_container}>
+                <div className={styles.data}>
+                  <p>Review Count</p>
+                  <p>{book?.review_count}</p>
+                </div>
+                <div className={styles.data}>
+                  <p>Page Number</p>
+                  <p>{book?.num_pages}</p>
+                </div>
+                <div className={styles.data}>
+                  <p>Language</p>
+                  <p>English</p>
+                </div>
+              </div>
+            </TabPanel>
+          </TabContext>
         </div>
-
-        <div className={styles.description}>
-          <div>
-            <span>About</span> Book
-          </div>
-
-          <div>{book?.description}</div>
-        </div>
-      </div>
-
-      <TabContext value={"1"}>
-        <TabList>
-          <Tab label="Overview" value="1" />
-        </TabList>
-        <TabPanel value="1">
-          <div className={styles.data_container}>
-            <div className={styles.data}>
-              <p>Review Count</p>
-              <p>{book?.review_count}</p>
-            </div>
-            <div className={styles.data}>
-              <p>Page Number</p>
-              <p>{book?.num_pages}</p>
-            </div>
-            <div className={styles.data}>
-              <p>Language</p>
-              <p>English</p>
-            </div>
-          </div>
-        </TabPanel>
-      </TabContext>
-    </div>
+      )}
+    </>
   );
 };
 
