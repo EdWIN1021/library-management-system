@@ -38,6 +38,9 @@ const BorrowList = ({ borrowList }: { borrowList: Borrow[] }) => {
 
   const total = useMemo(() => (quantity * 0.99).toFixed(2), [quantity]);
 
+
+  
+
   const onPay = async () => {
     await mutate(quantity, {
       onSuccess: (data: any) => {
@@ -69,7 +72,7 @@ const BorrowList = ({ borrowList }: { borrowList: Borrow[] }) => {
             <span className={styles.price}>Total: ${total}</span>
           </Grid>
           <Grid item>
-            <Link onClick={onPay}>checkout</Link>
+            <Link onClick={onPay}>Checkout</Link>
           </Grid>
         </Grid>
       </TableContainer>
