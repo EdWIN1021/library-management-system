@@ -131,11 +131,17 @@ export const makePayment = async (quantity: number) => {
   return { url: session.url };
 };
 
-export const getBooks = async (page: number, categoryId: string) => {
+export const getBooks = async (
+  page: number,
+  categoryId: string,
+  order: boolean
+) => {
   const res = await fetch(
     `${
       process.env.NEXT_PUBLIC_API_URL
-    }/books?q=${categoryId}&_page=${page.toString()}&_limit=20`,
+    }/books?q=${categoryId}&_page=${page.toString()}&_limit=10&_sort=rating&_order=${
+      order ? "asc" : "desc"
+    }`,
     {
       headers,
     }

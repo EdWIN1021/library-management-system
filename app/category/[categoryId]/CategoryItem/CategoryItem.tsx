@@ -31,7 +31,7 @@ const CategoryItem = ({ book }: { book: Book }) => {
 
       <TableCell>
         <div>
-          <Rating value={book?.rating} precision={0.5} readOnly />
+          <Rating value={book?.rating} precision={0.05} readOnly />
         </div>
       </TableCell>
       <TableCell>{book?.genres}</TableCell>

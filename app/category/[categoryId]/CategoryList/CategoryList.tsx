@@ -17,15 +17,18 @@ import { useQuery } from "react-query";
 
 const CategoryList = ({ categoryId }: { categoryId: string }) => {
   const [page, setPage] = useState(1);
+  const [order, setOrder] = useState(true);
 
   const {
     data: books,
     isLoading,
     refetch,
   } = useQuery({
-    queryFn: () => getBooks(page, categoryId),
+    queryFn: () => getBooks(page, categoryId, order),
     enabled: false,
   });
+
+  console.log(books);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -33,14 +36,17 @@ const CategoryList = ({ categoryId }: { categoryId: string }) => {
 
   useEffect(() => {
     refetch();
-  }, [page]);
+  }, [page, order]);
 
   return (
     <>
       {!isLoading && (
         <TableContainer component={Paper}>
           <Table>
-            <CategoryHead />
+            <CategoryHead
+              order={order}
+              handleOrder={() => setOrder((value) => !value)}
+            />
             <TableBody>
               {books?.map(
                 (book: Book) =>
