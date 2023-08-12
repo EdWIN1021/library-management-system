@@ -28,11 +28,9 @@ const BookDetail = ({ book }: { book: Book }) => {
     returnDate: dayjs(),
   });
 
-  const {
-    data: borrow,
-    isLoading,
-    refetch,
-  } = useBorrow("borrow", book?.id, user?.id);
+  const { data, isLoading, refetch } = useBorrow("borrow", book?.id, user?.id);
+
+  const borrow = data || { ...dateRange, return: true };
 
   const { mutate, isLoading: isButtonLoading } = useMutation({
     mutationFn: createBorrow,
