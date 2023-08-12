@@ -17,4 +17,6 @@
 ![Screenshot 2023-08-12 at 2 49 02 PM](https://github.com/EdWIN1021/library-management-system/assets/17692914/6edceb3b-9281-4d73-97c2-d09793058782)
 
 ##Setting
-![Screenshot 2023-08-12 at 2 49 02 PM](https://github.com/EdWIN1021/library-management-system/assets/17692914/accebf9e-58f9-4e8f-b935-ad60f3956621)
+![Screenshot 2023-08-12 at 2 50 10 PM](https://github.com/EdWIN1021/library-management-system/assets/17692914/9704c05d-bbbf-498f-b0d0-47019cce572a)
+
+
