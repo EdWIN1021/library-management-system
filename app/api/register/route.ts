@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
 import isEmail from "validator/lib/isEmail";
 import bcrypt from "bcrypt";
-import { v4 as uuidv4 } from "uuid";
 import { prisma } from "@/prisma/db";
 
 export async function POST(request: Request) {
   const { email, password, username, confirmPwd } = await request.json();
-
-  console.log("runs");
 
   const user = await prisma.user.findUnique({ where: { email } });
 
@@ -43,7 +40,6 @@ export async function POST(request: Request) {
 
   await prisma.user.create({
     data: {
-      id: uuidv4(),
       name: username,
       email,
       hashedPassword,

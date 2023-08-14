@@ -14,7 +14,7 @@ import styles from "./styles.module.scss";
 import { signOut, useSession } from "next-auth/react";
 import { openRegister, openLogin } from "@/app/features/modal/modalSlice";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "@/app/types";
 
@@ -24,6 +24,12 @@ function NavBar() {
 
   const { data: session } = useSession();
   const user = session?.user as User;
+
+
+  const imageUrl = useMemo(()=>{
+   return user?.image || "/images/placeholder.jpg"
+  },[user])
+
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -62,9 +68,9 @@ function NavBar() {
                 <Avatar
                   alt="..."
                   src={
-                    user?.provider === "library"
-                      ? `https://firebasestorage.googleapis.com/v0/b/images-39219.appspot.com/o/images%2F${user?.image}?alt=media&token=12c1b750-d60c-4123-82ce-c4f76baf5764`
-                      : user?.image || ""
+                    user?.provider === "library" ?
+                      user.image ? `https://firebasestorage.googleapis.com/v0/b/images-39219.appspot.com/o/images%2F${user?.image}?alt=media&token=12c1b750-d60c-4123-82ce-c4f76baf5764` : "/images/placeholder.jpg"
+                      : imageUrl
                   }
                 />
               </IconButton>
