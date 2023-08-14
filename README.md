@@ -19,4 +19,11 @@
 ##Setting
 ![Screenshot 2023-08-12 at 2 50 10 PM](https://github.com/EdWIN1021/library-management-system/assets/17692914/9704c05d-bbbf-498f-b0d0-47019cce572a)
 
+#Otp
+![Screenshot 2023-08-14 at 10 30 19 AM](https://github.com/EdWIN1021/library-management-system/assets/17692914/c32e6283-78e3-47cb-8f08-911be2f71516)
 
+#Opt Verification
+![Screenshot 2023-08-14 at 10 24 13 AM](https://github.com/EdWIN1021/library-management-system/assets/17692914/8d68efbd-e18e-4521-8c87-5ffcdd24702e)
+
+#Reset Password
+![Screenshot 2023-08-14 at 10 36 49 AM](https://github.com/EdWIN1021/library-management-system/assets/17692914/16f8a06c-ebba-41c6-9598-16d4d00ec7b4)
