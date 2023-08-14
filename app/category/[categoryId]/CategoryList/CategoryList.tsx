@@ -28,8 +28,6 @@ const CategoryList = ({ categoryId }: { categoryId: string }) => {
     enabled: false,
   });
 
-  console.log(books);
-
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };

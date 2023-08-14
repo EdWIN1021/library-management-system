@@ -114,8 +114,6 @@ export const uploadImage = async ({
 };
 
 export const makePayment = async (quantity: number) => {
-  console.log(quantity);
-
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
