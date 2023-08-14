@@ -1,0 +1,8 @@
+@import "../../../styles/utilities";
+@import "../../../styles/variables";
+
+.container {
+  @include flex-column;
+  align-items: center;
+  gap: $g-1;
+}

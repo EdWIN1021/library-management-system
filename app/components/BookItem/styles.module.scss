@@ -1,0 +1,31 @@
+@import "../../styles/variables";
+@import "../../styles/utilities";
+
+.book {
+  color: $text-primary;
+  line-height: $lh-1;
+  width: 9.38rem;
+
+  .image {
+    &:hover {
+      scale: 1.1;
+      cursor: pointer;
+    }
+  }
+
+  .title {
+    @include text-nowrap;
+  }
+
+  .author {
+    @include text-nowrap;
+    font-size: $text-1;
+  }
+
+  .rating {
+    font-size: $text-1;
+    span {
+      color: $text-secondary;
+    }
+  }
+}

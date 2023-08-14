@@ -1,0 +1,27 @@
+@import "../../styles/utilities";
+@import "../../styles/variables";
+
+.category {
+  background-color: $bg-white;
+  padding: 20px;
+  color: $text-primary;
+  margin-bottom: 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-weight: 400;
+    font-size: 25px;
+  }
+
+  .books {
+    @include flex-row;
+    gap: 20px;
+    overflow-x: scroll;
+  }
+}

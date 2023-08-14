@@ -1,0 +1,20 @@
+@import "../../styles/variables";
+@import "../../styles/utilities";
+
+.quote {
+  @include center;
+  z-index: 100;
+  color: $text-white;
+  padding: 50px;
+  line-height: 50px;
+  width: 100%;
+
+  div:nth-child(1) {
+    font-size: 45px;
+  }
+
+  div:nth-child(2) {
+    font-size: 30px;
+    text-align: end;
+  }
+}

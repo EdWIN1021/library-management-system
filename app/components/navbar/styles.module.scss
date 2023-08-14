@@ -1,0 +1,21 @@
+@import "../../styles/variables";
+.appbar {
+  position: fixed;
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+
+  &:visited {
+    color: $text-primary;
+  }
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+}

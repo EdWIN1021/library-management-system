@@ -1,0 +1,8 @@
+@import "../../../styles/variables";
+@import "../../../styles/utilities";
+
+.rating {
+  @include flex-row;
+  gap: $g-1;
+  cursor: pointer;
+}

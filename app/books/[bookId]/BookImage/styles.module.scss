@@ -1,0 +1,22 @@
+@import "../../../styles/_variables";
+@import "../../../styles/_utilities";
+
+.contianer {
+  @include flex-column;
+  max-width: 15.63rem;
+  gap: $g-1;
+  align-items: center;
+
+  .quotes {
+    margin-top: $mt-1;
+
+    div:first-child {
+      font-size: $text-3;
+      margin-bottom: $mt-1;
+    }
+
+    li {
+      margin-bottom: $mt-1;
+    }
+  }
+}
