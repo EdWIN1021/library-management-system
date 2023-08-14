@@ -85,7 +85,6 @@ const VerifyOTP = () => {
             style={{ alignSelf: "end", cursor: "pointer" }}
             onClick={onResend}
           >
-            {" "}
             Resend OTP
           </Link>
         </div>

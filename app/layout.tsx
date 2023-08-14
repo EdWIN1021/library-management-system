@@ -1,7 +1,7 @@
 import "./globals.scss";
 import styles from "./page.module.scss";
 import dynamic from "next/dynamic";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import StoreProvider from "./providers/StoreProvider";
 import StyleProvider from "./providers/StyleProvider";

@@ -25,9 +25,10 @@ const Settings = ({ borrowList }: { borrowList: Borrow[] }) => {
 
   const imageUrl = useMemo(
     () =>
-      user?.provider === "library"
-        ? `https://firebasestorage.googleapis.com/v0/b/images-39219.appspot.com/o/images%2F${user?.image}?alt=media&token=12c1b750-d60c-4123-82ce-c4f76baf5764`
-        : user?.image || "/images/placeholder.jpg",
+      user?.provider === "library" ?
+        user?.image ? `https://firebasestorage.googleapis.com/v0/b/images-39219.appspot.com/o/images%2F${user?.image}?alt=media&token=12c1b750-d60c-4123-82ce-c4f76baf5764` : "/images/placeholder.jpg"
+        : user?.image || "/images/placeholder.jpg"
+    ,
     [user]
   );
 
