@@ -72,7 +72,9 @@ const BorrowList = ({ borrowList }: { borrowList: Borrow[] }) => {
             <span className={styles.price}>Total: ${total}</span>
           </Grid>
           <Grid item>
-            <Link onClick={onPay}>Checkout</Link>
+            <Link style={{ cursor: "pointer" }} onClick={onPay}>
+              Checkout
+            </Link>
           </Grid>
         </Grid>
       </TableContainer>
