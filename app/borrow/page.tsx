@@ -1,15 +1,8 @@
-// import BorrowList from "./BorrowList/BorrowList";
 import { getBorrowList } from "../lib/books";
 import { getCurrentUser } from "../lib/auth";
 import dynamic from "next/dynamic";
 
-const BorrowList = dynamic(
-  () => import("./BorrowList/BorrowList"),
-  {
-    ssr: false,
-  }
-);
-
+const BorrowList = dynamic(() => import("./BorrowList/BorrowList"));
 
 const BorrowPage = async () => {
   const user = await getCurrentUser();
