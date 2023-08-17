@@ -16,11 +16,15 @@ export const fetchBorrow = async (
   bookId: number,
   userId: string | null | undefined
 ) => {
-  const res = await fetch(`/api/borrow/${bookId}?userId=${userId}`, {
-    method: "GET",
-    headers,
-  });
-  return res.json();
+
+  if(userId){
+    const res = await fetch(`/api/borrow/${bookId}?userId=${userId}`, {
+      method: "GET",
+      headers,
+    });
+    return res.json();
+  }
+  return null
 };
 
 export const createBorrow = async (borrowData: Borrow) => {

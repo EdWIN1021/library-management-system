@@ -29,17 +29,11 @@ const BookDetail = ({ book }: { book: Book }) => {
   });
 
   const { data, isLoading, refetch } = useBorrow("borrow", book?.id, user?.id);
-
   const borrow = data || { ...dateRange, return: true };
 
   const { mutate, isLoading: isButtonLoading } = useMutation({
     mutationFn: createBorrow,
   });
-
-  const isExpired = useMemo(
-    () => dayjs().diff(dayjs(borrow?.returnDate), "day") > 0,
-    [borrow]
-  );
 
   const handleBorrow = async () => {
     if (!user) {
@@ -108,22 +102,7 @@ const BookDetail = ({ book }: { book: Book }) => {
 
                 <div>
                   <div className={styles.title}>Status</div>
-                  {isExpired ? (
-                    <>
-                      {borrow?.return ? (
-                        <span className={styles.shelf}>In-Stock</span>
-                      ) : (
-                        <span
-                          className={styles.shelf}
-                          style={{ backgroundColor: "#f34040" }}
-                        >
-                          Expired
-                        </span>
-                      )}
-                    </>
-                  ) : (
-                    <span className={styles.shelf}>In-Shelf</span>
-                  )}
+                  <span className={styles.shelf}>In-Shelf</span>
                 </div>
               </div>
 
