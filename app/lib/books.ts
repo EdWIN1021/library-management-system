@@ -11,9 +11,6 @@ export const getCategory = async (categoryId: string) => {
 export const getBorrowList = async (userId: string | null | undefined) => {
   const res = await fetch(
     `${process.env.BASE_URL}/api/borrow_list?userId=${userId}`,
-    {
-      next: { revalidate: 60 },
-    }
   );
 
   return res.json();
