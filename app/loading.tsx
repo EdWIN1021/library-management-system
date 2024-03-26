@@ -1,4 +1,5 @@
 "use client";
+
 import CircularProgress from "@mui/material/CircularProgress";
 
 const Loading = () => {
@@ -9,7 +10,6 @@ const Loading = () => {
         position: "relative",
         display: "flex",
         width: "100%",
-        height: "100vh",
         justifyContent: "center",
       }}
     >

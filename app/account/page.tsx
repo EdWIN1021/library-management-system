@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
-import { getBorrowList } from "../lib/books";
-import { getCurrentUser } from "../lib/auth";
+import { getBorrowList } from "../../lib/books";
+import { getCurrentUser } from "../../lib/auth";
 import { redirect } from "next/navigation";
 
-const Settings = dynamic(() => import("../components/Settings/Settings"), {
+const Settings = dynamic(() => import("../../components/Settings"), {
   ssr: false,
 });
 

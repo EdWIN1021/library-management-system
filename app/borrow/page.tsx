@@ -1,9 +1,9 @@
-import { getBorrowList } from "../lib/books";
-import { getCurrentUser } from "../lib/auth";
+import { getBorrowList } from "../../lib/books";
+import { getCurrentUser } from "../../lib/auth";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
-const BorrowList = dynamic(() => import("./BorrowList/BorrowList"), {
+const BorrowList = dynamic(() => import("../../components/BorrowList"), {
   ssr: false,
 });
 

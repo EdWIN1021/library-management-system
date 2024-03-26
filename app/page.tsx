@@ -1,46 +1,25 @@
-import { getCategory } from "./lib/books";
-import { getQuote } from "./lib/quotes";
-import Search from "./components/Search/Search";
-import Banner from "./components/Banner/Banner";
-import Row from "./components/Row/Row";
-import styles from "./page.module.scss";
-import { Category } from "./types";
+import Banner from "@/components/Banner";
+import Row from "@/components/Row";
+import { getCategories } from "@/lib/books";
+import { getQuote } from "@/lib/quotes";
+import { CATEGORY } from "@/constants";
 
 export default async function Home() {
-  const { Fiction, Mystery, Romance, Science, Travel, Children, Historical } =
-    Category;
-
-  const [
-    fiction,
-    mystery,
-    romance,
-    science,
-    young,
-    children,
-    historical,
-    quote,
-  ] = await Promise.all([
-    await getCategory(Fiction),
-    await getCategory(Mystery),
-    await getCategory(Romance),
-    await getCategory(Science),
-    await getCategory(Travel),
-    await getCategory(Children),
-    await getCategory(Historical),
-    await getQuote(),
-  ]);
+  const [fiction, mystery, romance, science, children, historical] =
+    await getCategories();
+  const quote = await getQuote();
 
   return (
-    <div className={styles.container}>
+    <>
       <Banner book={quote} />
-      <Search />
-      <Row books={fiction} categoryId={Fiction} />
-      <Row books={mystery} categoryId={Mystery} />
-      <Row books={romance} categoryId={Romance} />
-      <Row books={science} categoryId={Science} />
-      <Row books={young} categoryId={Travel} />
-      <Row books={children} categoryId={Children} />
-      <Row books={historical} categoryId={Historical} />
-    </div>
+      <div className="flex flex-col gap-3">
+        <Row books={fiction} title={CATEGORY.Fiction} />
+        <Row books={mystery} title={CATEGORY.Mystery} />
+        <Row books={romance} title={CATEGORY.Romance} />
+        <Row books={science} title={CATEGORY.Science} />
+        <Row books={children} title={CATEGORY.Children} />
+        <Row books={historical} title={CATEGORY.Historical} />
+      </div>
+    </>
   );
 }

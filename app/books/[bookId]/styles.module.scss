@@ -1,9 +1,0 @@
-@import "../../styles/variables";
-@import "../../styles/utilities";
-
-.book {
-  @include flex-row;
-  background-color: $bg-white;
-  padding: 2rem;
-  height: 100%;
-}
