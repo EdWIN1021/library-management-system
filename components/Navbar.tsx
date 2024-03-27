@@ -42,7 +42,7 @@ function NavBar() {
   return (
     <AppBar position="relative">
       <Toolbar>
-        <span className="tracking-[0.3rem] font-extrabold text-xl mr-5 text-[white]">
+        <span className="tracking-[0.3rem] font-extrabold text-xl mr-5 text-[white] cursor-pointer">
           Library
         </span>
 

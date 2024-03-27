@@ -11,23 +11,23 @@ const Search = () => {
 
   return (
     <div className="flex-1">
-      <div className="relative max-w-[300px]">
+      <div className="flex max-w-[300px]">
         <input
-          className="py-2 px-3 rounded text-black w-full"
+          className="py-2 px-3 rounded-l text-black w-full"
           value={search}
           placeholder="search..."
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <IconButton
-          className="absolute right-0"
+        <button
+          className="bg-white px-3"
           onClick={() => {
             router.push(`category/${search.toLowerCase()}`);
             setSearch("");
           }}
         >
           <SearchIcon />
-        </IconButton>
+        </button>
       </div>
     </div>
   );
