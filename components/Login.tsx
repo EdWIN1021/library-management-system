@@ -90,7 +90,7 @@ const Login = () => {
               isEmpty(inputFields.email) || isEmpty(inputFields.password)
             }
             type="submit"
-            variant="contained"
+            variant="outlined"
             size="large"
             className="mt-4"
             fullWidth

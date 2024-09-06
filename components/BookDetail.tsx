@@ -112,13 +112,13 @@ const BookDetail = ({ book }: { book: Book }) => {
 
       <div className="my-10">
         {!borrow?.return ? (
-          <Button variant="contained" size="large" disabled>
+          <Button variant="outlined" size="large" disabled>
             Borrowed
           </Button>
         ) : (
           <LoadingButton
             loading={isButtonLoading}
-            variant="contained"
+            variant="outlined"
             size="large"
             onClick={handleBorrow}
           >

@@ -10,9 +10,9 @@ const StyleProvider = ({ children }: { children: React.ReactNode }) => {
       primary: {
         main: "#ff8a00",
       },
-      secondary: {
-        main: "#fff",
-      },
+      // secondary: {
+      //   main: "#fff",
+      // },
     },
   });
 

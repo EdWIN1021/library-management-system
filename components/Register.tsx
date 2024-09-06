@@ -170,7 +170,7 @@ const Register = () => {
           <LoadingButton
             loading={isLoding}
             type="submit"
-            variant="contained"
+            variant="outlined"
             size="large"
             style={{ marginTop: "20px" }}
             disabled={
